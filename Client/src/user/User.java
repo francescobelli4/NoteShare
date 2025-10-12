@@ -85,7 +85,8 @@ public class User {
     }
 
     /**
-     * This function starts the thread that will be used to read data from server
+     * This function starts the thread that will be used to read data from server.
+     * It's possible to find which type of Message I received by using instanceof
      */
     private void startInputThread() {
 
