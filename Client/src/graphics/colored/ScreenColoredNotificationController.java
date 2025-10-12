@@ -4,6 +4,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This controller manages a displayed notification.
@@ -47,8 +49,13 @@ public class ScreenColoredNotificationController implements PageController {
         title.setText(params.get("title"));
         description.setText(params.get("description"));
 
-        Image image = new Image(new File(params.get("icon")).toURI().toString());
+        Image image = new Image(Objects.requireNonNull(getClass().getResource(params.get("icon"))).toExternalForm());
         icon.setImage(image);
+    }
+
+    @Override
+    public void appendSecondaryPage(Node secondaryPage) {
+
     }
 
     /**

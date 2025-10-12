@@ -13,6 +13,24 @@ public class Locales {
     public static void initializeLocales() {
         locales.put("register", "Register");
         locales.put("login", "Login");
+        locales.put("username", "Username");
+        locales.put("password", "Password");
+        locales.put("register_page_username_field_prompt", "Min %d Max %d chars");
+        locales.put("register_page_password_field_prompt", "Min %d Max %d chars");
+        locales.put("student", "Student");
+        locales.put("teacher", "Teacher");
+        locales.put("error", "Error");
+        locales.put("error_username_too_short", "This username is too short.");
+        locales.put("error_username_too_long", "This username is too long.");
+        locales.put("error_password_too_short", "This password is too short.");
+        locales.put("error_password_too_long", "This password is too long.");
+        locales.put("error_user_type_not_selected", "No user type was selected");
+        locales.put("error_username_already_in_use", "This username is already in use.");
+        locales.put("success", "Success");
+        locales.put("success_register", "You successfully registered!");
+        locales.put("your_notes", "Your Notes");
+        locales.put("browse_notes", "Browse Notes");
+        locales.put("shared_notes", "Shared Notes");
     }
 
     public static String get(String key) {

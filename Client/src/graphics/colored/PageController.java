@@ -1,5 +1,7 @@
 package graphics.colored;
 
+import javafx.scene.Node;
+
 import java.util.Map;
 
 /**
@@ -9,4 +11,6 @@ import java.util.Map;
 public interface PageController {
 
     void setParams(Map<String, String> params);
+
+    void appendSecondaryPage(Node secondaryPage);
 }

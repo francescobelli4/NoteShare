@@ -5,6 +5,7 @@ import graphics.colored.PageController;
 import graphics.colored.Pages;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -31,6 +32,7 @@ public class GraphicsController extends Application {
     /**
      * Every page needs to have a StackPane as root
      */
+    private static FXMLLoader mainPage;
     private static StackPane root;
 
     /**
@@ -49,14 +51,15 @@ public class GraphicsController extends Application {
      */
     public static void displayMainPage(Pages page) {
 
-        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(page.getPath()));
+        mainPage = new FXMLLoader(GraphicsController.class.getResource(page.getPath()));
 
         try {
-            Parent loaded = loader.load();
+            Parent loaded = mainPage.load();
             root = (StackPane) loaded;
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
+
         } catch (IOException e) {
             //TODO
             e.printStackTrace();
@@ -66,19 +69,21 @@ public class GraphicsController extends Application {
     /**
      * This function displays a Floating Page.
      * A floating page is a secondary page
-     * @param floatingPage a secondary page
+     * @param secondaryPage a secondary page
      * @param params nullable params
      */
-    public static void displayFloatingPage(Pages floatingPage, Map<String, String> params) {
+    public static void displaySecondaryPage(Pages secondaryPage, Map<String, String> params) {
 
-        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(floatingPage.getPath()));
+        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(secondaryPage.getPath()));
 
         try {
-            StackPane notification_root = loader.load();
+            Node secondaryPageRoot = loader.load();
             PageController controller = loader.getController();
             controller.setParams(params);
 
-            root.getChildren().add(notification_root);
+            //root.getChildren().add(notification_root);
+            PageController mainPageController = mainPage.getController();
+            mainPageController.appendSecondaryPage(secondaryPageRoot);
         } catch (IOException e) {
             //TODO
             e.printStackTrace();
@@ -86,7 +91,7 @@ public class GraphicsController extends Application {
     }
 
     /**
-     * This function is a specification of displayFloatingPage.
+     * This function is a specification of displaySecondaryPage.
      * @param title notification title
      * @param description notification description
      * @param icon notification icon
@@ -97,7 +102,19 @@ public class GraphicsController extends Application {
         params.put("title", title);
         params.put("description", description);
         params.put("icon", icon.getPath());
-        displayFloatingPage(Pages.NOTIFICATION, params);
+
+        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(Pages.NOTIFICATION.getPath()));
+
+        try {
+            Node notification_root = loader.load();
+            PageController controller = loader.getController();
+            controller.setParams(params);
+
+            root.getChildren().add(notification_root);
+        } catch (IOException e) {
+            //TODO
+            e.printStackTrace();
+        }
     }
 
 
