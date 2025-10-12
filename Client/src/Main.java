@@ -1,3 +1,5 @@
+import graphics.GraphicsController;
+import locales.Locales;
 import user.User;
 
 public class Main {
@@ -9,6 +11,9 @@ public class Main {
 
         user.connect("localhost", 12345);
 
+        Locales.initializeLocales();
+
         // Now start the Graphics Controller!
+        GraphicsController.setup();
     }
 }
