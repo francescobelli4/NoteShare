@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import messages.requests.RegisterMessage;
+import messages.responses.ErrorMessage;
+import messages.responses.RegisterSuccessMessage;
 
 /**
  * This class creates a unified way to interact with messages sent client <---> server
@@ -18,14 +20,14 @@ public class Message {
 
     /**
      * This serializes the message to a JSON string
-     * @return
+     * @return a string in JSON format
      */
     public String toJson() { return new Gson().toJson(this); }
 
     /**
      * This returns an instance of Message from a JSON string.
      * It's possible to use instanceof to find the original Message subclass
-     * @param json
+     * @param json a JSON formatted string
      * @return a Message subclass
      */
     public static Message fromJson(String json) {
@@ -36,6 +38,8 @@ public class Message {
 
         return switch (msgId) {
             case 1 -> gson.fromJson(json, RegisterMessage.class);
+            case 3 -> gson.fromJson(json, ErrorMessage.class);
+            case 100 -> gson.fromJson(json, RegisterSuccessMessage.class);
             default -> null;
         };
     }

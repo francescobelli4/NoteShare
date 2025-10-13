@@ -13,10 +13,10 @@ import java.util.Map;
 public class ScreenColoredRegisterFormController implements PageController{
 
 
-    private int minUsernameLength = 5;
-    private int minPasswordLength = 10;
-    private int maxUsernameLength = 15;
-    private int maxPasswordLength = 20;
+    private final int minUsernameLength = 5;
+    private final int minPasswordLength = 8;
+    private final int maxUsernameLength = 15;
+    private final int maxPasswordLength = 20;
 
     @FXML
     Label title_label;

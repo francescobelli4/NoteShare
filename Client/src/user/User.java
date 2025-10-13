@@ -1,7 +1,13 @@
 package user;
 
 import dtos.UserDTO;
+import graphics.GraphicsController;
+import graphics.colored.Icons;
+import graphics.colored.Pages;
+import javafx.application.Platform;
+import locales.Locales;
 import messages.Message;
+import messages.responses.ErrorMessage;
 import messages.responses.RegisterSuccessMessage;
 
 import java.io.DataInputStream;
@@ -104,7 +110,19 @@ public class User {
                     Message parsedMessage = Message.fromJson(input);
 
                     if (parsedMessage instanceof RegisterSuccessMessage rsm) {
-                        //TODO update UI
+                        System.out.println("SUCCESSSSSSS");
+                        Platform.runLater(() -> {
+
+                            userDTO = rsm.userDTO;
+
+                            System.out.println("ASDSADASDSA");
+                            GraphicsController.displayMainPage(Pages.STUDENT_HOME);
+                            //GraphicsController.displayNotification(Locales.get("success"), Locales.get("success_register"), Icons.SUCCESS);
+                        });
+                    } else if (parsedMessage instanceof ErrorMessage err) {
+                        Platform.runLater(() -> {
+                            GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icons.ERROR);
+                        });
                     }
                 }
             } catch (IOException e) {

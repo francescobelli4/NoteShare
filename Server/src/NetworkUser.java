@@ -1,6 +1,9 @@
 import memory.shared.user.UserEntity;
+import memory.shared.user.UserMapper;
 import messages.Message;
 import messages.requests.RegisterMessage;
+import messages.responses.ErrorMessage;
+import messages.responses.RegisterSuccessMessage;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -101,7 +104,7 @@ public class NetworkUser implements Runnable {
             Message msg = Message.fromJson(data);
 
             if (msg instanceof RegisterMessage rr) {
-                // Handle the Register request!
+                handleRegisterRequest(rr);
             }
         } catch (IOException e) {
             //TODO
@@ -123,6 +126,27 @@ public class NetworkUser implements Runnable {
         } catch (IOException e) {
             //TODO
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * This function should notify the user if his username is available. In this case, it sends
+     * a RegisterSuccessMessage, otherwise it sends an ErrorMessage
+     * @param rr the request the user sent
+     */
+    private void handleRegisterRequest(RegisterMessage rr) {
+
+        userEntity.setUsername(rr.username);
+        userEntity.setPassword(rr.password);
+        userEntity.setUserType(rr.userType);
+        userEntity.setCoins(100);
+
+        if (Server.userDAO.saveUser(userEntity)) {
+            // Rispondo ok!
+            bq.add(new RegisterSuccessMessage(UserMapper.toDTO(userEntity)));
+        } else {
+            // Rispondo che c'è stato un problema!
+            bq.add(new ErrorMessage(0));
         }
     }
 }

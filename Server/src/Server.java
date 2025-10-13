@@ -1,3 +1,6 @@
+import memory.nonpersistent.user.NPUserDAO;
+import memory.shared.user.UserDAO;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,6 +13,8 @@ public class Server {
      */
     public static boolean demoMode = false;
 
+    public static UserDAO userDAO;
+
     public static void main(String[] args) {
 
         if (Objects.equals(args[0], "demo")) {
@@ -18,6 +23,11 @@ public class Server {
         }
 
         //TODO DAO interface and permanent and non permanent DAOs
+        if (demoMode) {
+            userDAO = NPUserDAO.getInstance();
+        } else {
+            //userDAO = PUserDAO.getInstance();
+        }
 
         setupServer(12345);
     }
