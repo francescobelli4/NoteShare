@@ -10,8 +10,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import messages.requests.RegisterMessage;
+import messages.requests.TokenLoginMessage;
+import user.User;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +87,6 @@ public class GraphicsController extends Application {
             PageController controller = loader.getController();
             controller.setParams(params);
 
-            //root.getChildren().add(notification_root);
             PageController mainPageController = mainPage.getController();
             mainPageController.appendSecondaryPage(secondaryPageRoot);
         } catch (IOException e) {
@@ -129,7 +134,12 @@ public class GraphicsController extends Application {
 
         stage.setTitle("Note Share");
 
-        displayMainPage(Pages.ACCESS);
+        if (User.getInstance().getUserDTO() == null) {
+            displayMainPage(Pages.ACCESS);
+        } else {
+            displayMainPage(Pages.STUDENT_HOME);
+        }
+
 
         stage.show();
     }

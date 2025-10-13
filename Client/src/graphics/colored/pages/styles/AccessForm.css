@@ -17,3 +17,11 @@
 #register_button {
     -fx-background-color: linear-gradient(to bottom right, #805dff, #b6a2ff);
 }
+
+#login_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #dddddd, #eeeeee);
+}
+
+#register_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6e4bec, #9881e9);
+}

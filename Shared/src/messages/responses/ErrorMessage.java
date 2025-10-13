@@ -5,7 +5,8 @@ import messages.Message;
 /**
  * ERROR CODES
  * 0: Register username already taken
- * 1:
+ * 1: Login failed (user not found)
+ * 2: Login failed (wrong password)
  */
 public class ErrorMessage extends Message {
 

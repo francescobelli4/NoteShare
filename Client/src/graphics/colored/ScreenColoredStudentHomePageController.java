@@ -43,7 +43,7 @@ public class ScreenColoredStudentHomePageController implements PageController{
         browse_notes_button.setText(Locales.get("browse_notes"));
         shared_notes_button.setText(Locales.get("shared_notes"));
 
-        username_label.setText(User.userDTO.getUsername());
-        coins_label.setText(User.userDTO.getCoins() + "");
+        username_label.setText(User.getInstance().getUserDTO().getUsername());
+        coins_label.setText(User.getInstance().getUserDTO().getCoins() + "");
     }
 }

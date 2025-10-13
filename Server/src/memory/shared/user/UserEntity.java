@@ -11,6 +11,7 @@ public class UserEntity {
     private String username;
     private String password;
     private String userType;
+    private String token;
     private int coins;
 
     public UserEntity() {}
@@ -54,5 +55,13 @@ public class UserEntity {
 
     public void setCoins(int coins) {
         this.coins = coins;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

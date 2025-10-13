@@ -38,6 +38,7 @@ public class ScreenColoredAccessFormController implements PageController{
     @FXML
     private void onLoginButtonClick() {
         System.out.println("Login button clicked");
+        GraphicsController.displaySecondaryPage(Pages.LOGIN_FORM, null);
     }
 
     @FXML

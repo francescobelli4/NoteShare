@@ -7,13 +7,19 @@ import graphics.colored.Pages;
 import javafx.application.Platform;
 import locales.Locales;
 import messages.Message;
+import messages.requests.LoginMessage;
+import messages.requests.RegisterMessage;
+import messages.requests.TokenLoginMessage;
 import messages.responses.ErrorMessage;
+import messages.responses.LoginSuccessMessage;
 import messages.responses.RegisterSuccessMessage;
+import messages.responses.TokenLoginSuccessMessage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -28,7 +34,7 @@ public class User {
      * This does not need to be private, every important check will be done by
      * the server anyway
      */
-    public static UserDTO userDTO;
+    private UserDTO userDTO;
 
     /**
      * Singleton
@@ -69,6 +75,10 @@ public class User {
      */
     private final BlockingQueue<Message> bq = new LinkedBlockingQueue<>();
 
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
     /**
      * This function connects the socket to the server
      * @param host server's host string
@@ -84,11 +94,72 @@ public class User {
             startInputThread();
             startOutputThread();
 
+            /**
+             * After this function, if userDTO is set, it means that the token login was successful,
+             * otherwise it wasn't...
+             */
+            tokenLogin();
+
         } catch (IOException e) {
             // TODO
             e.printStackTrace();
         }
     }
+
+    private void tokenLogin() {
+
+        Path path = Path.of("token.txt");
+
+        if (path.toFile().exists()) {
+            try {
+                enqueueMessage(new TokenLoginMessage(new String(Files.readAllBytes(path))));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * This function should send a LoginMessage to the server
+     * @param username
+     * @param password
+     */
+    public void login(String username, String password) {
+        LoginMessage lm = new LoginMessage(username, password);
+        enqueueMessage(lm);
+    }
+
+    /**
+     * This function should send a RegisterMessage to the server
+     * @param username
+     * @param password
+     * @param userType
+     */
+    public void register(String username, String password, String userType) {
+        RegisterMessage rm = new RegisterMessage(username, password, userType);
+        enqueueMessage(rm);
+    }
+
+    /**
+     * This function should save the access token in a file
+     * @param token
+     */
+    private void saveUserToken(String token) {
+
+        File tokenFile = new File("token.txt");
+
+        try {
+            tokenFile.createNewFile();
+
+            FileWriter fileWriter = new FileWriter("token.txt");
+            fileWriter.write(token);
+            fileWriter.close();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This function starts the thread that will be used to read data from server.
@@ -110,19 +181,30 @@ public class User {
                     Message parsedMessage = Message.fromJson(input);
 
                     if (parsedMessage instanceof RegisterSuccessMessage rsm) {
-                        System.out.println("SUCCESSSSSSS");
-                        Platform.runLater(() -> {
-
-                            userDTO = rsm.userDTO;
-
-                            System.out.println("ASDSADASDSA");
-                            GraphicsController.displayMainPage(Pages.STUDENT_HOME);
-                            //GraphicsController.displayNotification(Locales.get("success"), Locales.get("success_register"), Icons.SUCCESS);
-                        });
+                        handleRegisterSuccessMessage(rsm);
+                    } else if (parsedMessage instanceof LoginSuccessMessage lsm) {
+                        handleLoginSuccessMessage(lsm);
+                    } else if (parsedMessage instanceof TokenLoginSuccessMessage tlsm) {
+                        handleTokenLoginSuccessMessage(tlsm);
                     } else if (parsedMessage instanceof ErrorMessage err) {
-                        Platform.runLater(() -> {
-                            GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icons.ERROR);
-                        });
+
+                        switch (err.error_code) {
+                            case 0:
+                                Platform.runLater(() -> {
+                                    GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icons.ERROR);
+                                });
+                                break;
+                            case 1:
+                                Platform.runLater(() -> {
+                                    GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_user_does_not_exist"), Icons.ERROR);
+                                });
+                                break;
+                            case 2:
+                                Platform.runLater(() -> {
+                                    GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_wrong_password"), Icons.ERROR);
+                                });
+                        }
+
                     }
                 }
             } catch (IOException e) {
@@ -168,8 +250,48 @@ public class User {
      * This queue is actually a FIFO.
      * @param sendingMessage a Message subclass
      */
-    public void enqueueMessage(Message sendingMessage) {
+    private void enqueueMessage(Message sendingMessage) {
         bq.add(sendingMessage);
+    }
+
+    /**
+     * This function handles the RegisterSuccessMessage. It also saves the access token sent by the server
+     * @param rsm server response
+     */
+    private void handleRegisterSuccessMessage(RegisterSuccessMessage rsm) {
+
+        userDTO = rsm.userDTO;
+
+        saveUserToken(rsm.token);
+
+        Platform.runLater(() -> {
+            GraphicsController.displayMainPage(Pages.STUDENT_HOME);
+        });
+    }
+
+    /**
+     * This function handles the LoginSuccessMessage. It also saves the access token sent by the server
+     * @param lsm server response
+     */
+    private void handleLoginSuccessMessage(LoginSuccessMessage lsm) {
+
+        userDTO = lsm.userDTO;
+
+        saveUserToken(lsm.token);
+
+        Platform.runLater(() -> {
+            GraphicsController.displayMainPage(Pages.STUDENT_HOME);
+        });
+    }
+
+    /**
+     * This function handles the TokenLoginSuccessMessage.
+     * When the UI starts, if userDTO is null, it starts the AccessPage, otherwise it
+     * logs in the user, and it shows him the home page directly.
+     * @param tlsm server response
+     */
+    private void handleTokenLoginSuccessMessage(TokenLoginSuccessMessage tlsm) {
+        userDTO = tlsm.userDTO;
     }
 }
 

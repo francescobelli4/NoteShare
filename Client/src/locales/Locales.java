@@ -26,6 +26,8 @@ public class Locales {
         locales.put("error_password_too_long", "This password is too long.");
         locales.put("error_user_type_not_selected", "No user type was selected");
         locales.put("error_username_already_in_use", "This username is already in use.");
+        locales.put("error_user_does_not_exist", "This user does not exist.");
+        locales.put("error_wrong_password", "You entered a wrong password");
         locales.put("success", "Success");
         locales.put("success_register", "You successfully registered!");
         locales.put("your_notes", "Your Notes");

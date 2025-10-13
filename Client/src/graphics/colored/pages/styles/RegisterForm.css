@@ -22,3 +22,7 @@
 #register_button {
     -fx-background-color: linear-gradient(to bottom right, #805dff, #b6a2ff);
 }
+
+#register_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6e4bec, #9881e9);
+}

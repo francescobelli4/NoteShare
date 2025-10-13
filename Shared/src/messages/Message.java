@@ -3,9 +3,13 @@ package messages;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import messages.requests.LoginMessage;
 import messages.requests.RegisterMessage;
+import messages.requests.TokenLoginMessage;
 import messages.responses.ErrorMessage;
+import messages.responses.LoginSuccessMessage;
 import messages.responses.RegisterSuccessMessage;
+import messages.responses.TokenLoginSuccessMessage;
 
 /**
  * This class creates a unified way to interact with messages sent client <---> server
@@ -38,8 +42,12 @@ public class Message {
 
         return switch (msgId) {
             case 1 -> gson.fromJson(json, RegisterMessage.class);
+            case 2 -> gson.fromJson(json, LoginMessage.class);
             case 3 -> gson.fromJson(json, ErrorMessage.class);
+            case 4 -> gson.fromJson(json, TokenLoginMessage.class);
             case 100 -> gson.fromJson(json, RegisterSuccessMessage.class);
+            case 101 -> gson.fromJson(json, LoginSuccessMessage.class);
+            case 102 -> gson.fromJson(json, TokenLoginSuccessMessage.class);
             default -> null;
         };
     }

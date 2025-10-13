@@ -61,11 +61,16 @@ public class NPUserDAO implements UserDAO {
         return null;
     }
 
-    /**
-     * Not needed in demo mode :D
-     */
+
     @Override
     public UserEntity findUserByToken(String token) {
+
+        for (UserEntity user : users) {
+            if (Objects.equals(user.getToken(), token)) {
+                return user;
+            }
+        }
+
         return null;
     }
 
