@@ -55,6 +55,7 @@
                         <DropShadow />
                      </effect>
                   </HBox>
+                  <VBox fx:id="rightSideSlot" prefHeight="200.0" prefWidth="100.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                </children>
                <effect>
                   <InnerShadow blurType="GAUSSIAN" choke="0.48">
@@ -71,7 +72,7 @@
                         <Image url="@../styles/icons/app_icon.png" />
                      </image>
                   </ImageView>
-                  <VBox fx:id="secondaryPageSlot" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+                  <VBox fx:id="leftBarSlot" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                      <effect>
                         <DropShadow />
                      </effect>

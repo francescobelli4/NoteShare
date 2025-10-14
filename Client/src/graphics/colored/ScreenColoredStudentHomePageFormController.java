@@ -32,7 +32,7 @@ public class ScreenColoredStudentHomePageFormController implements PageControlle
     }
 
     @Override
-    public void appendSecondaryPage(Node secondaryPage) {
+    public void appendSecondaryPage(int id, Node secondaryPage) {
 
     }
 

@@ -22,7 +22,7 @@ public class ScreenColoredAccessFormController implements PageController{
     }
 
     @Override
-    public void appendSecondaryPage(Node secondaryPage) {
+    public void appendSecondaryPage(int id, Node secondaryPage) {
 
     }
 
@@ -38,12 +38,12 @@ public class ScreenColoredAccessFormController implements PageController{
     @FXML
     private void onLoginButtonClick() {
         System.out.println("Login button clicked");
-        GraphicsController.displaySecondaryPage(Pages.LOGIN_FORM, null);
+        GraphicsController.displaySecondaryPage(Pages.LOGIN_FORM, 0, null);
     }
 
     @FXML
     private void onRegisterButtonClick() {
         System.out.println("Register button clicked");
-        GraphicsController.displaySecondaryPage(Pages.REGISTER_FORM, null);
+        GraphicsController.displaySecondaryPage(Pages.REGISTER_FORM, 0, null);
     }
 }

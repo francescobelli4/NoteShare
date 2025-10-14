@@ -75,9 +75,12 @@ public class GraphicsController extends Application {
      * This function displays a Floating Page.
      * A floating page is a secondary page
      * @param secondaryPage a secondary page
+     * @param id a unique id used by the PageController to identify the secondary page
+     *           and place it in the right slot. This is actually a don't care condition
+     *           if the page only needs one secondary page
      * @param params nullable params
      */
-    public static void displaySecondaryPage(Pages secondaryPage, Map<String, String> params) {
+    public static void displaySecondaryPage(Pages secondaryPage, int id, Map<String, String> params) {
 
         FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(secondaryPage.getPath()));
 
@@ -87,7 +90,7 @@ public class GraphicsController extends Application {
             controller.setParams(params);
 
             PageController mainPageController = mainPage.getController();
-            mainPageController.appendSecondaryPage(secondaryPageRoot);
+            mainPageController.appendSecondaryPage(id, secondaryPageRoot);
         } catch (IOException e) {
             //TODO
             e.printStackTrace();

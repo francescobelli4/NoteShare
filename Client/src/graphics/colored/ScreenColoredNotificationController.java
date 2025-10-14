@@ -54,7 +54,7 @@ public class ScreenColoredNotificationController implements PageController {
     }
 
     @Override
-    public void appendSecondaryPage(Node secondaryPage) {
+    public void appendSecondaryPage(int id, Node secondaryPage) {
 
     }
 

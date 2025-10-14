@@ -41,7 +41,7 @@ public class ScreenColoredLoginFormController implements PageController{
     public void setParams(Map<String, String> params) {}
 
     @Override
-    public void appendSecondaryPage(Node secondaryPage) {
+    public void appendSecondaryPage(int id, Node secondaryPage) {
 
     }
 

@@ -21,13 +21,13 @@ public class ScreenColoredAccessController implements PageController{
     public void setParams(Map<String, String> params) {}
 
     @Override
-    public void appendSecondaryPage(Node secondaryPage) {
+    public void appendSecondaryPage(int id, Node secondaryPage) {
         secondaryPageSlot.getChildren().clear();
         secondaryPageSlot.getChildren().add(secondaryPage);
     }
 
     @FXML
     public void initialize() {
-        GraphicsController.displaySecondaryPage(Pages.ACCESS_FORM, null);
+        GraphicsController.displaySecondaryPage(Pages.ACCESS_FORM, 0, null);
     }
 }

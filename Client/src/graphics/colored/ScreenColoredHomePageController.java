@@ -15,7 +15,10 @@ import java.util.Objects;
 public class ScreenColoredHomePageController implements PageController{
 
     @FXML
-    VBox secondaryPageSlot;
+    VBox leftBarSlot;
+
+    @FXML
+    VBox rightSideSlot;
 
 
     @Override
@@ -24,15 +27,25 @@ public class ScreenColoredHomePageController implements PageController{
     }
 
     @Override
-    public void appendSecondaryPage(Node secondaryPage) {
-        secondaryPageSlot.getChildren().add(secondaryPage);
+    public void appendSecondaryPage(int id, Node secondaryPage) {
+
+        switch (id) {
+            case 0:
+                leftBarSlot.getChildren().add(secondaryPage);
+                break;
+            case 1:
+                rightSideSlot.getChildren().add(secondaryPage);
+                break;
+
+        }
+
     }
 
     @FXML
     public void initialize() {
 
         if (Objects.equals(User.getInstance().getUserDTO().getUserType(), "student")) {
-            GraphicsController.displaySecondaryPage(Pages.STUDENT_HOME_PAGE_FORM, null);
+            GraphicsController.displaySecondaryPage(Pages.STUDENT_HOME_PAGE_FORM, 0, null);
         } else if (Objects.equals(User.getInstance().getUserDTO().getUserType(), "teacher")) {
 
         } else if (Objects.equals(User.getInstance().getUserDTO().getUserType(), "administrator")) {

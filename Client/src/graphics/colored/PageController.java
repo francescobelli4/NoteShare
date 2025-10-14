@@ -12,5 +12,5 @@ public interface PageController {
 
     void setParams(Map<String, String> params);
 
-    void appendSecondaryPage(Node secondaryPage);
+    void appendSecondaryPage(int id, Node secondaryPage);
 }
