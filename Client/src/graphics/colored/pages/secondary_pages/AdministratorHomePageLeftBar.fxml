@@ -9,18 +9,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="leftbar" prefHeight="200.0" prefWidth="100.0" stylesheets="@../styles/StudentHomePageForm.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.colored.ScreenColoredStudentHomePageFormController">
+<VBox id="leftbar" prefHeight="200.0" prefWidth="100.0" stylesheets="@../styles/StudentHomePageForm.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.colored.ScreenColoredAdministratorHomePageLeftBarController">
    <effect>
       <DropShadow />
    </effect>
    <children>
       <VBox VBox.vgrow="ALWAYS">
          <children>
-            <Button fx:id="browse_notes_button" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Shared Notes">
+            <Button fx:id="reported_notes_button" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Reported Notes">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
-                        <Image url="@../styles/icons/globe_with_meridians.png" />
+                        <Image url="@../styles/icons/error.png" />
                      </image>
                   </ImageView>
                </graphic>

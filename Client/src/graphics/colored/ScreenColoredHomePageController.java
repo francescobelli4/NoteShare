@@ -44,12 +44,14 @@ public class ScreenColoredHomePageController implements PageController{
     @FXML
     public void initialize() {
 
-        if (Objects.equals(User.getInstance().getUserDTO().getUserType(), "student")) {
+        String userType = User.getInstance().getUserDTO().getUserType();
+
+        if (Objects.equals(userType, "student")) {
             GraphicsController.displaySecondaryPage(Pages.STUDENT_HOME_PAGE_FORM, 0, null);
-        } else if (Objects.equals(User.getInstance().getUserDTO().getUserType(), "teacher")) {
-
-        } else if (Objects.equals(User.getInstance().getUserDTO().getUserType(), "administrator")) {
-
+        } else if (Objects.equals(userType, "teacher")) {
+            GraphicsController.displaySecondaryPage(Pages.TEACHER_HOME_PAGE_FORM, 0, null);
+        } else if (Objects.equals(userType, "administrator")) {
+            GraphicsController.displaySecondaryPage(Pages.ADMINISTRATOR_HOME_PAGE_FORM, 0, null);
         }
     }
 }

@@ -8,8 +8,8 @@ public enum Pages {
     LOGIN_FORM("colored/pages/secondary_pages/LoginForm.fxml"),
     HOME_PAGE("colored/pages/main_pages/HomePage.fxml"),
     STUDENT_HOME_PAGE_FORM("colored/pages/secondary_pages/StudentHomePageLeftBar.fxml"),
-    TEACHER_HOME_PAGE_FORM("colored/pages/secondary_pages/TeacherHomePageLeftBar.fxml"),
-    ADMINISTRATOR_HOME_PAGE_FORM("colored/pages/secondary_pages/AdministratorHomePageLeftBar.fxml");
+    TEACHER_HOME_PAGE_FORM("colored/pages/secondary_pages/AdministratorHomePageLeftBar.fxml"),
+    ADMINISTRATOR_HOME_PAGE_FORM("colored/pages/secondary_pages/TeacherHomePageLeftBar.fxml");
 
     private String path;
 

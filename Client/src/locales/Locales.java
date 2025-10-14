@@ -33,6 +33,7 @@ public class Locales {
         locales.put("your_notes", "Your Notes");
         locales.put("browse_notes", "Browse Notes");
         locales.put("shared_notes", "Shared Notes");
+        locales.put("reported_notes", "Reported Notes");
     }
 
     public static String get(String key) {
