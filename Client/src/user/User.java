@@ -265,7 +265,7 @@ public class User {
         saveUserToken(rsm.token);
 
         Platform.runLater(() -> {
-            GraphicsController.displayMainPage(Pages.STUDENT_HOME);
+            GraphicsController.displayMainPage(Pages.HOME_PAGE);
         });
     }
 
@@ -280,7 +280,7 @@ public class User {
         saveUserToken(lsm.token);
 
         Platform.runLater(() -> {
-            GraphicsController.displayMainPage(Pages.STUDENT_HOME);
+            GraphicsController.displayMainPage(Pages.HOME_PAGE);
         });
     }
 

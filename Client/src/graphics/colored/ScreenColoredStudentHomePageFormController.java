@@ -9,7 +9,7 @@ import user.User;
 
 import java.util.Map;
 
-public class ScreenColoredStudentHomePageController implements PageController{
+public class ScreenColoredStudentHomePageFormController implements PageController{
 
     @FXML
     Button your_notes_button;

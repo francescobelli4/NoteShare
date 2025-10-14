@@ -65,7 +65,6 @@ public class GraphicsController extends Application {
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
-
         } catch (IOException e) {
             //TODO
             e.printStackTrace();
@@ -137,7 +136,7 @@ public class GraphicsController extends Application {
         if (User.getInstance().getUserDTO() == null) {
             displayMainPage(Pages.ACCESS);
         } else {
-            displayMainPage(Pages.STUDENT_HOME);
+            displayMainPage(Pages.HOME_PAGE);
         }
 
 

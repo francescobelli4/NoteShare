@@ -6,7 +6,8 @@ public enum Pages {
     ACCESS_FORM("colored/pages/secondary_pages/AccessForm.fxml"),
     REGISTER_FORM("colored/pages/secondary_pages/RegisterForm.fxml"),
     LOGIN_FORM("colored/pages/secondary_pages/LoginForm.fxml"),
-    STUDENT_HOME("colored/pages/main_pages/StudentHomePage.fxml");
+    HOME_PAGE("colored/pages/main_pages/HomePage.fxml"),
+    STUDENT_HOME_PAGE_FORM("colored/pages/secondary_pages/StudentHomePageForm.fxml");
 
     private String path;
 
