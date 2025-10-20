@@ -34,6 +34,11 @@ public class Locales {
         locales.put("browse_notes", "Browse Notes");
         locales.put("shared_notes", "Shared Notes");
         locales.put("reported_notes", "Reported Notes");
+        locales.put("folder_created", "Folder was created");
+        locales.put("folder_name_too_short", "Folder name is too short");
+        locales.put("folder_already_exists", "This folder already exists");
+        locales.put("create_folder", "Create Folder");
+        locales.put("name", "Name");
     }
 
     public static String get(String key) {

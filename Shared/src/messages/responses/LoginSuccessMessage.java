@@ -1,6 +1,6 @@
 package messages.responses;
 
-import dtos.UserDTO;
+import memory.shared.dtos.UserDTO;
 import messages.Message;
 
 /**

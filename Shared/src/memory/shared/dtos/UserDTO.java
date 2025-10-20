@@ -1,4 +1,4 @@
-package dtos;
+package memory.shared.dtos;
 
 /**
  * This class is a transferable object with all the useful info

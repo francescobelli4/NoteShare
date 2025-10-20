@@ -7,9 +7,13 @@ public enum Pages {
     REGISTER_FORM("colored/pages/secondary_pages/RegisterForm.fxml"),
     LOGIN_FORM("colored/pages/secondary_pages/LoginForm.fxml"),
     HOME_PAGE("colored/pages/main_pages/HomePage.fxml"),
-    STUDENT_HOME_PAGE_FORM("colored/pages/secondary_pages/StudentHomePageLeftBar.fxml"),
-    TEACHER_HOME_PAGE_FORM("colored/pages/secondary_pages/AdministratorHomePageLeftBar.fxml"),
-    ADMINISTRATOR_HOME_PAGE_FORM("colored/pages/secondary_pages/TeacherHomePageLeftBar.fxml");
+    STUDENT_HOME_PAGE_LEFT_BAR("colored/pages/secondary_pages/StudentHomePageLeftBar.fxml"),
+    TEACHER_HOME_PAGE_LEFT_BAR("colored/pages/secondary_pages/AdministratorHomePageLeftBar.fxml"),
+    ADMINISTRATOR_HOME_PAGE_LEFT_BAR("colored/pages/secondary_pages/TeacherHomePageLeftBar.fxml"),
+    STUDENT_HOME_PAGE_TOOLS_BAR("colored/pages/secondary_pages/StudentHomePageToolsBar.fxml"),
+    FOLDER_CREATION_FORM("colored/pages/secondary_pages/FolderCreationForm.fxml"),
+    FOLDER_ELEMENT("colored/pages/secondary_pages/FolderElement.fxml");
+
 
     private String path;
 

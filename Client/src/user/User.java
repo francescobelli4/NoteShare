@@ -1,6 +1,7 @@
 package user;
 
-import dtos.UserDTO;
+import memory.shared.Folder;
+import memory.shared.dtos.UserDTO;
 import graphics.GraphicsController;
 import graphics.colored.Icons;
 import graphics.colored.Pages;
@@ -14,12 +15,13 @@ import messages.responses.ErrorMessage;
 import messages.responses.LoginSuccessMessage;
 import messages.responses.RegisterSuccessMessage;
 import messages.responses.TokenLoginSuccessMessage;
+import utils.PathUtils;
+import utils.Utils;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -35,6 +37,9 @@ public class User {
      * the server anyway
      */
     private UserDTO userDTO;
+
+    private Folder rootFolder;
+    private Folder activeFolder;
 
     /**
      * Singleton
@@ -79,6 +84,22 @@ public class User {
         return userDTO;
     }
 
+    public Folder getRootFolder() {
+        return rootFolder;
+    }
+
+    public void setRootFolder(Folder rootFolder) {
+        this.rootFolder = rootFolder;
+    }
+
+    public Folder getActiveFolder() {
+        return activeFolder;
+    }
+
+    public void setActiveFolder(Folder activeFolder) {
+        this.activeFolder = activeFolder;
+    }
+
     /**
      * This function connects the socket to the server
      * @param host server's host string
@@ -108,7 +129,7 @@ public class User {
 
     private void tokenLogin() {
 
-        Path path = Path.of("token.txt");
+        Path path = Path.of(PathUtils.getOSLocalPath() + "token.txt");
 
         if (path.toFile().exists()) {
             try {
@@ -140,25 +161,7 @@ public class User {
         enqueueMessage(rm);
     }
 
-    /**
-     * This function should save the access token in a file
-     * @param token
-     */
-    private void saveUserToken(String token) {
 
-        File tokenFile = new File("token.txt");
-
-        try {
-            tokenFile.createNewFile();
-
-            FileWriter fileWriter = new FileWriter("token.txt");
-            fileWriter.write(token);
-            fileWriter.close();
-        } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
-        }
-    }
 
 
     /**
@@ -262,7 +265,7 @@ public class User {
 
         userDTO = rsm.userDTO;
 
-        saveUserToken(rsm.token);
+        Utils.saveAccessToken(rsm.token);
 
         Platform.runLater(() -> {
             GraphicsController.displayMainPage(Pages.HOME_PAGE);
@@ -277,7 +280,7 @@ public class User {
 
         userDTO = lsm.userDTO;
 
-        saveUserToken(lsm.token);
+        Utils.saveAccessToken(lsm.token);
 
         Platform.runLater(() -> {
             GraphicsController.displayMainPage(Pages.HOME_PAGE);

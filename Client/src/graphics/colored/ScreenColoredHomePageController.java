@@ -3,10 +3,9 @@ package graphics.colored;
 import graphics.GraphicsController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import locales.Locales;
 import user.User;
 
 import java.util.Map;
@@ -15,10 +14,16 @@ import java.util.Objects;
 public class ScreenColoredHomePageController implements PageController{
 
     @FXML
+    StackPane root;
+
+    @FXML
     VBox leftBarSlot;
 
     @FXML
-    VBox rightSideSlot;
+    VBox toolsSlot;
+
+    @FXML
+    FlowPane elements_container;
 
 
     @Override
@@ -34,9 +39,14 @@ public class ScreenColoredHomePageController implements PageController{
                 leftBarSlot.getChildren().add(secondaryPage);
                 break;
             case 1:
-                rightSideSlot.getChildren().add(secondaryPage);
+                elements_container.getChildren().add(secondaryPage);
                 break;
-
+            case 2:
+                toolsSlot.getChildren().add(secondaryPage);
+                break;
+            case 3:
+                root.getChildren().add(secondaryPage);
+                break;
         }
 
     }
@@ -47,11 +57,12 @@ public class ScreenColoredHomePageController implements PageController{
         String userType = User.getInstance().getUserDTO().getUserType();
 
         if (Objects.equals(userType, "student")) {
-            GraphicsController.displaySecondaryPage(Pages.STUDENT_HOME_PAGE_FORM, 0, null);
+            GraphicsController.displaySecondaryPage(Pages.STUDENT_HOME_PAGE_LEFT_BAR, 0, null);
+            GraphicsController.displaySecondaryPage(Pages.STUDENT_HOME_PAGE_TOOLS_BAR, 2, null);
         } else if (Objects.equals(userType, "teacher")) {
-            GraphicsController.displaySecondaryPage(Pages.TEACHER_HOME_PAGE_FORM, 0, null);
+            GraphicsController.displaySecondaryPage(Pages.TEACHER_HOME_PAGE_LEFT_BAR, 0, null);
         } else if (Objects.equals(userType, "administrator")) {
-            GraphicsController.displaySecondaryPage(Pages.ADMINISTRATOR_HOME_PAGE_FORM, 0, null);
+            GraphicsController.displaySecondaryPage(Pages.ADMINISTRATOR_HOME_PAGE_LEFT_BAR, 0, null);
         }
     }
 }

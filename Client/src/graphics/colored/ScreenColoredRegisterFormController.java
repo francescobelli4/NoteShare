@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import locales.Locales;
 import messages.requests.RegisterMessage;
 import user.User;
+import utils.Utils;
 
 import java.util.Map;
 
@@ -70,12 +71,12 @@ public class ScreenColoredRegisterFormController implements PageController{
 
         username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
-            return len > maxUsernameLength || change.getText().contains(" ") ? null : change;
+            return len < maxUsernameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
 
         password_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
-            return len > maxPasswordLength || change.getText().contains(" ") ? null : change;
+            return len < maxPasswordLength && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
     }
 

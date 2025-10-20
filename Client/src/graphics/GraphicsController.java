@@ -51,8 +51,8 @@ public class GraphicsController extends Application {
     }
 
     /**
-     * This function displays a Main Page.
-     * A Main Page is used as a basis for Secondary Pages.
+     * This function displays a main.Main Page.
+     * A main.Main Page is used as a basis for Secondary Pages.
      * @param page A main page
      */
     public static void displayMainPage(Pages page) {

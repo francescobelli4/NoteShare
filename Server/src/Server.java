@@ -22,7 +22,6 @@ public class Server {
             demoMode = true;
         }
 
-        //TODO DAO interface and permanent and non permanent DAOs
         if (demoMode) {
             userDAO = NPUserDAO.getInstance();
         } else {

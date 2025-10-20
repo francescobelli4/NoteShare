@@ -1,6 +1,6 @@
 package memory.shared.user;
 
-import dtos.UserDTO;
+import memory.shared.dtos.UserDTO;
 
 /**
  * This class should only map UserEntity <---> UserDTO
