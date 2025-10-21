@@ -3,6 +3,7 @@ package memory.nonpersistent;
 import memory.shared.Folder;
 import memory.shared.entities.NoteEntity;
 
+import java.io.File;
 import java.util.Objects;
 
 public class NPFolder extends Folder {
@@ -45,11 +46,6 @@ public class NPFolder extends Folder {
         }
 
         return temp;
-    }
-
-    @Override
-    public Folder createRootFolder() {
-        return new NPFolder();
     }
 
     @Override

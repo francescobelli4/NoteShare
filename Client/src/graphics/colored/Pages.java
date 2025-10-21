@@ -12,7 +12,9 @@ public enum Pages {
     ADMINISTRATOR_HOME_PAGE_LEFT_BAR("colored/pages/secondary_pages/TeacherHomePageLeftBar.fxml"),
     STUDENT_HOME_PAGE_TOOLS_BAR("colored/pages/secondary_pages/StudentHomePageToolsBar.fxml"),
     FOLDER_CREATION_FORM("colored/pages/secondary_pages/FolderCreationForm.fxml"),
-    FOLDER_ELEMENT("colored/pages/secondary_pages/FolderElement.fxml");
+    NOTES_CREATION_FORM("colored/pages/secondary_pages/NoteCreationForm.fxml"),
+    FOLDER_ELEMENT("colored/pages/secondary_pages/FolderElement.fxml"),
+    NOTE_ELEMENT("colored/pages/secondary_pages/NoteElement.fxml");
 
 
     private String path;

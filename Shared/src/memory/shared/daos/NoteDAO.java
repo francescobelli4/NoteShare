@@ -1,10 +1,13 @@
 package memory.shared.daos;
 
+import memory.shared.Folder;
 import memory.shared.entities.NoteEntity;
 
 public interface NoteDAO {
 
-    void saveNote(NoteEntity noteEntity);
+    NoteEntity createNote(String name, String fileRelativePath);
 
-    NoteEntity getNote(String path);
+    NoteEntity getNote(Folder parentFolder, String name);
+
+    void saveNote(Folder parentFolder, NoteEntity note);
 }

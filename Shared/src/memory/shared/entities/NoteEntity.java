@@ -1,14 +1,19 @@
 package memory.shared.entities;
 
 public class NoteEntity {
-    String name;
-    String path;
+    private String name;
+    private String filePath;
 
-    public NoteEntity(String path) {
-
+    public NoteEntity(String name, String filePath) {
+        this.name = name;
+        this.filePath = filePath;
     }
 
-    public NoteEntity(String name, String path) {
+    public String getName() {
+        return name;
+    }
 
+    public String getFilePath() {
+        return filePath;
     }
 }

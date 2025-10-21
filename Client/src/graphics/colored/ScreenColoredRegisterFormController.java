@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import locales.Locales;
-import messages.requests.RegisterMessage;
 import user.User;
 import utils.Utils;
 

@@ -38,6 +38,12 @@ public class Locales {
         locales.put("folder_name_too_short", "Folder name is too short");
         locales.put("folder_already_exists", "This folder already exists");
         locales.put("create_folder", "Create Folder");
+        locales.put("note_created", "Note was created");
+        locales.put("note_name_too_short", "Note name is too short");
+        locales.put("note_already_exists", "This note already exists");
+        locales.put("create_note", "Create Note");
+        locales.put("choose_pdf", "Choose PDF");
+        locales.put("note_pdf_not_set", "You did not choose a PDF file");
         locales.put("name", "Name");
     }
 

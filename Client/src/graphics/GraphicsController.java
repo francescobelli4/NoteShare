@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import messages.requests.RegisterMessage;
 import messages.requests.TokenLoginMessage;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +42,10 @@ public class GraphicsController extends Application {
      */
     private static FXMLLoader mainPage;
     private static StackPane root;
+
+    public static FXMLLoader getMainPage() {
+        return mainPage;
+    }
 
     /**
      * This function launches the "start" function, that actually starts the UI
@@ -88,6 +94,7 @@ public class GraphicsController extends Application {
             Node secondaryPageRoot = loader.load();
             PageController controller = loader.getController();
             controller.setParams(params);
+            secondaryPageRoot.setUserData(controller);
 
             PageController mainPageController = mainPage.getController();
             mainPageController.appendSecondaryPage(id, secondaryPageRoot);
@@ -124,6 +131,13 @@ public class GraphicsController extends Application {
         }
     }
 
+
+    public static File openFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Apri file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf"));
+        return fileChooser.showOpenDialog(stage);
+    }
 
     /**
      * This function actually starts the UI

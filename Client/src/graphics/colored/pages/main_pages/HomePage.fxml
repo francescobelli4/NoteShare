@@ -34,7 +34,7 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" percentHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -70,11 +70,10 @@
                              </content>
                          </ScrollPane>
                      </children></VBox>
-                  <VBox fx:id="toolsSlot" GridPane.rowIndex="1">
-                     <children>
-
-                     </children>
-                  </VBox>
+                  <VBox fx:id="toolsSlot" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding></VBox>
                </children>
                <effect>
                   <InnerShadow blurType="GAUSSIAN" choke="0.48">

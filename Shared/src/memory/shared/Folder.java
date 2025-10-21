@@ -2,6 +2,7 @@ package memory.shared;
 
 import memory.shared.entities.NoteEntity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +26,6 @@ public abstract class Folder {
      * @param path a path relative to this folder
      */
     public abstract Folder searchSubFolder(String path);
-
-    public abstract Folder createRootFolder();
 
     public abstract void addNote(NoteEntity note);
 

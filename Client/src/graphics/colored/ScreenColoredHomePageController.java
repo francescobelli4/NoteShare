@@ -25,6 +25,10 @@ public class ScreenColoredHomePageController implements PageController{
     @FXML
     FlowPane elements_container;
 
+    public void updatePathLabel(String path) {
+        ScreenColoredStudentHomePageToolsBarController toolsController = (ScreenColoredStudentHomePageToolsBarController) toolsSlot.getUserData();
+        toolsController.pathLabel.setText(path);
+    }
 
     @Override
     public void setParams(Map<String, String> params) {
