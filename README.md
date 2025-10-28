@@ -24,4 +24,5 @@ the note’s name and the earned credits.
 
 Use cases diagram:
 
-<img width="769" height="1001" alt="Use Cases drawio" src="https://github.com/user-attachments/assets/c7888d4b-3371-4ed4-80ab-b4ca1c213814" />
+
+<img width="1207" height="1278" alt="Use Cases drawio" src="https://github.com/user-attachments/assets/1f260ebd-8229-40d1-9944-77121a9c06da" />
