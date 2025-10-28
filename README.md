@@ -51,5 +51,6 @@ by requesting it to the server.
 and the note price.
 
 **Activity Diagram:**
+
 <img width="773" height="791" alt="ActivityDiagram drawio" src="https://github.com/user-attachments/assets/9ab80634-3e46-4993-bfd6-534a5927f904" />
 
