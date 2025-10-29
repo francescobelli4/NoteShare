@@ -1,5 +1,5 @@
-import memory.shared.user.UserEntity;
-import memory.shared.user.UserMapper;
+import persistency.shared.user.UserEntity;
+import persistency.shared.user.UserMapper;
 import messages.Message;
 import messages.requests.LoginMessage;
 import messages.requests.RegisterMessage;

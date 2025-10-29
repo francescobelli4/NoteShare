@@ -1,163 +1,72 @@
 package graphics;
 
-import graphics.colored.Icons;
-import graphics.colored.PageController;
-import graphics.colored.Pages;
+import graphics.colored.Page;
+import graphics.colored.controllers.main_pages.ScreenColoredMainPage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import messages.requests.RegisterMessage;
-import messages.requests.TokenLoginMessage;
-import user.User;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-/**
- * This is the main GraphicsController. This manages both the colored and the black&white UI.
- * Every main Page needs to have a StackPane as root, because it allows to display floating pages (like notifications or
- * forms) on top of the main Page.
- * Secondary pages are displayed on top of primary pages.
- *
- * TODO MAKE AN INTERFACE TO MAKE THIS WORK BOTH IN COLORED AND BLACK&WHITE UI!
- */
-public class GraphicsController extends Application {
+public abstract class GraphicsController extends Application {
 
-    /**
-     * The stage is the actual window
-     */
-    private static Stage stage;
-    /**
-     * Every page needs to have a StackPane as root
-     */
-    private static FXMLLoader mainPage;
-    private static StackPane root;
+    private static GraphicsController instance;
+    protected Stage window;
+    protected ScreenColoredMainPage mainPage;
 
-    public static FXMLLoader getMainPage() {
+    public static GraphicsController getInstance() {
+        return instance;
+    }
+
+    public Stage getWindow() {
+        return window;
+    }
+
+    public Parent getRoot() {
+        return window.getScene().getRoot();
+    }
+
+    public ScreenColoredMainPage getMainPage() {
         return mainPage;
     }
 
-    /**
-     * This function launches the "start" function, that actually starts the UI
-     */
-    public static void setup() {
-
-        System.out.println("Setting up Graphics controller");
-        launch();
+    public void setMainPage(ScreenColoredMainPage mainPage) {
+        this.mainPage = mainPage;
     }
 
-    /**
-     * This function displays a main.Main Page.
-     * A main.Main Page is used as a basis for Secondary Pages.
-     * @param page A main page
-     */
-    public static void displayMainPage(Pages page) {
+    public FXMLLoader generateFXMLLoader(Page page) {
+        return new FXMLLoader(GraphicsController.class.getResource(page.getPath()));
+    }
 
-        mainPage = new FXMLLoader(GraphicsController.class.getResource(page.getPath()));
-
+    public Node loadFXMLLoader(FXMLLoader loader) {
         try {
-            Parent loaded = mainPage.load();
-            root = (StackPane) loaded;
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            return loader.load();
         } catch (IOException e) {
-            //TODO
             e.printStackTrace();
         }
+        return null;
     }
 
-    /**
-     * This function displays a Floating Page.
-     * A floating page is a secondary page
-     * @param secondaryPage a secondary page
-     * @param id a unique id used by the PageController to identify the secondary page
-     *           and place it in the right slot. This is actually a don't care condition
-     *           if the page only needs one secondary page
-     * @param params nullable params
-     */
-    public static void displaySecondaryPage(Pages secondaryPage, int id, Map<String, String> params) {
-
-        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(secondaryPage.getPath()));
-
-        try {
-            Node secondaryPageRoot = loader.load();
-            PageController controller = loader.getController();
-            controller.setParams(params);
-            secondaryPageRoot.setUserData(controller);
-
-            PageController mainPageController = mainPage.getController();
-            mainPageController.appendSecondaryPage(id, secondaryPageRoot);
-        } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * This function is a specification of displaySecondaryPage.
-     * @param title notification title
-     * @param description notification description
-     * @param icon notification icon
-     */
-    public static void displayNotification(String title, String description, Icons icon) {
-
-        Map<String, String> params = new HashMap<>();
-        params.put("title", title);
-        params.put("description", description);
-        params.put("icon", icon.getPath());
-
-        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(Pages.NOTIFICATION.getPath()));
-
-        try {
-            Node notification_root = loader.load();
-            PageController controller = loader.getController();
-            controller.setParams(params);
-
-            root.getChildren().add(notification_root);
-        } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
-        }
-    }
-
-
-    public static File openFileChooser() {
+    public File openFileChooser() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Apri file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf"));
-        return fileChooser.showOpenDialog(stage);
+        return fileChooser.showOpenDialog(window);
     }
 
-    /**
-     * This function actually starts the UI
-     * @param stage the main app stage
-     */
     @Override
     public void start(Stage stage) {
+        instance = this;
 
-        GraphicsController.stage = stage;
+        this.window = stage;
+        this.window.setTitle("NoteShare");
 
-        stage.setTitle("Note Share");
-
-        if (User.getInstance().getUserDTO() == null) {
-            displayMainPage(Pages.ACCESS);
-        } else {
-            displayMainPage(Pages.HOME_PAGE);
-        }
-
-
-        stage.show();
+        startMainPage();
     }
 
+    protected abstract void startMainPage();
 }

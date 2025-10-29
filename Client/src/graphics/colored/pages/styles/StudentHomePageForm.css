@@ -1,0 +1,17 @@
+
+#leftbar {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-padding: 30;
+}
+
+.leftbar_button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-background-radius: 30;
+}
+
+.selected{
+    -fx-background-color: linear-gradient(to bottom right, #805dff, #c1afff);
+    -fx-text-fill: white;
+}
