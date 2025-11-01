@@ -12,6 +12,18 @@
    <children>
       <HBox stylesheets="@../styles/StudentHomePageTools.css">
          <children>
+            <Button fx:id="back_button" mnemonicParsing="false" styleClass="hoverable">
+               <font>
+                  <Font size="29.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="hoverable">
+                     <image>
+                        <Image url="@../styles/icons/left-arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button fx:id="folder_add_button" mnemonicParsing="false" styleClass="hoverable" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="29.0" />

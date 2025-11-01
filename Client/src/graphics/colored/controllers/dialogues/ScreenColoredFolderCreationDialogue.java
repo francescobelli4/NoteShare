@@ -1,6 +1,7 @@
 package graphics.colored.controllers.dialogues;
 
-import app.User;
+import app.NetworkUser;
+import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Icon;
 import graphics.colored.Page;
@@ -88,17 +89,17 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
             return;
         }
 
-        if (User.getInstance().getActiveFolder().searchSubFolder(folderNameTextField.getText()) != null) {
+        if (UserModel.getInstance().getActiveFolder().searchSubFolder(folderNameTextField.getText()) != null) {
             ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_already_exists"), Icon.ERROR);
             notification.display();
             return;
         }
 
-        User.getInstance().getActiveFolder().addSubFolder(folderNameTextField.getText());
+        UserModel.getInstance().getActiveFolder().addSubFolder(folderNameTextField.getText());
 
         ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
         ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(User.getInstance().getActiveFolder());
+        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
 
         ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("success"), Locales.get("folder_created"), Icon.SUCCESS);
         notification.display();

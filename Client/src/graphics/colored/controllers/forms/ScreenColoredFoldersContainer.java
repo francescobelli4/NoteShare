@@ -1,6 +1,7 @@
 package graphics.colored.controllers.forms;
 
-import app.User;
+import app.NetworkUser;
+import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
@@ -85,7 +86,7 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm {
      */
     @FXML
     public void initialize() {
-        displayFolder(User.getInstance().getRootFolder());
+        displayFolder(UserModel.getInstance().getRootFolder());
     }
 
     /**

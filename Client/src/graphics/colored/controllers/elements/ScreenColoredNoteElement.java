@@ -5,7 +5,11 @@ import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import persistency.shared.entities.NoteEntity;
+
 
 /**
  * Class that represents the folder element.
@@ -17,6 +21,8 @@ public class ScreenColoredNoteElement extends ScreenColoredElement{
     /** The name of the note */
     @FXML
     Label noteLabel;
+    @FXML
+    VBox noteElement;
 
     /** A reference to the note represented by this element */
     NoteEntity thisNote;
@@ -45,5 +51,18 @@ public class ScreenColoredNoteElement extends ScreenColoredElement{
     @FXML
     public void initialize() {
         noteLabel.setText(thisNote.getName());
+        noteElement.setOnMouseClicked(this::onNoteElementClick);
+    }
+
+    public void onNoteElementClick(MouseEvent mouseEvent) {
+
+        if (!mouseEvent.getButton().equals(MouseButton.PRIMARY) || mouseEvent.getClickCount() != 2) return;
+
+        openNote();
+    }
+
+    private void openNote() {
+        
     }
 }
+

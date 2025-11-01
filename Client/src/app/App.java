@@ -1,5 +1,6 @@
 package app;
 
+import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.ColoredGraphicsController;
 import javafx.application.Application;
@@ -26,7 +27,8 @@ public class App {
             demoMode = true;
         }
 
-        User user = User.getInstance();
+        NetworkUser networkUser = NetworkUser.getInstance();
+        UserModel user = UserModel.getInstance();
 
         if (demoMode) {
             noteDAO = NPNoteDAO.getInstance();
@@ -39,7 +41,7 @@ public class App {
         user.setActiveFolder(user.getRootFolder());
         Utils.createUserSubfolders();
 
-        user.connect("localhost", 12345);
+        networkUser.connect("localhost", 12345);
 
         // Now start the Graphics Controller!
         Application.launch(ColoredGraphicsController.class);

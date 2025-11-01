@@ -1,6 +1,7 @@
 package graphics.colored.controllers.forms;
 
-import app.User;
+import app.NetworkUser;
+import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
@@ -56,8 +57,8 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
         browse_notes_button.setText(Locales.get("browse_notes"));
         shared_notes_button.setText(Locales.get("shared_notes"));
 
-        username_label.setText(User.getInstance().getUserDTO().getUsername());
-        coins_label.setText(User.getInstance().getUserDTO().getCoins() + "");
+        username_label.setText(UserModel.getInstance().getUsername());
+        coins_label.setText(UserModel.getInstance().getCoins() + "");
     }
 
     /**

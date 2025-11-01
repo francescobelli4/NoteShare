@@ -1,11 +1,16 @@
 package graphics.colored.controllers.forms;
 
-import app.User;
+import app.NetworkUser;
+import app.bce.login.LoginResult;
+import app.bce.register.RegisterBoundary;
+import app.bce.register.RegisterResult;
 import graphics.GraphicsController;
 import graphics.colored.Icon;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
+import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
 import graphics.colored.controllers.notifications.ScreenColoredGenericNotification;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -15,7 +20,7 @@ import utils.Utils;
 /**
  * Class that represents the login form.
  */
-public class ScreenColoredRegisterForm extends ScreenColoredForm {
+public class ScreenColoredRegisterForm extends ScreenColoredForm implements RegisterBoundary.Listener {
 
     /**
      * FXML elements
@@ -47,15 +52,19 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm {
     private int minPasswordLength = 5;
     private int maxPasswordLength = 20;
 
+    private RegisterBoundary registerBoundary;
+
     /**
      * Constructor with parent controller
      *
      * This constructor actually loads the FXMLLoader and sets the controller for the page
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredRegisterForm(PageController parentController) {
+    public ScreenColoredRegisterForm(PageController parentController, RegisterBoundary registerBoundary) {
         super(Page.REGISTER_FORM, parentController);
 
+        this.registerBoundary = registerBoundary;
+        this.registerBoundary.setListener(this);
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
     }
@@ -143,7 +152,7 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm {
             return;
         }
 
-        User.getInstance().register(username_text_field.getText(), password_text_field.getText(), student_radiobutton.isSelected() ? "student" : "teacher");
+        NetworkUser.getInstance().register(username_text_field.getText(), password_text_field.getText(), student_radiobutton.isSelected() ? "student" : "teacher");
     }
 
     /**
@@ -161,5 +170,30 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm {
     @Override
     public void display(VBox container) {
         super.display(container);
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        Platform.runLater(() -> {
+            ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
+            screenColoredHomePage.display();
+        });
+    }
+
+    @Override
+    public void onRegisterFailed(RegisterResult registerResult) {
+        ScreenColoredGenericNotification notification = switch (registerResult) {
+            case RegisterResult.USERNAME_TOO_SHORT ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_short"), Icon.ERROR);
+            case RegisterResult.USERNAME_TOO_LONG ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_long"), Icon.ERROR);
+            case RegisterResult.PASSWORD_TOO_SHORT ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_short"), Icon.ERROR);
+            case RegisterResult.PASSWORD_TOO_LONG ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_long"), Icon.ERROR);
+            case RegisterResult.USERNAME_ALREADY_IN_USE ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icon.ERROR);
+        };
+        Platform.runLater(notification::display);
     }
 }

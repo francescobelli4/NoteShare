@@ -1,10 +1,11 @@
 package app;
 
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
-import persistency.shared.Folder;
-import persistency.shared.dtos.UserDTO;
+import app.bce.login.LoginBoundary;
+import app.bce.login.LoginController;
+import app.bce.login.LoginResult;
+import app.bce.register.RegisterBoundary;
+import app.bce.register.RegisterResult;
 import graphics.GraphicsController;
-import javafx.application.Platform;
 import messages.Message;
 import messages.requests.LoginMessage;
 import messages.requests.RegisterMessage;
@@ -14,7 +15,6 @@ import messages.responses.LoginSuccessMessage;
 import messages.responses.RegisterSuccessMessage;
 import messages.responses.TokenLoginSuccessMessage;
 import utils.PathUtils;
-import utils.Utils;
 
 import java.io.*;
 import java.net.Socket;
@@ -30,26 +30,17 @@ import static java.lang.Thread.sleep;
  * This class manages the client <--> server communication and the user's data
  * using a UserDTO
  */
-public class User {
-
-    /**
-     * This does not need to be private, every important check will be done by
-     * the server anyway
-     */
-    private UserDTO userDTO;
-
-    private Folder rootFolder;
-    private Folder activeFolder;
+public class NetworkUser {
 
     /**
      * Singleton
      */
-    private static User instance;
-    private User() {}
-    public static User getInstance() {
+    private static NetworkUser instance;
+    private NetworkUser() {}
+    public static NetworkUser getInstance() {
 
         if (instance == null) {
-            instance = new User();
+            instance = new NetworkUser();
         }
 
         return instance;
@@ -80,24 +71,14 @@ public class User {
      */
     private final BlockingQueue<Message> bq = new LinkedBlockingQueue<>();
 
-    public UserDTO getUserDTO() {
-        return userDTO;
+    private LoginBoundary loginBoundary;
+    public void setLoginBoundary(LoginBoundary loginBoundary) {
+        this.loginBoundary = loginBoundary;
     }
 
-    public Folder getRootFolder() {
-        return rootFolder;
-    }
-
-    public void setRootFolder(Folder rootFolder) {
-        this.rootFolder = rootFolder;
-    }
-
-    public Folder getActiveFolder() {
-        return activeFolder;
-    }
-
-    public void setActiveFolder(Folder activeFolder) {
-        this.activeFolder = activeFolder;
+    private RegisterBoundary registerBoundary;
+    public void setRegisterBoundary(RegisterBoundary registerBoundary) {
+        this.registerBoundary = registerBoundary;
     }
 
     /**
@@ -114,15 +95,13 @@ public class User {
 
             startInputThread();
             startOutputThread();
-
-            tokenLogin();
         } catch (IOException e) {
             // TODO
             e.printStackTrace();
         }
     }
 
-    private void tokenLogin() {
+    public void tokenLogin() {
 
         Path path = Path.of(PathUtils.getOSLocalPath() + "token.txt");
 
@@ -156,11 +135,6 @@ public class User {
         enqueueMessage(rm);
     }
 
-    public String getUserType() {
-        return userDTO.getUserType();
-    }
-
-
     /**
      * This function starts the thread that will be used to read data from server.
      * It's possible to find which type of Message I received by using instanceof
@@ -190,19 +164,13 @@ public class User {
 
                         switch (err.error_code) {
                             case 0:
-                                /*Platform.runLater(() -> {
-                                    GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icons.ERROR);
-                                });*/
+                                registerBoundary.handleRegisterFailedResponse(RegisterResult.USERNAME_ALREADY_IN_USE);
                                 break;
                             case 1:
-                                /*Platform.runLater(() -> {
-                                    GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_user_does_not_exist"), Icons.ERROR);
-                                });*/
+                                loginBoundary.handleLoginFailedResponse(LoginResult.USER_NOT_EXISTS);
                                 break;
                             case 2:
-                                /*Platform.runLater(() -> {
-                                    GraphicsController.displayNotification(Locales.get("error"), Locales.get("error_wrong_password"), Icons.ERROR);
-                                });*/
+                                loginBoundary.handleLoginFailedResponse(LoginResult.WRONG_PASSWORD);
                         }
 
                     }
@@ -259,15 +227,7 @@ public class User {
      * @param rsm server response
      */
     private void handleRegisterSuccessMessage(RegisterSuccessMessage rsm) {
-
-        userDTO = rsm.userDTO;
-
-        Utils.saveAccessToken(rsm.token);
-
-        Platform.runLater(() -> {
-            ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
-            screenColoredHomePage.display();
-        });
+        registerBoundary.handleRegisterSuccessResponse(rsm.userDTO, rsm.token);
     }
 
     /**
@@ -275,15 +235,7 @@ public class User {
      * @param lsm server response
      */
     private void handleLoginSuccessMessage(LoginSuccessMessage lsm) {
-
-        userDTO = lsm.userDTO;
-
-        Utils.saveAccessToken(lsm.token);
-
-        Platform.runLater(() -> {
-            ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
-            screenColoredHomePage.display();
-        });
+        loginBoundary.handleLoginSuccessResponse(lsm.userDTO, lsm.token);
     }
 
     /**
@@ -292,23 +244,7 @@ public class User {
      * @param tlsm server response
      */
     private void handleTokenLoginSuccessMessage(TokenLoginSuccessMessage tlsm) {
-        userDTO = tlsm.userDTO;
-
-        Utils.saveAccessToken(tlsm.token);
-
-        // Busy waiting for GraphicsController...
-        while (GraphicsController.getInstance() == null) {
-            try {
-                sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        Platform.runLater(() -> {
-            ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
-            screenColoredHomePage.display();
-        });
+        loginBoundary.handleLoginSuccessResponse(tlsm.userDTO, tlsm.token);
     }
 }
 

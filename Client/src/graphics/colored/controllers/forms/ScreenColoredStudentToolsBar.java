@@ -1,10 +1,13 @@
 package graphics.colored.controllers.forms;
 
+import app.NetworkUser;
+import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
 import graphics.colored.controllers.dialogues.ScreenColoredFolderCreationDialogue;
 import graphics.colored.controllers.dialogues.ScreenColoredNoteCreationDialogue;
+import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +27,8 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
     Button folder_add_button;
     @FXML
     Button note_add_button;
+    @FXML
+    Button back_button;
 
     /**
      * Constructor with parent controller
@@ -45,6 +50,7 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
     public void initialize() {
         folder_add_button.setOnAction(_ -> onFolderAddButtonClick());
         note_add_button.setOnAction(_ -> onNoteAddButtonClick());
+        back_button.setOnAction(_ -> onBackButtonClick());
     }
 
     /**
@@ -61,6 +67,19 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
     public void onNoteAddButtonClick() {
         ScreenColoredNoteCreationDialogue screenColoredNoteCreationDialogue = new ScreenColoredNoteCreationDialogue();
         screenColoredNoteCreationDialogue.display();
+    }
+
+    /**
+     * This function should set the active folder to the actual active folder's parent
+     */
+    public void onBackButtonClick() {
+        if (UserModel.getInstance().getActiveFolder() == UserModel.getInstance().getRootFolder()) return;
+
+        UserModel.getInstance().setActiveFolder(UserModel.getInstance().getActiveFolder().getParentFolder());
+
+        ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
+        ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
+        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
     }
 
     /**

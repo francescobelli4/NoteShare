@@ -1,6 +1,7 @@
 package graphics.colored.controllers.main_pages;
 
-import app.User;
+import app.NetworkUser;
+import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.forms.*;
@@ -69,7 +70,7 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
      */
     private void appendToolsBar() {
 
-        switch (User.getInstance().getUserType()) {
+        switch (UserModel.getInstance().getUserType()) {
             case "student":
                 studentToolsBarController = new ScreenColoredStudentToolsBar(this);
                 studentToolsBarController.display(toolsSlot);
@@ -86,7 +87,7 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
      * This function should append the left bar to the leftBarSlot
      */
     private void appendLeftBar() {
-        switch (User.getInstance().getUserType()) {
+        switch (UserModel.getInstance().getUserType()) {
             case "student":
                 studentLeftBarController = new ScreenColoredStudentLeftBar(this);
                 studentLeftBarController.display(leftBarSlot);

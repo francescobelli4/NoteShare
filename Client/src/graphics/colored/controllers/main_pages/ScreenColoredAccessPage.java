@@ -1,11 +1,17 @@
 package graphics.colored.controllers.main_pages;
 
+import app.bce.login.LoginBoundary;
+import app.bce.login.LoginController;
+import app.bce.login.LoginResult;
+import app.bce.register.RegisterBoundary;
+import app.bce.register.RegisterController;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.forms.ScreenColoredAccessForm;
 import graphics.colored.controllers.forms.ScreenColoredForm;
 import graphics.colored.controllers.forms.ScreenColoredLoginForm;
 import graphics.colored.controllers.forms.ScreenColoredRegisterForm;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -23,7 +29,7 @@ import javafx.scene.layout.VBox;
  *  that is the reference at the active child's controller as only one of the children can be active
  *  at the same time.
  */
-public class ScreenColoredAccessPage extends ScreenColoredMainPage {
+public class ScreenColoredAccessPage extends ScreenColoredMainPage implements LoginBoundary.Listener {
 
     /** The slot for the secondary pages */
     @FXML
@@ -31,6 +37,8 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage {
 
     /** The generic child controller reference */
     private ScreenColoredForm formChildController;
+
+    private LoginBoundary loginBoundary;
 
     /**
      * Base constructor
@@ -42,15 +50,21 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage {
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        LoginController loginController = new LoginController();
+        loginBoundary = new LoginBoundary(loginController);
+        loginBoundary.setListener(this);
     }
 
     /**
      * This function should display this page. When this page is displayed, it should automatically append
      * the access form.
+     * It also tries to do the tokenLogin.
      */
     @Override
     public void display() {
         super.display();
+
+        loginBoundary.performTokenLogin();
         appendAccessForm();
     }
 
@@ -70,7 +84,10 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage {
     public void appendRegisterForm() {
         closeChild(formChildController);
 
-        formChildController = new ScreenColoredRegisterForm(this);
+        RegisterController registerController = new RegisterController();
+        RegisterBoundary registerBoundary = new RegisterBoundary(registerController);
+
+        formChildController = new ScreenColoredRegisterForm(this, registerBoundary);
         formChildController.display(secondaryPageSlot);
     }
 
@@ -80,7 +97,10 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage {
     public void appendLoginForm() {
         closeChild(formChildController);
 
-        formChildController = new ScreenColoredLoginForm(this);
+        LoginController loginController = new LoginController();
+        LoginBoundary loginBoundary = new LoginBoundary(loginController);
+
+        formChildController = new ScreenColoredLoginForm(this, loginBoundary);
         formChildController.display(secondaryPageSlot);
     }
 
@@ -95,4 +115,18 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage {
     public VBox getSecondaryPageSlot() {
         return secondaryPageSlot;
     }
+
+    /**
+     * This function is a listener: if tokenLogin has success, this is called!
+     */
+    @Override
+    public void onLoginSuccess() {
+        Platform.runLater(() -> {
+            ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
+            screenColoredHomePage.display();
+        });
+    }
+
+    @Override
+    public void onLoginFailed(LoginResult loginResult) {}
 }
