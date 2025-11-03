@@ -1,5 +1,6 @@
 package graphics.colored.controllers.main_pages;
 
+import app.bce.BoundaryManager;
 import app.bce.login.LoginBoundary;
 import app.bce.login.LoginController;
 import app.bce.login.LoginResult;
@@ -38,8 +39,6 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
     /** The generic child controller reference */
     private ScreenColoredForm formChildController;
 
-    private LoginBoundary loginBoundary;
-
     /**
      * Base constructor
      *
@@ -50,9 +49,8 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
-        LoginController loginController = new LoginController();
-        loginBoundary = new LoginBoundary(loginController);
-        loginBoundary.setListener(this);
+
+        BoundaryManager.getInstance().getLoginBoundary().addListener(this);
     }
 
     /**
@@ -63,8 +61,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
     @Override
     public void display() {
         super.display();
-
-        loginBoundary.performTokenLogin();
+        BoundaryManager.getInstance().getLoginBoundary().performTokenLogin();
         appendAccessForm();
     }
 
@@ -84,10 +81,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
     public void appendRegisterForm() {
         closeChild(formChildController);
 
-        RegisterController registerController = new RegisterController();
-        RegisterBoundary registerBoundary = new RegisterBoundary(registerController);
-
-        formChildController = new ScreenColoredRegisterForm(this, registerBoundary);
+        formChildController = new ScreenColoredRegisterForm(this);
         formChildController.display(secondaryPageSlot);
     }
 
@@ -97,10 +91,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
     public void appendLoginForm() {
         closeChild(formChildController);
 
-        LoginController loginController = new LoginController();
-        LoginBoundary loginBoundary = new LoginBoundary(loginController);
-
-        formChildController = new ScreenColoredLoginForm(this, loginBoundary);
+        formChildController = new ScreenColoredLoginForm(this);
         formChildController.display(secondaryPageSlot);
     }
 

@@ -1,6 +1,8 @@
 package graphics.colored.controllers.forms;
 
 import app.NetworkUser;
+import app.bce.Boundary;
+import app.bce.BoundaryManager;
 import app.bce.login.LoginResult;
 import app.bce.register.RegisterBoundary;
 import app.bce.register.RegisterResult;
@@ -52,21 +54,19 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
     private int minPasswordLength = 5;
     private int maxPasswordLength = 20;
 
-    private RegisterBoundary registerBoundary;
-
     /**
      * Constructor with parent controller
      *
      * This constructor actually loads the FXMLLoader and sets the controller for the page
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredRegisterForm(PageController parentController, RegisterBoundary registerBoundary) {
+    public ScreenColoredRegisterForm(PageController parentController) {
         super(Page.REGISTER_FORM, parentController);
 
-        this.registerBoundary = registerBoundary;
-        this.registerBoundary.setListener(this);
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().getRegisterBoundary().addListener(this);
     }
 
     /**
@@ -84,9 +84,9 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
         password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), minPasswordLength, maxPasswordLength));
         student_label.setText(Locales.get("student"));
         teacher_label.setText(Locales.get("teacher"));
-        student_radiobutton.setOnAction(event -> onStudentButtonClick());
-        teacher_radiobutton.setOnAction(event -> onTeacherButtonClick());
-        register_button.setOnAction(event -> onRegisterButtonClick());
+        student_radiobutton.setOnAction(_ -> onStudentButtonClick());
+        teacher_radiobutton.setOnAction(_ -> onTeacherButtonClick());
+        register_button.setOnAction(_ -> onRegisterButtonClick());
 
         username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
@@ -121,38 +121,7 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
      */
     @FXML
     public void onRegisterButtonClick() {
-
-        if (username_text_field.getText().length() < minUsernameLength) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_short"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (password_text_field.getText().length() < minPasswordLength) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_short"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (username_text_field.getText().length() > maxUsernameLength) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_long"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (password_text_field.getText().length() > maxPasswordLength) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_long"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (!student_radiobutton.isSelected() && !teacher_radiobutton.isSelected()) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_user_type_not_selected"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        NetworkUser.getInstance().register(username_text_field.getText(), password_text_field.getText(), student_radiobutton.isSelected() ? "student" : "teacher");
+        BoundaryManager.getInstance().getRegisterBoundary().performRegister(username_text_field.getText(), password_text_field.getText(), student_radiobutton.isSelected() ? "student" : teacher_radiobutton.isSelected() ? "teacher" : null);
     }
 
     /**
@@ -193,6 +162,8 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
                     new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_long"), Icon.ERROR);
             case RegisterResult.USERNAME_ALREADY_IN_USE ->
                     new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icon.ERROR);
+            case RegisterResult.USER_TYPE_NOT_SELECTED ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_user_type_not_selected"), Icon.ERROR);
         };
         Platform.runLater(notification::display);
     }

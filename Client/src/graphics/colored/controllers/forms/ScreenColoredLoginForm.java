@@ -1,5 +1,6 @@
 package graphics.colored.controllers.forms;
 
+import app.bce.BoundaryManager;
 import app.bce.login.LoginResult;
 import app.bce.login.LoginBoundary;
 import graphics.GraphicsController;
@@ -36,26 +37,19 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     @FXML
     Button login_button;
 
-
-    /**
-     * Boundary
-     */
-    private LoginBoundary loginBoundary;
-
-
     /**
      * Constructor with parent controller
      *
      * This constructor actually loads the FXMLLoader and sets the controller for the page
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredLoginForm(PageController parentController, LoginBoundary loginBoundary) {
+    public ScreenColoredLoginForm(PageController parentController) {
         super(Page.LOGIN_FORM, parentController);
 
-        this.loginBoundary = loginBoundary;
-        this.loginBoundary.setListener(this);
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().getLoginBoundary().addListener(this);
     }
 
     /**
@@ -65,21 +59,21 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     @FXML
     public void initialize() {
 
-        title_label.setText(Locales.get("register"));
+        title_label.setText(Locales.get("login"));
         username_text_field.setPromptText(Locales.get("username"));
         password_text_field.setPromptText(Locales.get("password"));
-        username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), loginBoundary.getMIN_USERNAME_LENGTH(), loginBoundary.getMAX_USERNAME_LENGTH()));
-        password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), loginBoundary.getMIN_PASSWORD_LENGTH(), loginBoundary.getMAX_PASSWORD_LENGTH()));
+        username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), BoundaryManager.getInstance().getLoginBoundary().getMIN_USERNAME_LENGTH(), BoundaryManager.getInstance().getLoginBoundary().getMAX_USERNAME_LENGTH()));
+        password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), BoundaryManager.getInstance().getLoginBoundary().getMIN_PASSWORD_LENGTH(), BoundaryManager.getInstance().getLoginBoundary().getMAX_PASSWORD_LENGTH()));
         login_button.setOnAction(_ -> onLoginButtonClicked());
 
         username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
-            return len < loginBoundary.getMAX_USERNAME_LENGTH() && Utils.isAlphanumeric(change.getText()) ? change : null;
+            return len < BoundaryManager.getInstance().getLoginBoundary().getMAX_USERNAME_LENGTH() && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
 
         password_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
-            return len < loginBoundary.getMAX_PASSWORD_LENGTH() && Utils.isAlphanumeric(change.getText()) ? change : null;
+            return len < BoundaryManager.getInstance().getLoginBoundary().getMAX_PASSWORD_LENGTH() && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
     }
 
@@ -89,7 +83,7 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
      */
     @FXML
     public void onLoginButtonClicked() {
-        loginBoundary.performLogin(username_text_field.getText(), password_text_field.getText());
+        BoundaryManager.getInstance().getLoginBoundary().performLogin(username_text_field.getText(), password_text_field.getText());
     }
 
 

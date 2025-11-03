@@ -1,6 +1,5 @@
 package app.bce.entities;
 
-import app.NetworkUser;
 import persistency.shared.Folder;
 
 public class UserModel {
@@ -11,11 +10,9 @@ public class UserModel {
     private static UserModel instance;
     private UserModel() {}
     public static UserModel getInstance() {
-
         if (instance == null) {
             instance = new UserModel();
         }
-
         return instance;
     }
 

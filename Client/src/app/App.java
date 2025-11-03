@@ -1,5 +1,6 @@
 package app;
 
+import app.bce.BoundaryManager;
 import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.ColoredGraphicsController;
@@ -29,6 +30,10 @@ public class App {
 
         NetworkUser networkUser = NetworkUser.getInstance();
         UserModel user = UserModel.getInstance();
+        BoundaryManager boundaryManager = BoundaryManager.getInstance();
+
+        boundaryManager.initializeLoginBoundary();
+        boundaryManager.initializeRegisterBoundary();
 
         if (demoMode) {
             noteDAO = NPNoteDAO.getInstance();

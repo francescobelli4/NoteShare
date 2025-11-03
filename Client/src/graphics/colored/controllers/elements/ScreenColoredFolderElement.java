@@ -1,6 +1,7 @@
 package graphics.colored.controllers.elements;
 
 import app.NetworkUser;
+import app.bce.BoundaryManager;
 import app.bce.entities.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
@@ -64,10 +65,11 @@ public class ScreenColoredFolderElement extends ScreenColoredElement{
 
         if (!mouseEvent.getButton().equals(MouseButton.PRIMARY) || mouseEvent.getClickCount() != 2) return;
 
-        UserModel.getInstance().setActiveFolder(thisFolder);
+        /*UserModel.getInstance().setActiveFolder(thisFolder);
 
         ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
         ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
+        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());*/
+        BoundaryManager.getInstance().getNavigationBoundary().goToFolder(thisFolder);
     }
 }

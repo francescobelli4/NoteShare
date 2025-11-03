@@ -1,5 +1,6 @@
 package app;
 
+import app.bce.BoundaryManager;
 import app.bce.login.LoginBoundary;
 import app.bce.login.LoginController;
 import app.bce.login.LoginResult;
@@ -70,16 +71,6 @@ public class NetworkUser {
      * bq.take() will do the job :D
      */
     private final BlockingQueue<Message> bq = new LinkedBlockingQueue<>();
-
-    private LoginBoundary loginBoundary;
-    public void setLoginBoundary(LoginBoundary loginBoundary) {
-        this.loginBoundary = loginBoundary;
-    }
-
-    private RegisterBoundary registerBoundary;
-    public void setRegisterBoundary(RegisterBoundary registerBoundary) {
-        this.registerBoundary = registerBoundary;
-    }
 
     /**
      * This function connects the socket to the server
@@ -164,13 +155,13 @@ public class NetworkUser {
 
                         switch (err.error_code) {
                             case 0:
-                                registerBoundary.handleRegisterFailedResponse(RegisterResult.USERNAME_ALREADY_IN_USE);
+                                BoundaryManager.getInstance().getRegisterBoundary().handleRegisterFailedResponse(RegisterResult.USERNAME_ALREADY_IN_USE);
                                 break;
                             case 1:
-                                loginBoundary.handleLoginFailedResponse(LoginResult.USER_NOT_EXISTS);
+                                BoundaryManager.getInstance().getLoginBoundary().handleLoginFailedResponse(LoginResult.USER_NOT_EXISTS);
                                 break;
                             case 2:
-                                loginBoundary.handleLoginFailedResponse(LoginResult.WRONG_PASSWORD);
+                                BoundaryManager.getInstance().getLoginBoundary().handleLoginFailedResponse(LoginResult.WRONG_PASSWORD);
                         }
 
                     }
@@ -227,7 +218,8 @@ public class NetworkUser {
      * @param rsm server response
      */
     private void handleRegisterSuccessMessage(RegisterSuccessMessage rsm) {
-        registerBoundary.handleRegisterSuccessResponse(rsm.userDTO, rsm.token);
+        BoundaryManager.getInstance().getRegisterBoundary().handleRegisterSuccessResponse(rsm.userDTO, rsm.token);
+        BoundaryManager.getInstance().initializeNavigationBoundary();
     }
 
     /**
@@ -235,7 +227,8 @@ public class NetworkUser {
      * @param lsm server response
      */
     private void handleLoginSuccessMessage(LoginSuccessMessage lsm) {
-        loginBoundary.handleLoginSuccessResponse(lsm.userDTO, lsm.token);
+        BoundaryManager.getInstance().getLoginBoundary().handleLoginSuccessResponse(lsm.userDTO, lsm.token);
+        BoundaryManager.getInstance().initializeNavigationBoundary();
     }
 
     /**
@@ -244,7 +237,8 @@ public class NetworkUser {
      * @param tlsm server response
      */
     private void handleTokenLoginSuccessMessage(TokenLoginSuccessMessage tlsm) {
-        loginBoundary.handleLoginSuccessResponse(tlsm.userDTO, tlsm.token);
+        BoundaryManager.getInstance().getLoginBoundary().handleLoginSuccessResponse(tlsm.userDTO, tlsm.token);
+        BoundaryManager.getInstance().initializeNavigationBoundary();
     }
 }
 

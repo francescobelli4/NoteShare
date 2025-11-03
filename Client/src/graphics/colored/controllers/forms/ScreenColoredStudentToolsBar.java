@@ -1,7 +1,10 @@
 package graphics.colored.controllers.forms;
 
 import app.NetworkUser;
+import app.bce.Boundary;
+import app.bce.BoundaryManager;
 import app.bce.entities.UserModel;
+import app.bce.navigation.NavigationBoundary;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
@@ -16,7 +19,7 @@ import javafx.scene.layout.VBox;
 /**
  * Class that represents the left bar for the student user type.
  */
-public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
+public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements NavigationBoundary.Listener {
 
     /**
      * FXML elements
@@ -41,6 +44,8 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().getNavigationBoundary().addListener(this);
     }
 
     /**
@@ -74,12 +79,7 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
      */
     public void onBackButtonClick() {
         if (UserModel.getInstance().getActiveFolder() == UserModel.getInstance().getRootFolder()) return;
-
-        UserModel.getInstance().setActiveFolder(UserModel.getInstance().getActiveFolder().getParentFolder());
-
-        ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
-        ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
+        BoundaryManager.getInstance().getNavigationBoundary().goBack();
     }
 
     /**
@@ -105,5 +105,10 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm {
     @Override
     public void display(VBox container) {
         super.display(container);
+    }
+
+    @Override
+    public void onActiveFolderUpdated() {
+        setPathLabel(UserModel.getInstance().getActiveFolder().getPath());
     }
 }

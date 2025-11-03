@@ -1,7 +1,9 @@
 package graphics.colored.controllers.forms;
 
 import app.NetworkUser;
+import app.bce.BoundaryManager;
 import app.bce.entities.UserModel;
+import app.bce.navigation.NavigationBoundary;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
@@ -17,7 +19,7 @@ import persistency.shared.entities.NoteEntity;
 /**
  * Class that represents the folders container
  */
-public class ScreenColoredFoldersContainer extends ScreenColoredForm {
+public class ScreenColoredFoldersContainer extends ScreenColoredForm implements NavigationBoundary.Listener {
 
     @FXML
     FlowPane foldersContainer;
@@ -33,6 +35,8 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm {
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().getNavigationBoundary().addListener(this);
     }
 
     /**
@@ -42,10 +46,6 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm {
     public void displayFolder(Folder folder) {
 
         clear();
-
-        ScreenColoredHomePage homePageController = (ScreenColoredHomePage)this.parentController;
-        ScreenColoredStudentToolsBar toolsBar = homePageController.getStudentToolsBarController();
-        toolsBar.setPathLabel(folder.getPath());
 
         for (Folder f : folder.getSubFolders()) {
             addFolder(f);
@@ -102,5 +102,10 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm {
     @Override
     public void display(VBox container) {
         super.display(container);
+    }
+
+    @Override
+    public void onActiveFolderUpdated() {
+        displayFolder(UserModel.getInstance().getActiveFolder());
     }
 }

@@ -1,37 +1,36 @@
 package app.bce.register;
 
-import app.NetworkUser;
+import app.bce.Boundary;
 import persistency.shared.dtos.UserDTO;
+
+import java.util.ArrayList;
 
 /**
  * This boundary should allow communication between user and Register use case.
  */
-public class RegisterBoundary {
+public class RegisterBoundary extends Boundary {
 
     private int MIN_USERNAME_LENGTH = 5;
     private int MAX_USERNAME_LENGTH = 20;
     private int MIN_PASSWORD_LENGTH = 5;
     private int MAX_PASSWORD_LENGTH = 20;
 
-    RegisterController registerController;
-    Listener listener;
+    private final ArrayList<Listener> listeners = new ArrayList<>();
 
     public RegisterBoundary(RegisterController registerController) {
-        this.registerController = registerController;
-        this.registerController.setBoundary(this);
+        super(registerController);
     }
 
-    public void setListener(Listener listener) {
-        this.listener = listener;
-        NetworkUser.getInstance().setRegisterBoundary(this);
+    public void addListener(Listener listener) {
+        listeners.add(listener);
     }
 
     public void performRegister(String username, String password, String userType) {
-        this.registerController.performRegister(username, password, userType);
+        getController().performRegister(username, password, userType);
     }
 
     public void handleRegisterSuccessResponse(UserDTO userDTO, String token) {
-        registerController.onRegisterSuccess(userDTO, token);
+        getController().onRegisterSuccess(userDTO, token);
     }
 
     public void handleRegisterFailedResponse(RegisterResult registerResult) {
@@ -39,13 +38,16 @@ public class RegisterBoundary {
     }
 
     public void onRegisterSuccess() {
-        if (listener != null)
-            listener.onRegisterSuccess();
+        for (Listener l : listeners) {
+            l.onRegisterSuccess();
+        }
+
     }
 
     public void onRegisterFailed(RegisterResult registerResult) {
-        if (listener != null)
-            listener.onRegisterFailed(registerResult);
+        for (Listener l : listeners) {
+            l.onRegisterFailed(registerResult);
+        }
     }
 
     public int getMAX_PASSWORD_LENGTH() {
@@ -64,8 +66,21 @@ public class RegisterBoundary {
         return MIN_USERNAME_LENGTH;
     }
 
-    public interface Listener {
+    @Override
+    protected void initialize() {
+    }
 
+    @Override
+    public void destroy() {
+        controller = null;
+    }
+
+    @Override
+    protected RegisterController getController() {
+        return (RegisterController) controller;
+    }
+
+    public interface Listener {
         void onRegisterSuccess();
         void onRegisterFailed(RegisterResult registerResult);
     }

@@ -1,6 +1,9 @@
 package app.bce.login;
 
 import app.NetworkUser;
+import app.bce.Boundary;
+import app.bce.BoundaryManager;
+import app.bce.Controller;
 import app.bce.entities.UserModel;
 import persistency.shared.dtos.UserDTO;
 import utils.Utils;
@@ -9,33 +12,32 @@ import utils.Utils;
  * This controller should manage everything in the "Login" use case.
  * Its purpose is to divide the UI from the app functionalities' logic.
  */
-public class LoginController {
+public class LoginController extends Controller {
 
-    private LoginBoundary loginBoundary;
-
-    public void setBoundary(LoginBoundary loginBoundary) {
-        this.loginBoundary = loginBoundary;
+    @Override
+    protected LoginBoundary getBoundary() {
+        return (LoginBoundary) boundary;
     }
 
     public void performLogin(String username, String password) {
 
-        if (username.length() < loginBoundary.getMIN_USERNAME_LENGTH()) {
-            loginBoundary.onLoginFailed(LoginResult.USERNAME_TOO_SHORT);
+        if (username.length() < getBoundary().getMIN_USERNAME_LENGTH()) {
+            getBoundary().handleLoginFailedResponse(LoginResult.USERNAME_TOO_SHORT);
             return;
         }
 
-        if (username.length() > loginBoundary.getMAX_USERNAME_LENGTH()) {
-            loginBoundary.onLoginFailed(LoginResult.USERNAME_TOO_LONG);
+        if (username.length() > getBoundary().getMAX_USERNAME_LENGTH()) {
+            getBoundary().handleLoginFailedResponse(LoginResult.USERNAME_TOO_LONG);
             return;
         }
 
-        if (password.length() < loginBoundary.getMIN_PASSWORD_LENGTH()) {
-            loginBoundary.onLoginFailed(LoginResult.PASSWORD_TOO_SHORT);
+        if (password.length() < getBoundary().getMIN_PASSWORD_LENGTH()) {
+            getBoundary().handleLoginFailedResponse(LoginResult.PASSWORD_TOO_SHORT);
             return;
         }
 
-        if (password.length() > loginBoundary.getMAX_PASSWORD_LENGTH()) {
-            loginBoundary.onLoginFailed(LoginResult.PASSWORD_TOO_LONG);
+        if (password.length() > getBoundary().getMAX_PASSWORD_LENGTH()) {
+            getBoundary().handleLoginFailedResponse(LoginResult.PASSWORD_TOO_LONG);
             return;
         }
 
@@ -54,6 +56,9 @@ public class LoginController {
 
         Utils.saveAccessToken(token);
 
-        loginBoundary.onLoginSuccess();
+        getBoundary().onLoginSuccess();
+
+        BoundaryManager.getInstance().destroyLoginBoundary();
+        BoundaryManager.getInstance().destroyRegisterBoundary();
     }
 }

@@ -1,41 +1,59 @@
 package app.bce.login;
 
 import app.NetworkUser;
+import app.bce.Boundary;
+import app.bce.Controller;
 import persistency.shared.dtos.UserDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This boundary should allow communication between the user and the Login use case.
  */
-public class LoginBoundary {
+public class LoginBoundary extends Boundary {
 
     private int MIN_USERNAME_LENGTH = 5;
     private int MAX_USERNAME_LENGTH = 20;
     private int MIN_PASSWORD_LENGTH = 5;
     private int MAX_PASSWORD_LENGTH = 20;
 
-    LoginController loginController;
-    LoginBoundary.Listener listener;
+    private final ArrayList<Listener> listeners = new ArrayList<>();
 
-    public LoginBoundary(LoginController loginController) {
-        this.loginController = loginController;
-        this.loginController.setBoundary(this);
+    public LoginBoundary(LoginController controller) {
+        super(controller);
     }
 
-    public void setListener(LoginBoundary.Listener listener) {
-        this.listener = listener;
-        NetworkUser.getInstance().setLoginBoundary(this);
+
+    @Override
+    protected void initialize() {
+
+    }
+
+    @Override
+    public void destroy() {
+        controller = null;
+    }
+
+    @Override
+    protected LoginController getController() {
+        return (LoginController) controller;
+    }
+
+    public void addListener(Listener listener) {
+        listeners.add(listener);
     }
 
     public void performLogin(String username, String password) {
-        this.loginController.performLogin(username, password);
+        getController().performLogin(username, password);
     }
 
     public void performTokenLogin() {
-        this.loginController.performTokenLogin();
+        getController().performTokenLogin();
     }
 
     public void handleLoginSuccessResponse(UserDTO userDTO, String token) {
-        loginController.onLoginSuccess(userDTO, token);
+        getController().onLoginSuccess(userDTO, token);
     }
 
     public void handleLoginFailedResponse(LoginResult loginResult) {
@@ -43,13 +61,13 @@ public class LoginBoundary {
     }
 
     public void onLoginSuccess() {
-        if (listener != null)
-            listener.onLoginSuccess();
+        for (Listener l : listeners)
+            l.onLoginSuccess();
     }
 
     public void onLoginFailed(LoginResult loginResult) {
-        if (listener != null)
-            listener.onLoginFailed(loginResult);
+        for (Listener l : listeners)
+            l.onLoginFailed(loginResult);
     }
 
     public int getMAX_PASSWORD_LENGTH() {
