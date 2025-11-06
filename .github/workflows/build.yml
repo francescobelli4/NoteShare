@@ -10,16 +10,17 @@ jobs:
   build:
     name: Build and Analyze
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
       - name: Compile Java sources
         run: |
           mkdir -p out
-          find src -name "*.java" > sources.txt
+          find Client/src Server/src Shared/src -name "*.java" > sources.txt
           javac -d out @sources.txt
 
       - name: SonarQube Scan
