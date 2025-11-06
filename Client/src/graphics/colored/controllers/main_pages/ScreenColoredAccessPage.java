@@ -1,11 +1,8 @@
 package graphics.colored.controllers.main_pages;
 
-import app.bce.BoundaryManager;
-import app.bce.login.LoginBoundary;
-import app.bce.login.LoginController;
-import app.bce.login.LoginResult;
-import app.bce.register.RegisterBoundary;
-import app.bce.register.RegisterController;
+import app.mvc.BoundaryManager;
+import app.mvc.login.LoginBoundary;
+import app.mvc.login.LoginResult;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.forms.ScreenColoredAccessForm;

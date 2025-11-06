@@ -1,25 +1,32 @@
 package graphics.colored.controllers.forms;
 
-import app.NetworkUser;
-import app.bce.BoundaryManager;
-import app.bce.entities.UserModel;
-import app.bce.navigation.NavigationBoundary;
+import app.mvc.BoundaryManager;
+import app.mvc.managefolder.ManageFolderBoundary;
+import app.mvc.managefolder.ManageFolderResult;
+import app.mvc.managenote.ManageNoteBoundary;
+import app.mvc.managenote.ManageNoteResult;
+import app.mvc.models.FolderModel;
+import app.mvc.models.NoteModel;
+import app.mvc.models.UserModel;
+import app.mvc.navigation.NavigationBoundary;
 import graphics.GraphicsController;
+import graphics.colored.Icon;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
 import graphics.colored.controllers.elements.ScreenColoredFolderElement;
 import graphics.colored.controllers.elements.ScreenColoredNoteElement;
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
+import graphics.colored.controllers.notifications.ScreenColoredGenericNotification;
+import graphics.colored.controllers.notifications.ScreenColoredNotification;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import persistency.shared.Folder;
-import persistency.shared.entities.NoteEntity;
+import locales.Locales;
 
 /**
  * Class that represents the folders container
  */
-public class ScreenColoredFoldersContainer extends ScreenColoredForm implements NavigationBoundary.Listener {
+public class ScreenColoredFoldersContainer extends ScreenColoredForm implements NavigationBoundary.Listener, ManageFolderBoundary.Listener, ManageNoteBoundary.Listener {
 
     @FXML
     FlowPane foldersContainer;
@@ -37,21 +44,23 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().getNavigationBoundary().addListener(this);
+        BoundaryManager.getInstance().getManageFolderBoundary().addListener(this);
+        BoundaryManager.getInstance().getManageNoteBoundary().addListener(this);
     }
 
     /**
      * This function should clear the foldersContainer and then display a new folder's content
-     * @param folder the folder that should be displayed
+     * @param folderModel the folder that should be displayed
      */
-    public void displayFolder(Folder folder) {
+    public void displayFolder(FolderModel folderModel) {
 
         clear();
 
-        for (Folder f : folder.getSubFolders()) {
+        for (FolderModel f : folderModel.getSubFolders()) {
             addFolder(f);
         }
 
-        for (NoteEntity n : folder.getNotes()) {
+        for (NoteModel n : folderModel.getNotes()) {
             addNote(n);
         }
     }
@@ -65,10 +74,10 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
 
     /**
      * This function should display a folder
-     * @param folder the folder that should be displayed
+     * @param folderModel the folder that should be displayed
      */
-    private void addFolder(Folder folder) {
-        ScreenColoredFolderElement folderElement = new ScreenColoredFolderElement(this, folder);
+    private void addFolder(FolderModel folderModel) {
+        ScreenColoredFolderElement folderElement = new ScreenColoredFolderElement(this, folderModel);
         folderElement.display(foldersContainer);
     }
 
@@ -76,7 +85,7 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
      * This function should display a note
      * @param note the note that should be displayed
      */
-    private void addNote(NoteEntity note) {
+    private void addNote(NoteModel note) {
         ScreenColoredNoteElement noteElement = new ScreenColoredNoteElement(this, note);
         noteElement.display(foldersContainer);
     }
@@ -107,5 +116,68 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
     @Override
     public void onActiveFolderUpdated() {
         displayFolder(UserModel.getInstance().getActiveFolder());
+    }
+
+    @Override
+    public void onFolderSaved(FolderModel folder) {
+        displayFolder(folder.getParentFolder());
+
+        ScreenColoredNotification notification = new ScreenColoredGenericNotification(Locales.get("success"), Locales.get("folder_created"), Icon.SUCCESS);
+        notification.display();
+    }
+
+    @Override
+    public void onFolderDeleted() {
+        displayFolder(UserModel.getInstance().getActiveFolder());
+    }
+
+    @Override
+    public void onFolderMoved() {
+
+    }
+
+    @Override
+    public void onFolderCreationFailed(ManageFolderResult manageFolderResult) {
+
+        ScreenColoredGenericNotification notification = switch (manageFolderResult) {
+            case ManageFolderResult.FOLDER_NAME_NOT_SPECIFIED ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_name_too_short"), Icon.ERROR);
+            case ManageFolderResult.FOLDER_ALREADY_EXISTS ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_already_exists"), Icon.ERROR);
+
+        };
+
+        Platform.runLater(notification::display);
+    }
+
+    @Override
+    public void onNoteSaved(NoteModel note) {
+        displayFolder(note.getParentFolder());
+
+        ScreenColoredNotification notification = new ScreenColoredGenericNotification(Locales.get("success"), Locales.get("note_created"), Icon.SUCCESS);
+        notification.display();
+    }
+
+    @Override
+    public void onNoteDeleted() {
+        displayFolder(UserModel.getInstance().getActiveFolder());
+    }
+
+    @Override
+    public void onNoteMoved() {
+
+    }
+
+    @Override
+    public void onNoteCreationFailed(ManageNoteResult manageNoteResult) {
+        ScreenColoredGenericNotification notification = switch (manageNoteResult) {
+            case ManageNoteResult.NOTE_NAME_NOT_SPECIFIED ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_name_too_short"), Icon.ERROR);
+            case ManageNoteResult.NOTE_ALREADY_EXISTS ->
+                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_already_exists"), Icon.ERROR);
+
+        };
+
+        Platform.runLater(notification::display);
     }
 }

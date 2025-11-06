@@ -1,5 +1,5 @@
-import persistency.shared.user.UserEntity;
-import persistency.shared.user.UserMapper;
+import persistency.shared.entities.UserEntity;
+import persistency.shared.mappers.UserMapper;
 import messages.Message;
 import messages.requests.LoginMessage;
 import messages.requests.RegisterMessage;
@@ -58,7 +58,7 @@ public class NetworkUser implements Runnable {
             outputThread.interrupt();
 
             client.close();
-        } catch (IOException _) {}
+        } catch (IOException e) {}
 
         System.out.println("Connessione chiusa con " + client.getInetAddress());
 

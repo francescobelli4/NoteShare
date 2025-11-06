@@ -1,11 +1,8 @@
 package graphics.colored.controllers.forms;
 
-import app.NetworkUser;
-import app.bce.Boundary;
-import app.bce.BoundaryManager;
-import app.bce.login.LoginResult;
-import app.bce.register.RegisterBoundary;
-import app.bce.register.RegisterResult;
+import app.mvc.BoundaryManager;
+import app.mvc.register.RegisterBoundary;
+import app.mvc.register.RegisterResult;
 import graphics.GraphicsController;
 import graphics.colored.Icon;
 import graphics.colored.Page;
@@ -84,9 +81,9 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
         password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), minPasswordLength, maxPasswordLength));
         student_label.setText(Locales.get("student"));
         teacher_label.setText(Locales.get("teacher"));
-        student_radiobutton.setOnAction(_ -> onStudentButtonClick());
-        teacher_radiobutton.setOnAction(_ -> onTeacherButtonClick());
-        register_button.setOnAction(_ -> onRegisterButtonClick());
+        student_radiobutton.setOnAction(e -> onStudentButtonClick());
+        teacher_radiobutton.setOnAction(e -> onTeacherButtonClick());
+        register_button.setOnAction(e -> onRegisterButtonClick());
 
         username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();

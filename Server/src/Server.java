@@ -1,5 +1,5 @@
-import persistency.nonpersistent.user.NPUserDAO;
-import persistency.shared.user.UserDAO;
+import persistency.nonpersistent.daos.NPUserDAO;
+import persistency.shared.daos.UserDAO;
 
 import java.io.IOException;
 import java.net.ServerSocket;

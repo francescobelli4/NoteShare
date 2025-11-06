@@ -1,8 +1,8 @@
 package graphics.colored.controllers.dialogues;
 
 import app.App;
-import app.NetworkUser;
-import app.bce.entities.UserModel;
+import app.mvc.BoundaryManager;
+import app.mvc.models.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Icon;
 import graphics.colored.Page;
@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import locales.Locales;
-import persistency.shared.entities.NoteEntity;
 import utils.Utils;
 
 import java.io.File;
@@ -75,9 +74,9 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
             return len < maxNoteNameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
 
-        createNoteButton.setOnAction(_ -> onCreateNoteButtonClick());
-        closeButton.setOnAction(_ -> onCloseButtonClick());
-        choosePDFButton.setOnAction(_ -> onChoosePDFButtonClick());
+        createNoteButton.setOnAction(e -> onCreateNoteButtonClick());
+        closeButton.setOnAction(e -> onCloseButtonClick());
+        choosePDFButton.setOnAction(e -> onChoosePDFButtonClick());
     }
 
     /**
@@ -94,7 +93,8 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
     @FXML
     public void onCreateNoteButtonClick() {
 
-        if (noteNameTextField.getText().isEmpty()) {
+        BoundaryManager.getInstance().getManageNoteBoundary().saveNote(noteNameTextField.getText(), pdf, UserModel.getInstance().getActiveFolder());
+        /*if (noteNameTextField.getText().isEmpty()) {
             ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_name_too_short"), Icon.ERROR);
             notification.display();
             return;
@@ -120,7 +120,9 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
 
         ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
         ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
+        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());*/
+
+
 
         close();
     }

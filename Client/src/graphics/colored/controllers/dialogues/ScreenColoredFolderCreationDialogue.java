@@ -1,7 +1,8 @@
 package graphics.colored.controllers.dialogues;
 
-import app.NetworkUser;
-import app.bce.entities.UserModel;
+import app.App;
+import app.mvc.BoundaryManager;
+import app.mvc.models.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Icon;
 import graphics.colored.Page;
@@ -65,8 +66,8 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
             return len < maxFolderNameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
 
-        createFolderButton.setOnAction(actionEvent -> onCreateFolderButtonClick());
-        closeButton.setOnAction(actionEvent -> onCloseButtonClick());
+        createFolderButton.setOnAction(e -> onCreateFolderButtonClick());
+        closeButton.setOnAction(e -> onCloseButtonClick());
     }
 
     /**
@@ -83,7 +84,9 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
     @FXML
     public void onCreateFolderButtonClick() {
 
-        if (folderNameTextField.getText().isEmpty()) {
+        BoundaryManager.getInstance().getManageFolderBoundary().saveFolder(folderNameTextField.getText(), UserModel.getInstance().getActiveFolder());
+
+        /*if (folderNameTextField.getText().isEmpty()) {
             ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_name_too_short"), Icon.ERROR);
             notification.display();
             return;
@@ -102,7 +105,7 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
         foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
 
         ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("success"), Locales.get("folder_created"), Icon.SUCCESS);
-        notification.display();
+        notification.display();*/
 
         close();
     }

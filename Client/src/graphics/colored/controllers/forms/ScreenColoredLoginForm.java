@@ -1,8 +1,8 @@
 package graphics.colored.controllers.forms;
 
-import app.bce.BoundaryManager;
-import app.bce.login.LoginResult;
-import app.bce.login.LoginBoundary;
+import app.mvc.BoundaryManager;
+import app.mvc.login.LoginResult;
+import app.mvc.login.LoginBoundary;
 import graphics.GraphicsController;
 import graphics.colored.Icon;
 import graphics.colored.Page;
@@ -64,7 +64,7 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
         password_text_field.setPromptText(Locales.get("password"));
         username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), BoundaryManager.getInstance().getLoginBoundary().getMIN_USERNAME_LENGTH(), BoundaryManager.getInstance().getLoginBoundary().getMAX_USERNAME_LENGTH()));
         password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), BoundaryManager.getInstance().getLoginBoundary().getMIN_PASSWORD_LENGTH(), BoundaryManager.getInstance().getLoginBoundary().getMAX_PASSWORD_LENGTH()));
-        login_button.setOnAction(_ -> onLoginButtonClicked());
+        login_button.setOnAction(e -> onLoginButtonClicked());
 
         username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();

@@ -88,17 +88,17 @@ public class ScreenColoredGenericNotification extends ScreenColoredNotification{
         tt.setToY(0);
         tt.play();
 
-        tt.setOnFinished(_ -> {
+        tt.setOnFinished(e -> {
 
             // Pause
             PauseTransition delay = new PauseTransition(Duration.seconds(2));
-            delay.setOnFinished(_ -> {
+            delay.setOnFinished(ev -> {
 
                 // Slide out
                 TranslateTransition slideOut = new TranslateTransition(Duration.millis(500), notification);
                 slideOut.setFromY(notification.getTranslateY());
                 slideOut.setToY(-2*notification.prefHeight(-1));
-                slideOut.setOnFinished(_ -> {
+                slideOut.setOnFinished(event -> {
                     if (notification_container.getParent() instanceof javafx.scene.layout.Pane parent) {
                         parent.getChildren().remove(notification_container);
                     }

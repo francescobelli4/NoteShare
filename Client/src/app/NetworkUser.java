@@ -1,12 +1,9 @@
 package app;
 
-import app.bce.BoundaryManager;
-import app.bce.login.LoginBoundary;
-import app.bce.login.LoginController;
-import app.bce.login.LoginResult;
-import app.bce.register.RegisterBoundary;
-import app.bce.register.RegisterResult;
-import graphics.GraphicsController;
+import app.mvc.Boundary;
+import app.mvc.BoundaryManager;
+import app.mvc.login.LoginResult;
+import app.mvc.register.RegisterResult;
 import messages.Message;
 import messages.requests.LoginMessage;
 import messages.requests.RegisterMessage;
@@ -220,6 +217,8 @@ public class NetworkUser {
     private void handleRegisterSuccessMessage(RegisterSuccessMessage rsm) {
         BoundaryManager.getInstance().getRegisterBoundary().handleRegisterSuccessResponse(rsm.userDTO, rsm.token);
         BoundaryManager.getInstance().initializeNavigationBoundary();
+        BoundaryManager.getInstance().initializeManageFolderBoundary();
+        BoundaryManager.getInstance().initializeManageNoteBoundary();
     }
 
     /**
@@ -229,6 +228,8 @@ public class NetworkUser {
     private void handleLoginSuccessMessage(LoginSuccessMessage lsm) {
         BoundaryManager.getInstance().getLoginBoundary().handleLoginSuccessResponse(lsm.userDTO, lsm.token);
         BoundaryManager.getInstance().initializeNavigationBoundary();
+        BoundaryManager.getInstance().initializeManageFolderBoundary();
+        BoundaryManager.getInstance().initializeManageNoteBoundary();
     }
 
     /**
@@ -239,6 +240,8 @@ public class NetworkUser {
     private void handleTokenLoginSuccessMessage(TokenLoginSuccessMessage tlsm) {
         BoundaryManager.getInstance().getLoginBoundary().handleLoginSuccessResponse(tlsm.userDTO, tlsm.token);
         BoundaryManager.getInstance().initializeNavigationBoundary();
+        BoundaryManager.getInstance().initializeManageFolderBoundary();
+        BoundaryManager.getInstance().initializeManageNoteBoundary();
     }
 }
 

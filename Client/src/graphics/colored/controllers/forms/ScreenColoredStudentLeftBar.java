@@ -1,7 +1,6 @@
 package graphics.colored.controllers.forms;
 
-import app.NetworkUser;
-import app.bce.entities.UserModel;
+import app.mvc.models.UserModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;

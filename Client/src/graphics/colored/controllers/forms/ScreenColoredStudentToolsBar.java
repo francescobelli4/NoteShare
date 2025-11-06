@@ -1,16 +1,13 @@
 package graphics.colored.controllers.forms;
 
-import app.NetworkUser;
-import app.bce.Boundary;
-import app.bce.BoundaryManager;
-import app.bce.entities.UserModel;
-import app.bce.navigation.NavigationBoundary;
+import app.mvc.BoundaryManager;
+import app.mvc.models.UserModel;
+import app.mvc.navigation.NavigationBoundary;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
 import graphics.colored.controllers.dialogues.ScreenColoredFolderCreationDialogue;
 import graphics.colored.controllers.dialogues.ScreenColoredNoteCreationDialogue;
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -53,9 +50,10 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
      */
     @FXML
     public void initialize() {
-        folder_add_button.setOnAction(_ -> onFolderAddButtonClick());
-        note_add_button.setOnAction(_ -> onNoteAddButtonClick());
-        back_button.setOnAction(_ -> onBackButtonClick());
+        folder_add_button.setOnAction(e -> onFolderAddButtonClick());
+        note_add_button.setOnAction(e -> onNoteAddButtonClick());
+        back_button.setOnAction(e -> onBackButtonClick());
+        setPathLabel(UserModel.getInstance().getRootFolder().getPath());
     }
 
     /**

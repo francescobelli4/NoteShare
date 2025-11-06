@@ -1,19 +1,15 @@
 package graphics.colored.controllers.elements;
 
-import app.NetworkUser;
-import app.bce.BoundaryManager;
-import app.bce.entities.UserModel;
+import app.mvc.BoundaryManager;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
-import graphics.colored.controllers.forms.ScreenColoredFoldersContainer;
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import persistency.shared.Folder;
+import app.mvc.models.FolderModel;
 
 /**
  * Class that represents the folder element.
@@ -29,7 +25,7 @@ public class ScreenColoredFolderElement extends ScreenColoredElement{
     VBox folderElement;
 
     /** A reference to the folder represented by this element */
-    Folder thisFolder;
+    FolderModel thisFolder;
 
     /**
      * Constructor with parent controller and folder reference
@@ -38,12 +34,12 @@ public class ScreenColoredFolderElement extends ScreenColoredElement{
      * reference to the Folder
      *
      * @param parentController the parent's controller
-     * @param folder a reference to the represented folder
+     * @param folderModel a reference to the represented folder
      */
-    public ScreenColoredFolderElement(PageController parentController, Folder folder) {
+    public ScreenColoredFolderElement(PageController parentController, FolderModel folderModel) {
         super(Page.FOLDER_ELEMENT, parentController);
 
-        this.thisFolder = folder;
+        this.thisFolder = folderModel;
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
@@ -65,11 +61,6 @@ public class ScreenColoredFolderElement extends ScreenColoredElement{
 
         if (!mouseEvent.getButton().equals(MouseButton.PRIMARY) || mouseEvent.getClickCount() != 2) return;
 
-        /*UserModel.getInstance().setActiveFolder(thisFolder);
-
-        ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
-        ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());*/
         BoundaryManager.getInstance().getNavigationBoundary().goToFolder(thisFolder);
     }
 }

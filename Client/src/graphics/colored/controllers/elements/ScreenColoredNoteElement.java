@@ -1,5 +1,6 @@
 package graphics.colored.controllers.elements;
 
+import app.mvc.models.NoteModel;
 import graphics.GraphicsController;
 import graphics.colored.Page;
 import graphics.colored.controllers.PageController;
@@ -8,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import persistency.shared.entities.NoteEntity;
 
 
 /**
@@ -25,7 +25,7 @@ public class ScreenColoredNoteElement extends ScreenColoredElement{
     VBox noteElement;
 
     /** A reference to the note represented by this element */
-    NoteEntity thisNote;
+    NoteModel thisNote;
 
     /**
      * Constructor with parent controller and note reference
@@ -36,7 +36,7 @@ public class ScreenColoredNoteElement extends ScreenColoredElement{
      * @param parentController the parent's controller
      * @param note a reference to the represented note
      */
-    public ScreenColoredNoteElement(PageController parentController, NoteEntity note) {
+    public ScreenColoredNoteElement(PageController parentController, NoteModel note) {
         super(Page.NOTE_ELEMENT, parentController);
 
         this.thisNote = note;
