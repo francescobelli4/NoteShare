@@ -14,16 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # meglio per Sonar
+          fetch-depth: 0 
 
-      # ✅ Step per compilare i sorgenti Java (senza Maven/Gradle)
       - name: Compile Java sources
         run: |
           mkdir -p out
           find src -name "*.java" > sources.txt
           javac -d out @sources.txt
 
-      # ✅ Step SonarQube
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
