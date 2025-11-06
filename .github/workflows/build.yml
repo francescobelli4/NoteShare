@@ -20,7 +20,7 @@ jobs:
       - name: Compile Java sources
         run: |
           mkdir -p out
-          find Client/src Server/src Shared/src -name "*.java" > sources.txt
+          find Client/src Server/src -name "*.java" > sources.txt
           javac -d out @sources.txt
 
       - name: SonarQube Scan
