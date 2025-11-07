@@ -1,6 +1,5 @@
 package app;
 
-import app.mvc.Boundary;
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginResult;
 import app.mvc.register.RegisterResult;
@@ -21,7 +20,6 @@ import java.nio.file.Path;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static java.lang.Thread.sleep;
 
 /**
  * User should be a singleton class!
@@ -179,8 +177,10 @@ public class NetworkUser {
 
         outputThread = new Thread(() -> {
 
+            DataOutputStream sender = null;
+
             try {
-                DataOutputStream sender = new DataOutputStream(server.getOutputStream());
+                sender = new DataOutputStream(server.getOutputStream());
 
                 while (server.isConnected()) {
 
@@ -195,6 +195,14 @@ public class NetworkUser {
             } catch (IOException | InterruptedException e) {
                 //TODO
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
+
+                try {
+                    if (sender != null)
+                        sender.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
