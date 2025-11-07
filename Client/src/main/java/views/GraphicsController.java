@@ -1,7 +1,7 @@
-package graphics;
+package views;
 
-import graphics.colored.Page;
-import graphics.colored.controllers.main_pages.ScreenColoredMainPage;
+import views.colored.Page;
+import views.colored.main_pages.ScreenColoredMainPage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

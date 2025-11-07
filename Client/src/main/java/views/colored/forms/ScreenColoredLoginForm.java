@@ -1,14 +1,14 @@
-package graphics.colored.controllers.forms;
+package views.colored.forms;
 
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginResult;
 import app.mvc.login.LoginBoundary;
-import graphics.GraphicsController;
-import graphics.colored.Icon;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
-import graphics.colored.controllers.notifications.ScreenColoredGenericNotification;
+import views.GraphicsController;
+import views.colored.Icon;
+import views.colored.Page;
+import views.colored.PageController;
+import views.colored.main_pages.ScreenColoredHomePage;
+import views.colored.notifications.ScreenColoredGenericNotification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -48,6 +48,8 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().initializeLoginBoundary();
 
         BoundaryManager.getInstance().getLoginBoundary().addListener(this);
     }
@@ -110,6 +112,8 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
             ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
             screenColoredHomePage.display();
         });
+
+        BoundaryManager.getInstance().destroyLoginBoundary();
     }
 
     @Override

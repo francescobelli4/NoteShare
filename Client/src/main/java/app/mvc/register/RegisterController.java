@@ -1,6 +1,5 @@
 package app.mvc.register;
 
-import app.mvc.BoundaryManager;
 import app.mvc.Controller;
 import app.mvc.mappers.UserMapper;
 import app.mvc.models.UserModel;
@@ -13,6 +12,13 @@ import utils.Utils;
  */
 public class RegisterController extends Controller {
 
+    /**
+     * This function should check the parameters inserted by the user and then
+     * use the UserModel to register the user.
+     * @param username the selected username
+     * @param password the selected password
+     * @param userType the selected userType
+     */
     public void performRegister(String username, String password, String userType) {
 
         if (username.length() < getBoundary().getMIN_USERNAME_LENGTH()) {
@@ -43,17 +49,20 @@ public class RegisterController extends Controller {
         UserModel.getInstance().register(username, password, userType);
     }
 
+    /**
+     * This function should implement the app logic to register the user
+     * @param userDTO the user's dto representation
+     * @param token the token that has been assigned to this user by the server
+     */
     public void onRegisterSuccess(UserDTO userDTO, String token) {
         UserMapper.mapToModel(userDTO, token);
-
         Utils.saveAccessToken(token);
-
-        getBoundary().onRegisterSuccess();
-
-        BoundaryManager.getInstance().destroyLoginBoundary();
-        BoundaryManager.getInstance().destroyRegisterBoundary();
     }
 
+    /**
+     * This function should return the correct Boundary subclass for this controller
+     * @return a RegisterBoundary reference
+     */
     @Override
     protected RegisterBoundary getBoundary() {
         return (RegisterBoundary) boundary;

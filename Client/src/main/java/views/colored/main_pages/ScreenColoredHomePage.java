@@ -1,9 +1,9 @@
-package graphics.colored.controllers.main_pages;
+package views.colored.main_pages;
 
 import app.mvc.models.UserModel;
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.forms.*;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.forms.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
  * A home page has 3 slots for children pages:
  * -    leftBarSlot:        ScreenColored[Student/Teacher/Administrator]LeftBar
  * -    toolsSlot:          ScreenColored[Student/Teacher/Administrator]ToolsBar
- * -    foldersContainer:   TODO
+ * -    foldersContainer:   ScreenColoredFoldersContainer
  *
  */
 public class ScreenColoredHomePage extends ScreenColoredMainPage {
@@ -59,9 +59,9 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
     public void display() {
         super.display();
 
+        appendFoldersContainer();
         appendToolsBar();
         appendLeftBar();
-        appendFoldersContainer();
     }
 
     /**
@@ -102,13 +102,5 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
     private void appendFoldersContainer() {
         foldersContainerController = new ScreenColoredFoldersContainer(this);
         foldersContainerController.display(foldersContainer);
-    }
-
-    public ScreenColoredStudentToolsBar getStudentToolsBarController() {
-        return studentToolsBarController;
-    }
-
-    public ScreenColoredFoldersContainer getFoldersContainerController() {
-        return foldersContainerController;
     }
 }

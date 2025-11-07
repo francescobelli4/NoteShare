@@ -13,6 +13,10 @@ import app.mvc.register.RegisterController;
 
 /**
  * Singleton
+ *
+ * This class is a container that grants a good flexibility in the use of boundaries. It allows
+ * to initialize or destroy boundaries from any class. In this way, a boundary can be destroyed
+ * when it's not needed anymore.
  */
 public class BoundaryManager {
 

@@ -1,4 +1,4 @@
-package graphics.colored;
+package views.colored;
 
 public enum Page {
     ACCESS("/colored/pages/main_pages/AccessPage.fxml"),

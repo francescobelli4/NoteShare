@@ -1,14 +1,14 @@
-package graphics.colored.controllers.main_pages;
+package views.colored.main_pages;
 
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginBoundary;
 import app.mvc.login.LoginResult;
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.forms.ScreenColoredAccessForm;
-import graphics.colored.controllers.forms.ScreenColoredForm;
-import graphics.colored.controllers.forms.ScreenColoredLoginForm;
-import graphics.colored.controllers.forms.ScreenColoredRegisterForm;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.forms.ScreenColoredAccessForm;
+import views.colored.forms.ScreenColoredForm;
+import views.colored.forms.ScreenColoredLoginForm;
+import views.colored.forms.ScreenColoredRegisterForm;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -47,6 +47,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
 
+        BoundaryManager.getInstance().initializeLoginBoundary();
         BoundaryManager.getInstance().getLoginBoundary().addListener(this);
     }
 
@@ -92,17 +93,6 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
         formChildController.display(secondaryPageSlot);
     }
 
-    /**
-     *  GETTERS
-     */
-
-    public ScreenColoredForm getFormChildController() {
-        return formChildController;
-    }
-
-    public VBox getSecondaryPageSlot() {
-        return secondaryPageSlot;
-    }
 
     /**
      * This function is a listener: if tokenLogin has success, this is called!

@@ -1,7 +1,7 @@
-package graphics.colored.controllers.elements;
+package views.colored.elements;
 
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
+import views.colored.Page;
+import views.colored.PageController;
 import javafx.scene.layout.FlowPane;
 
 /**

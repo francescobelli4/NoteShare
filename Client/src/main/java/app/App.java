@@ -1,10 +1,7 @@
 package app;
 
-import app.mvc.BoundaryManager;
-import app.mvc.models.FolderModel;
 import app.mvc.models.UserModel;
-import graphics.GraphicsController;
-import graphics.colored.ColoredGraphicsController;
+import views.colored.ColoredGraphicsController;
 import javafx.application.Application;
 import locales.Locales;
 import persistency.nonpersistent.daos.NPFolderDAO;
@@ -25,8 +22,6 @@ public class App {
 
     public static boolean demoMode = false;
 
-    private static GraphicsController graphicsController;
-
     private static NoteDAO noteDAO;
     private static FolderDAO folderDAO;
 
@@ -46,13 +41,9 @@ public class App {
             noteDAO = new PNoteDAO();
         }
 
-        UserModel user = UserModel.getInstance();
-        user.setActiveFolder(folderDAO.getRootFolder());
+        UserModel.getInstance().setActiveFolder(folderDAO.getRootFolder());
         Utils.createUserSubfolders();
 
-        BoundaryManager boundaryManager = BoundaryManager.getInstance();
-        boundaryManager.initializeLoginBoundary();
-        boundaryManager.initializeRegisterBoundary();
 
         NetworkUser networkUser = NetworkUser.getInstance();
         networkUser.connect("localhost", 12345);

@@ -1,7 +1,6 @@
-package graphics.colored.controllers;
+package views.colored;
 
-import graphics.colored.Page;
-import graphics.GraphicsController;
+import views.GraphicsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 

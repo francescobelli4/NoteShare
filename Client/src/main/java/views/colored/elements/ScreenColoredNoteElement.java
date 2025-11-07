@@ -1,9 +1,9 @@
-package graphics.colored.controllers.elements;
+package views.colored.elements;
 
 import app.mvc.models.NoteModel;
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.PageController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;

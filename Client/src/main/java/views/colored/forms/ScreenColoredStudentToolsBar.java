@@ -1,13 +1,13 @@
-package graphics.colored.controllers.forms;
+package views.colored.forms;
 
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
 import app.mvc.navigation.NavigationBoundary;
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
-import graphics.colored.controllers.dialogues.ScreenColoredFolderCreationDialogue;
-import graphics.colored.controllers.dialogues.ScreenColoredNoteCreationDialogue;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.PageController;
+import views.colored.dialogues.ScreenColoredFolderCreationDialogue;
+import views.colored.dialogues.ScreenColoredNoteCreationDialogue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

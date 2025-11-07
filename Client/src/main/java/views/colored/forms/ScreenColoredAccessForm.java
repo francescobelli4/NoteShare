@@ -1,9 +1,9 @@
-package graphics.colored.controllers.forms;
+package views.colored.forms;
 
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
-import graphics.colored.controllers.main_pages.ScreenColoredAccessPage;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.PageController;
+import views.colored.main_pages.ScreenColoredAccessPage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

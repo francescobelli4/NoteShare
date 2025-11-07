@@ -1,8 +1,8 @@
-package graphics.colored.controllers.notifications;
+package views.colored.notifications;
 
-import graphics.GraphicsController;
-import graphics.colored.Icon;
-import graphics.colored.Page;
+import views.GraphicsController;
+import views.colored.Icon;
+import views.colored.Page;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;

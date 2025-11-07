@@ -150,13 +150,13 @@ public class NetworkUser {
 
                         switch (err.error_code) {
                             case 0:
-                                BoundaryManager.getInstance().getRegisterBoundary().handleRegisterFailedResponse(RegisterResult.USERNAME_ALREADY_IN_USE);
+                                BoundaryManager.getInstance().getRegisterBoundary().onRegisterFailed(RegisterResult.USERNAME_ALREADY_IN_USE);
                                 break;
                             case 1:
-                                BoundaryManager.getInstance().getLoginBoundary().handleLoginFailedResponse(LoginResult.USER_NOT_EXISTS);
+                                BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.USER_NOT_EXISTS);
                                 break;
                             case 2:
-                                BoundaryManager.getInstance().getLoginBoundary().handleLoginFailedResponse(LoginResult.WRONG_PASSWORD);
+                                BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.WRONG_PASSWORD);
                         }
 
                     }
@@ -223,10 +223,7 @@ public class NetworkUser {
      * @param rsm server response
      */
     private void handleRegisterSuccessMessage(RegisterSuccessMessage rsm) {
-        BoundaryManager.getInstance().getRegisterBoundary().handleRegisterSuccessResponse(rsm.userDTO, rsm.token);
-        BoundaryManager.getInstance().initializeNavigationBoundary();
-        BoundaryManager.getInstance().initializeManageFolderBoundary();
-        BoundaryManager.getInstance().initializeManageNoteBoundary();
+        BoundaryManager.getInstance().getRegisterBoundary().onRegisterSuccess(rsm.userDTO, rsm.token);
     }
 
     /**
@@ -234,10 +231,7 @@ public class NetworkUser {
      * @param lsm server response
      */
     private void handleLoginSuccessMessage(LoginSuccessMessage lsm) {
-        BoundaryManager.getInstance().getLoginBoundary().handleLoginSuccessResponse(lsm.userDTO, lsm.token);
-        BoundaryManager.getInstance().initializeNavigationBoundary();
-        BoundaryManager.getInstance().initializeManageFolderBoundary();
-        BoundaryManager.getInstance().initializeManageNoteBoundary();
+        BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(lsm.userDTO, lsm.token);
     }
 
     /**
@@ -246,10 +240,7 @@ public class NetworkUser {
      * @param tlsm server response
      */
     private void handleTokenLoginSuccessMessage(TokenLoginSuccessMessage tlsm) {
-        BoundaryManager.getInstance().getLoginBoundary().handleLoginSuccessResponse(tlsm.userDTO, tlsm.token);
-        BoundaryManager.getInstance().initializeNavigationBoundary();
-        BoundaryManager.getInstance().initializeManageFolderBoundary();
-        BoundaryManager.getInstance().initializeManageNoteBoundary();
+        BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(tlsm.userDTO, tlsm.token);
     }
 }
 

@@ -1,14 +1,14 @@
-package graphics.colored.controllers.forms;
+package views.colored.forms;
 
 import app.mvc.BoundaryManager;
 import app.mvc.register.RegisterBoundary;
 import app.mvc.register.RegisterResult;
-import graphics.GraphicsController;
-import graphics.colored.Icon;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
-import graphics.colored.controllers.notifications.ScreenColoredGenericNotification;
+import views.GraphicsController;
+import views.colored.Icon;
+import views.colored.Page;
+import views.colored.PageController;
+import views.colored.main_pages.ScreenColoredHomePage;
+import views.colored.notifications.ScreenColoredGenericNotification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -62,6 +62,8 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().initializeRegisterBoundary();
 
         BoundaryManager.getInstance().getRegisterBoundary().addListener(this);
     }
@@ -144,6 +146,9 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
             ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
             screenColoredHomePage.display();
         });
+
+        BoundaryManager.getInstance().destroyRegisterBoundary();
+        BoundaryManager.getInstance().destroyLoginBoundary();
     }
 
     @Override

@@ -44,11 +44,6 @@ public class ManageNoteBoundary extends Boundary {
     }
 
     @Override
-    protected void initialize() {
-
-    }
-
-    @Override
     public void destroy() {
         controller = null;
     }

@@ -1,8 +1,8 @@
-package graphics.colored.controllers.dialogues;
+package views.colored.dialogues;
 
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.PageController;
 import javafx.scene.layout.StackPane;
 
 /**

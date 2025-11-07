@@ -1,14 +1,9 @@
-package graphics.colored.controllers.dialogues;
+package views.colored.dialogues;
 
-import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
-import graphics.GraphicsController;
-import graphics.colored.Icon;
-import graphics.colored.Page;
-import graphics.colored.controllers.forms.ScreenColoredFoldersContainer;
-import graphics.colored.controllers.main_pages.ScreenColoredHomePage;
-import graphics.colored.controllers.notifications.ScreenColoredGenericNotification;
+import views.GraphicsController;
+import views.colored.Page;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -1,8 +1,8 @@
-package graphics.colored;
+package views.colored;
 
-import graphics.GraphicsController;
-import graphics.colored.controllers.main_pages.ScreenColoredAccessPage;
-import graphics.colored.controllers.main_pages.ScreenColoredMainPage;
+import views.GraphicsController;
+import views.colored.main_pages.ScreenColoredAccessPage;
+import views.colored.main_pages.ScreenColoredMainPage;
 
 
 public class ColoredGraphicsController extends GraphicsController {

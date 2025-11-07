@@ -1,4 +1,4 @@
-package graphics.colored.controllers.forms;
+package views.colored.forms;
 
 import app.mvc.BoundaryManager;
 import app.mvc.managefolder.ManageFolderBoundary;
@@ -9,14 +9,14 @@ import app.mvc.models.FolderModel;
 import app.mvc.models.NoteModel;
 import app.mvc.models.UserModel;
 import app.mvc.navigation.NavigationBoundary;
-import graphics.GraphicsController;
-import graphics.colored.Icon;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
-import graphics.colored.controllers.elements.ScreenColoredFolderElement;
-import graphics.colored.controllers.elements.ScreenColoredNoteElement;
-import graphics.colored.controllers.notifications.ScreenColoredGenericNotification;
-import graphics.colored.controllers.notifications.ScreenColoredNotification;
+import views.GraphicsController;
+import views.colored.Icon;
+import views.colored.Page;
+import views.colored.PageController;
+import views.colored.elements.ScreenColoredFolderElement;
+import views.colored.elements.ScreenColoredNoteElement;
+import views.colored.notifications.ScreenColoredGenericNotification;
+import views.colored.notifications.ScreenColoredNotification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
@@ -42,6 +42,10 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().initializeNavigationBoundary();
+        BoundaryManager.getInstance().initializeManageFolderBoundary();
+        BoundaryManager.getInstance().initializeManageNoteBoundary();
 
         BoundaryManager.getInstance().getNavigationBoundary().addListener(this);
         BoundaryManager.getInstance().getManageFolderBoundary().addListener(this);
@@ -102,7 +106,11 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
      * This functions should close this container, never needed actually...
      */
     @Override
-    public void close() { }
+    public void close() {
+        BoundaryManager.getInstance().destroyNavigationBoundary();
+        BoundaryManager.getInstance().destroyManageFolderBoundary();
+        BoundaryManager.getInstance().destroyManageNoteBoundary();
+    }
 
     /**
      * This function should display the folders container

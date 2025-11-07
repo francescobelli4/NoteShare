@@ -1,9 +1,9 @@
-package graphics.colored.controllers.forms;
+package views.colored.forms;
 
 import app.mvc.models.UserModel;
-import graphics.GraphicsController;
-import graphics.colored.Page;
-import graphics.colored.controllers.PageController;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.PageController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
