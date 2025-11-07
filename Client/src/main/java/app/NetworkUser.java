@@ -201,7 +201,7 @@ public class NetworkUser {
                     if (sender != null)
                         sender.close();
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    e.printStackTrace();
                 }
             }
         });
