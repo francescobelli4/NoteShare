@@ -1,0 +1,4 @@
+.hoverable:hover {
+    -fx-background-color: rgb(231, 231, 231);
+    -fx-background-radius: 40;
+}
