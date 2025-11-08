@@ -11,14 +11,6 @@ import java.util.ArrayList;
 public class RegisterBoundary extends Boundary {
 
     /**
-     * Data boundaries
-     */
-    private final int MIN_USERNAME_LENGTH = 5;
-    private final int MAX_USERNAME_LENGTH = 20;
-    private final int MIN_PASSWORD_LENGTH = 5;
-    private final int MAX_PASSWORD_LENGTH = 20;
-
-    /**
      * The arraylist of listeners. Every listener will be notified when events occur
      */
     private final ArrayList<Listener> listeners = new ArrayList<>();
@@ -76,22 +68,6 @@ public class RegisterBoundary extends Boundary {
         }
     }
 
-    public int getMAX_PASSWORD_LENGTH() {
-        return MAX_PASSWORD_LENGTH;
-    }
-
-    public int getMAX_USERNAME_LENGTH() {
-        return MAX_USERNAME_LENGTH;
-    }
-
-    public int getMIN_PASSWORD_LENGTH() {
-        return MIN_PASSWORD_LENGTH;
-    }
-
-    public int getMIN_USERNAME_LENGTH() {
-        return MIN_USERNAME_LENGTH;
-    }
-
     /**
      * This function should destroy the controller. The only reference to this boundary will
      * be destroyed by the BoundaryManager
@@ -99,6 +75,7 @@ public class RegisterBoundary extends Boundary {
     @Override
     public void destroy() {
         controller = null;
+        listeners.clear();
     }
 
     /**

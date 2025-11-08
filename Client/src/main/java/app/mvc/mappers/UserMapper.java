@@ -8,6 +8,11 @@ import persistency.dtos.UserDTO;
  */
 public class UserMapper {
 
+    /**
+     * This function builds a UserDTO from a UserModel
+     * @param userModel the current user app status
+     * @return the data transfer object
+     */
     public static UserDTO toDTO(UserModel userModel) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(userModel.getUsername());
@@ -16,13 +21,11 @@ public class UserMapper {
         return userDTO;
     };
 
-    public static void mapToModel(UserDTO userDTO) {
-        UserModel userModel = UserModel.getInstance();
-        userModel.setUsername(userDTO.getUsername());
-        userModel.setUserType(userDTO.getUserType());
-        userModel.setCoins(userDTO.getCoins());
-    }
-
+    /**
+     * This function populates the UserModel starting from a UserDTO.
+     * @param userDTO the dto received from the server
+     * @param token the access token
+     */
     public static void mapToModel(UserDTO userDTO, String token) {
         UserModel userModel = UserModel.getInstance();
         userModel.setUsername(userDTO.getUsername());

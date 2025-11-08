@@ -9,6 +9,11 @@ import static utils.PathUtils.getOSLocalPath;
 
 public class Utils {
 
+    private static final int MIN_USERNAME_LENGTH = 5;
+    private static final int MAX_USERNAME_LENGTH = 20;
+    private static final int MIN_PASSWORD_LENGTH = 5;
+    private static final int MAX_PASSWORD_LENGTH = 20;
+
     private Utils() {}
 
     public static void createUserSubfolders() {
@@ -33,5 +38,21 @@ public class Utils {
     //https://stackoverflow.com/questions/8248277/how-to-determine-if-a-string-has-non-alphanumeric-characters
     public static boolean isAlphanumeric(String str) {
         return str.matches("[a-zA-Z0-9]+") || str.isEmpty();
+    }
+
+    public static int getMaxPasswordLength() {
+        return MAX_PASSWORD_LENGTH;
+    }
+
+    public static int getMaxUsernameLength() {
+        return MAX_USERNAME_LENGTH;
+    }
+
+    public static int getMinPasswordLength() {
+        return MIN_PASSWORD_LENGTH;
+    }
+
+    public static int getMinUsernameLength() {
+        return MIN_USERNAME_LENGTH;
     }
 }

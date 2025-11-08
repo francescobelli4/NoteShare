@@ -1,5 +1,6 @@
 package app.mvc.register;
 
+import app.NetworkUser;
 import app.mvc.Controller;
 import app.mvc.mappers.UserMapper;
 import app.mvc.models.UserModel;
@@ -21,22 +22,22 @@ public class RegisterController extends Controller {
      */
     public void performRegister(String username, String password, String userType) {
 
-        if (username.length() < getBoundary().getMIN_USERNAME_LENGTH()) {
+        if (username.length() < Utils.getMinUsernameLength()) {
             getBoundary().onRegisterFailed(RegisterResult.USERNAME_TOO_SHORT);
             return;
         }
 
-        if (username.length() > getBoundary().getMAX_USERNAME_LENGTH()) {
+        if (username.length() > Utils.getMaxUsernameLength()) {
             getBoundary().onRegisterFailed(RegisterResult.USERNAME_TOO_LONG);
             return;
         }
 
-        if (password.length() < getBoundary().getMIN_PASSWORD_LENGTH()) {
+        if (password.length() < Utils.getMinPasswordLength()) {
             getBoundary().onRegisterFailed(RegisterResult.PASSWORD_TOO_SHORT);
             return;
         }
 
-        if (password.length() > getBoundary().getMAX_PASSWORD_LENGTH()) {
+        if (password.length() > Utils.getMaxPasswordLength()) {
             getBoundary().onRegisterFailed(RegisterResult.PASSWORD_TOO_LONG);
             return;
         }
@@ -46,7 +47,7 @@ public class RegisterController extends Controller {
             return;
         }
 
-        UserModel.getInstance().register(username, password, userType);
+        NetworkUser.getInstance().register(username, password, userType);
     }
 
     /**

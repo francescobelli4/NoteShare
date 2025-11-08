@@ -1,5 +1,6 @@
 package app.mvc.login;
 
+import app.NetworkUser;
 import app.mvc.Controller;
 import app.mvc.mappers.UserMapper;
 import app.mvc.models.UserModel;
@@ -21,34 +22,34 @@ public class LoginController extends Controller {
      */
     public void performLogin(String username, String password) {
 
-        if (username.length() < getBoundary().getMIN_USERNAME_LENGTH()) {
+        if (username.length() < Utils.getMinUsernameLength()) {
             getBoundary().onLoginFailed(LoginResult.USERNAME_TOO_SHORT);
             return;
         }
 
-        if (username.length() > getBoundary().getMAX_USERNAME_LENGTH()) {
+        if (username.length() > Utils.getMaxUsernameLength()) {
             getBoundary().onLoginFailed(LoginResult.USERNAME_TOO_LONG);
             return;
         }
 
-        if (password.length() < getBoundary().getMIN_PASSWORD_LENGTH()) {
+        if (password.length() < Utils.getMinPasswordLength()) {
             getBoundary().onLoginFailed(LoginResult.PASSWORD_TOO_SHORT);
             return;
         }
 
-        if (password.length() > getBoundary().getMAX_PASSWORD_LENGTH()) {
+        if (password.length() > Utils.getMaxPasswordLength()) {
             getBoundary().onLoginFailed(LoginResult.PASSWORD_TOO_LONG);
             return;
         }
 
-        UserModel.getInstance().login(username, password);
+        NetworkUser.getInstance().login(username, password);
     }
 
     /**
      * This function should perform the login with the token using UserModel
      */
     public void performTokenLogin() {
-        UserModel.getInstance().tokenLogin();
+        NetworkUser.getInstance().tokenLogin();
     }
 
     /**

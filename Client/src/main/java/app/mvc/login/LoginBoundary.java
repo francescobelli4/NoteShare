@@ -11,14 +11,6 @@ import java.util.ArrayList;
 public class LoginBoundary extends Boundary {
 
     /**
-     * Data boundaries
-     */
-    private int MIN_USERNAME_LENGTH = 5;
-    private int MAX_USERNAME_LENGTH = 20;
-    private int MIN_PASSWORD_LENGTH = 5;
-    private int MAX_PASSWORD_LENGTH = 20;
-
-    /**
      * The list of listeners that will be notified when events occur
      */
     private final ArrayList<Listener> listeners = new ArrayList<>();
@@ -79,27 +71,22 @@ public class LoginBoundary extends Boundary {
             l.onLoginFailed(loginResult);
     }
 
-    public int getMAX_PASSWORD_LENGTH() {
-        return MAX_PASSWORD_LENGTH;
-    }
 
-    public int getMAX_USERNAME_LENGTH() {
-        return MAX_USERNAME_LENGTH;
-    }
 
-    public int getMIN_PASSWORD_LENGTH() {
-        return MIN_PASSWORD_LENGTH;
-    }
-
-    public int getMIN_USERNAME_LENGTH() {
-        return MIN_USERNAME_LENGTH;
-    }
-
+    /**
+     * This function should destroy the associated controller. The reference to this boundary
+     * is deleted by the BoundaryManager.
+     */
     @Override
     public void destroy() {
         controller = null;
+        listeners.clear();
     }
 
+    /**
+     * This function should return the correct subclass of this boundary's controller
+     * @return a LoginController reference
+     */
     @Override
     protected LoginController getController() {
         return (LoginController) controller;

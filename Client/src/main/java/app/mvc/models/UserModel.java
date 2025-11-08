@@ -1,7 +1,9 @@
 package app.mvc.models;
 
-import app.NetworkUser;
-
+/**
+ * This class (a model) represents the actual state of the user in the app. It should implement
+ * methods for getting and setting the actual user state and domain-logic functions.
+ */
 public class UserModel {
 
     /**
@@ -21,7 +23,17 @@ public class UserModel {
     private String token;
     private int coins;
 
+    /** This should always be the app's local folder out of demo mode.
+     *  In demo mode, the root folder (just like all the other folders) is saved on the
+     *  stack.
+     */
     private FolderModel rootFolder;
+
+    /**
+     * The folder that the user is actually working on. This can be a persistent one
+     * or not. In general, this should contain the notes and subfolders that the user
+     * needs to see.
+     */
     private FolderModel activeFolder;
 
     public FolderModel getRootFolder() {
@@ -70,15 +82,13 @@ public class UserModel {
         this.coins = coins;
     }
 
-    public void login(String username, String password) {
-        NetworkUser.getInstance().login(username, password);
-    }
-
-    public void tokenLogin() {
-        NetworkUser.getInstance().tokenLogin();
-    }
-
-    public void register(String username, String password, String userType) {
-        NetworkUser.getInstance().register(username, password, userType);
-    }
+    /**
+     * public void canBuy(int price)
+     *
+     * SOLO SE STRETTAMENTE NECESSARIO. DI BASE QUESTO VORREI FARLO NEI BOUNDARY E BASTA
+     *  public interface Listener {
+     *      public void onCoinsChanged()
+     *      public void on onUsernameChanged()
+     *  }
+     */
 }
