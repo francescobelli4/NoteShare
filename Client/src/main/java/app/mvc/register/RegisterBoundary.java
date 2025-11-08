@@ -19,7 +19,7 @@ public class RegisterBoundary extends Boundary {
      * Base constructor
      *
      * This constructor should just call the superclass' constructor
-     * @param registerController
+     * @param registerController the right controller for this boundary
      */
     public RegisterBoundary(RegisterController registerController) {
         super(registerController);
@@ -75,7 +75,6 @@ public class RegisterBoundary extends Boundary {
     @Override
     public void destroy() {
         controller = null;
-        listeners.clear();
     }
 
     /**

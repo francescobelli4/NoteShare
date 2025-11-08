@@ -45,12 +45,6 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
     @FXML
     Button register_button;
 
-    /** TextField limits */
-    private int minUsernameLength = 5;
-    private int maxUsernameLength = 20;
-    private int minPasswordLength = 5;
-    private int maxPasswordLength = 20;
-
     /**
      * Constructor with parent controller
      *
@@ -79,8 +73,8 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
         username_text_field.setPromptText(Locales.get("username"));
         password_text_field.setPromptText(Locales.get("password"));
         register_button.setText(Locales.get("register"));
-        username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), minUsernameLength, maxUsernameLength));
-        password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), minPasswordLength, maxPasswordLength));
+        username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()));
+        password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()));
         student_label.setText(Locales.get("student"));
         teacher_label.setText(Locales.get("teacher"));
         student_radiobutton.setOnAction(e -> onStudentButtonClick());
@@ -89,12 +83,12 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
 
         username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
-            return len < maxUsernameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
+            return len < Utils.getMaxUsernameLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
 
         password_text_field.setTextFormatter(new TextFormatter<String>(change -> {
             int len = change.getControlNewText().length();
-            return len < maxPasswordLength && Utils.isAlphanumeric(change.getText()) ? change : null;
+            return len < Utils.getMaxPasswordLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
         }));
     }
 

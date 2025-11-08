@@ -71,7 +71,6 @@ public class ManageFolderBoundary extends Boundary {
     @Override
     public void destroy() {
         controller = null;
-        listeners.clear();
     }
 
     /**
