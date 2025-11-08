@@ -30,7 +30,7 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
     @FXML
     Label coins_label;
     @FXML
-    VBox container;
+    VBox barContainer;
 
     /**
      * Constructor with parent controller
@@ -50,7 +50,7 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
      */
     @FXML
     public void initialize() {
-        VBox.setVgrow(container, Priority.ALWAYS);
+        VBox.setVgrow(barContainer, Priority.ALWAYS);
 
         your_notes_button.setText(Locales.get("your_notes"));
         browse_notes_button.setText(Locales.get("browse_notes"));

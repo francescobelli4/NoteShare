@@ -62,7 +62,7 @@ public class ScreenColoredNoteElement extends ScreenColoredElement{
     }
 
     private void openNote() {
-        
+        //TODO
     }
 }
 

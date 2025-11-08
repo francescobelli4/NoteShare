@@ -157,6 +157,8 @@ public class NetworkUser {
                                 break;
                             case 2:
                                 BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.WRONG_PASSWORD);
+                            default:
+                                break;
                         }
 
                     }
