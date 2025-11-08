@@ -93,7 +93,7 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
      */
     @Override
     public void close() {
-
+        //Nothing to do (never closed)
     }
 
     /**

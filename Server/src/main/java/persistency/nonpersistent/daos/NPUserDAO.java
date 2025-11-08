@@ -47,7 +47,9 @@ public class NPUserDAO implements UserDAO {
      * Not needed in demo mode :D
      */
     @Override
-    public void updateUser(UserEntity user) {}
+    public void updateUser(UserEntity user) {
+        // Not needed in this situation
+    }
 
 
     @Override

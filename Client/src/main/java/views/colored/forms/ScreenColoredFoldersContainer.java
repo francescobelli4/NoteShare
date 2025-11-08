@@ -141,7 +141,7 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
 
     @Override
     public void onFolderMoved() {
-
+        //TODO
     }
 
     @Override
@@ -173,7 +173,7 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
 
     @Override
     public void onNoteMoved() {
-
+        //TODO
     }
 
     @Override

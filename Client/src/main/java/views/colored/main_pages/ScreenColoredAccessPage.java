@@ -106,5 +106,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
     }
 
     @Override
-    public void onLoginFailed(LoginResult loginResult) {}
+    public void onLoginFailed(LoginResult loginResult) {
+        // Nothing to do in this situation
+    }
 }

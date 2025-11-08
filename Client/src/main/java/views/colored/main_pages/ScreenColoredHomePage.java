@@ -78,6 +78,8 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
                 break;
             case "administrator":
                 break;
+            default:
+                break;
 
         }
     }
@@ -94,6 +96,8 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
             case "teacher":
                 break;
             case "administrator":
+                break;
+            default:
                 break;
 
         }
