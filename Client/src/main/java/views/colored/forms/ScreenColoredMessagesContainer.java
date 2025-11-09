@@ -1,6 +1,5 @@
 package views.colored.forms;
 
-import app.mvc.Boundary;
 import app.mvc.BoundaryManager;
 import app.mvc.models.MessageModel;
 import app.mvc.models.UserModel;
@@ -10,7 +9,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;

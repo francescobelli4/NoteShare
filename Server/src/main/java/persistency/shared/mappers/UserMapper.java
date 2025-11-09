@@ -8,6 +8,8 @@ import persistency.shared.entities.UserEntity;
  */
 public class UserMapper {
 
+    private UserMapper() {}
+
     public static UserDTO toDTO(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(userEntity.getUsername());

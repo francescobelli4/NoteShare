@@ -7,8 +7,8 @@ import communication.Transferable;
  */
 public class LoginRequest extends Transferable {
 
-    public String username;
-    public String password;
+    private final String username;
+    private final String password;
 
 
     public LoginRequest(String username, String password) {
@@ -17,5 +17,13 @@ public class LoginRequest extends Transferable {
 
         this.username = username;
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

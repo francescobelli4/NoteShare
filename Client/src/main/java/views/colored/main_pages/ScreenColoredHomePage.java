@@ -1,13 +1,11 @@
 package views.colored.main_pages;
 
-import app.mvc.Boundary;
 import app.mvc.BoundaryManager;
 import app.mvc.models.MessageModel;
 import app.mvc.models.UserModel;
 import app.mvc.viewmessages.ViewMessagesBoundary;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import locales.Locales;
 import views.GraphicsController;
@@ -16,9 +14,6 @@ import views.colored.forms.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import views.colored.notifications.ScreenColoredGenericNotification;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 
 /**
  * Class that represents the home page.

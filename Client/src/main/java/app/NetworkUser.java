@@ -151,7 +151,7 @@ public class NetworkUser {
                         handleNewMessageEvent(nme);
                     } else if (parsedTransferable instanceof ErrorResponse err) {
 
-                        switch (err.error_code) {
+                        switch (err.getErrorCode()) {
                             case 0:
                                 BoundaryManager.getInstance().getRegisterBoundary().onRegisterFailed(RegisterResult.USERNAME_ALREADY_IN_USE);
                                 break;
@@ -229,7 +229,7 @@ public class NetworkUser {
      * @param rsm server response
      */
     private void handleRegisterSuccessResponse(RegisterSuccessResponse rsm) {
-        BoundaryManager.getInstance().getRegisterBoundary().onRegisterSuccess(rsm.userDTO, rsm.token);
+        BoundaryManager.getInstance().getRegisterBoundary().onRegisterSuccess(rsm.getUserDTO(), rsm.getToken());
     }
 
     /**
@@ -237,8 +237,8 @@ public class NetworkUser {
      * @param lsm server response
      */
     private void handleLoginSuccessResponse(LoginSuccessResponse lsm) {
-        BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(lsm.userDTO, lsm.token);
-        BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(lsm.messages);
+        BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(lsm.getUserDTO(), lsm.getToken());
+        BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(lsm.getMessages());
     }
 
     /**
@@ -247,8 +247,8 @@ public class NetworkUser {
      * @param tlsm server response
      */
     private void handleTokenLoginSuccessResponse(TokenLoginSuccessResponse tlsm) {
-        BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(tlsm.userDTO, tlsm.token);
-        BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(tlsm.messages);
+        BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(tlsm.getUserDTO(), tlsm.getToken());
+        BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(tlsm.getMessages());
     }
 
     /**
@@ -257,7 +257,7 @@ public class NetworkUser {
      * @param nme the event
      */
     private void handleNewMessageEvent(NewMessageEvent nme) {
-        BoundaryManager.getInstance().getViewMessagesBoundary().messageArrived(nme.message);
+        BoundaryManager.getInstance().getViewMessagesBoundary().messageArrived(nme.getMessage());
     }
 }
 

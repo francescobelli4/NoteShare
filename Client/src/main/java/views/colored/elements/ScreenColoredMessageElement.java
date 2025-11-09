@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import locales.Locales;
 import views.GraphicsController;
 import views.colored.Page;
@@ -60,14 +59,5 @@ public class ScreenColoredMessageElement extends ScreenColoredElement{
         description.setText(Locales.get(message.getDescription()));
         date.setText(message.getDate());
         icon.setImage(new Image(Objects.requireNonNull(getClass().getResource(message.getIcon().getPath())).toExternalForm()));
-    }
-
-    /**
-     * This function should display this FolderElement
-     * @param container the container that contains this element
-     */
-    @Override
-    public void display(FlowPane container) {
-        super.display(container);
     }
 }

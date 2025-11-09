@@ -63,7 +63,7 @@ public class NetworkUser implements Runnable {
             outputThread.interrupt();
 
             client.close();
-        } catch (IOException e) {
+        } catch (IOException _) {
             //TODO
         }
 
@@ -88,8 +88,7 @@ public class NetworkUser implements Runnable {
                 while (connected) {
                     handleRequest(in);
                 }
-            } catch (IOException e) {
-                //e.printStackTrace();
+            } catch (IOException _) {
                 closeConnection();
             }
         });
@@ -107,17 +106,13 @@ public class NetworkUser implements Runnable {
                         Transferable msg = bq.take();
 
                         sendMessage(msg, out);
-                    } catch (InterruptedException e) {
-                        //TODO
+                    } catch (InterruptedException _) {
                         closeConnection();
                     }
                 }
-            } catch (IOException e) {
-                //e.printStackTrace();
+            } catch (IOException _) {
                 closeConnection();
             }
-
-
         });
 
         outputThread.start();
@@ -143,10 +138,7 @@ public class NetworkUser implements Runnable {
             } else if (msg instanceof TokenLoginRequest tlm) {
                 handleTokenLoginRequest(tlm);
             }
-        } catch (EOFException e) {
-            //TODO
-            closeConnection();
-        } catch (IOException e) {
+        } catch (IOException _) {
             closeConnection();
         }
     }
@@ -162,7 +154,7 @@ public class NetworkUser implements Runnable {
         try {
             out.writeUTF(sendingTransferable.toJson());
             System.out.println("Sent: " + sendingTransferable.toJson());
-        } catch (IOException e) {
+        } catch (IOException _) {
             //TODO
             closeConnection();
         }
@@ -175,13 +167,13 @@ public class NetworkUser implements Runnable {
      */
     private void handleRegisterRequest(RegisterRequest rm) {
 
-        userEntity.setUsername(rm.username);
-        userEntity.setPassword(rm.password);
-        userEntity.setUserType(rm.userType);
+        userEntity.setUsername(rm.getUsername());
+        userEntity.setPassword(rm.getPassword());
+        userEntity.setUserType(rm.getUserType());
         userEntity.setToken(Auth.generateAccessToken());
         userEntity.setCoins(100);
 
-        if (Server.userDAO.saveUser(userEntity)) {
+        if (Server.getUserDAO().saveUser(userEntity)) {
             bq.add(new RegisterSuccessResponse(UserMapper.toDTO(userEntity), userEntity.getToken()));
 
             MessageEntity mess = new MessageEntity();
@@ -189,8 +181,8 @@ public class NetworkUser implements Runnable {
             mess.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
             mess.setDescription("register_welcome");
             mess.setType("info");
-            mess.setUsername(rm.username);
-            Server.messageDAO.save(mess);
+            mess.setUsername(rm.getUsername());
+            Server.getMessageDAO().save(mess);
 
             bq.add(new NewMessageEvent(MessageMapper.toDTO(mess)));
         } else {
@@ -204,7 +196,7 @@ public class NetworkUser implements Runnable {
      */
     private void handleLoginRequest(LoginRequest lm) {
 
-        UserEntity userEntity = Server.userDAO.findUserByUsername(lm.username);
+        UserEntity userEntity = Server.getUserDAO().findUserByUsername(lm.getUsername());
 
         if (userEntity == null) {
             // LOGIN FAILED (user not found)
@@ -212,8 +204,8 @@ public class NetworkUser implements Runnable {
             return;
         }
 
-        if (Objects.equals(userEntity.getPassword(), lm.password)) {
-            bq.add(new LoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.messageDAO.get(lm.username)), userEntity.getToken()));
+        if (Objects.equals(userEntity.getPassword(), lm.getPassword())) {
+            bq.add(new LoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.getMessageDAO().get(lm.getUsername())), userEntity.getToken()));
         } else {
             // LOGIN FAILED (wrong password)
             bq.add(new ErrorResponse(2));
@@ -228,10 +220,10 @@ public class NetworkUser implements Runnable {
      */
     private void handleTokenLoginRequest(TokenLoginRequest tlm) {
 
-        UserEntity userEntity = Server.userDAO.findUserByToken(tlm.token);
+        UserEntity userEntity = Server.getUserDAO().findUserByToken(tlm.getToken());
 
         if (userEntity != null) {
-            bq.add(new TokenLoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.messageDAO.get(userEntity.getUsername())), userEntity.getToken()));
+            bq.add(new TokenLoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.getMessageDAO().get(userEntity.getUsername())), userEntity.getToken()));
         }
     }
 }

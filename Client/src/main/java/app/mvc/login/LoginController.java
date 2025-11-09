@@ -3,7 +3,6 @@ package app.mvc.login;
 import app.NetworkUser;
 import app.mvc.Controller;
 import app.mvc.mappers.UserMapper;
-import app.mvc.models.UserModel;
 import persistency.dtos.UserDTO;
 import utils.Utils;
 

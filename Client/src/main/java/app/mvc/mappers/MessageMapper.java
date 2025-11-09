@@ -1,9 +1,7 @@
 package app.mvc.mappers;
 
 import app.mvc.models.MessageModel;
-import app.mvc.models.UserModel;
 import persistency.dtos.MessageDTO;
-import persistency.dtos.UserDTO;
 import views.colored.Icon;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.List;
  */
 public class MessageMapper {
 
-    private MessageMapper() {};
+    private MessageMapper() {}
 
     public static MessageModel toModel(MessageDTO message) {
 

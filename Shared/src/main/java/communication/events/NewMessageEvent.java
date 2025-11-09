@@ -12,11 +12,15 @@ import persistency.dtos.MessageDTO;
  */
 public class NewMessageEvent extends Transferable {
 
-    public MessageDTO message;
+    private final MessageDTO message;
 
     public NewMessageEvent(MessageDTO message) {
 
         id = 5;
         this.message = message;
+    }
+
+    public MessageDTO getMessage() {
+        return message;
     }
 }

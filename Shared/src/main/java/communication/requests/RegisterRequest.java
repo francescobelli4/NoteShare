@@ -7,9 +7,9 @@ import communication.Transferable;
  */
 public class RegisterRequest extends Transferable {
 
-    public String username;
-    public String password;
-    public String userType;
+    private final String username;
+    private final String password;
+    private final String userType;
 
     public RegisterRequest(String username, String password, String userType) {
 
@@ -18,5 +18,17 @@ public class RegisterRequest extends Transferable {
         this.username = username;
         this.password = password;
         this.userType = userType;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUserType() {
+        return userType;
     }
 }

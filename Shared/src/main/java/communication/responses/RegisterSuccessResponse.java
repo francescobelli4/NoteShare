@@ -11,13 +11,21 @@ import persistency.dtos.UserDTO;
  */
 public class RegisterSuccessResponse extends Transferable {
 
-    public UserDTO userDTO;
-    public String token;
+    private final UserDTO userDTO;
+    private final String token;
 
     public RegisterSuccessResponse(UserDTO userDTO, String token) {
 
         id = 100;
         this.userDTO = userDTO;
         this.token = token;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

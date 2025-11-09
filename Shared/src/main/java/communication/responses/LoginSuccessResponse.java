@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class LoginSuccessResponse extends Transferable {
 
-    public UserDTO userDTO;
-    public List<MessageDTO> messages;
-    public String token;
+    private final UserDTO userDTO;
+    private final List<MessageDTO> messages;
+    private final String token;
 
     public LoginSuccessResponse(UserDTO userDTO, List<MessageDTO> messages, String token) {
 
@@ -25,5 +25,17 @@ public class LoginSuccessResponse extends Transferable {
         this.userDTO = userDTO;
         this.messages = messages;
         this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    public List<MessageDTO> getMessages() {
+        return messages;
     }
 }

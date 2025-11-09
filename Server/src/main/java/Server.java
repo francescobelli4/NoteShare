@@ -2,7 +2,6 @@ import persistency.nonpersistent.daos.NPMessageDAO;
 import persistency.nonpersistent.daos.NPUserDAO;
 import persistency.shared.daos.MessageDAO;
 import persistency.shared.daos.UserDAO;
-import persistency.shared.entities.MessageEntity;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,8 +15,8 @@ public class Server {
      */
     public static boolean demoMode = false;
 
-    public static UserDAO userDAO;
-    public static MessageDAO messageDAO;
+    private static UserDAO userDAO;
+    private static MessageDAO messageDAO;
 
     static void main(String[] args) {
 
@@ -61,5 +60,13 @@ public class Server {
             //TODO
             e.printStackTrace();
         }
+    }
+
+    public static UserDAO getUserDAO() {
+        return userDAO;
+    }
+
+    public static MessageDAO getMessageDAO() {
+        return messageDAO;
     }
 }

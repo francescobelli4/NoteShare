@@ -14,8 +14,6 @@ public class UserEntity {
     private String token;
     private int coins;
 
-    public UserEntity() {}
-
     public String getUsername() {
         return username;
     }

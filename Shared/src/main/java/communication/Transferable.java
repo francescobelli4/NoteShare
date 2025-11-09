@@ -18,7 +18,7 @@ public class Transferable {
     /**
      * This should be unique
      */
-    public int id;
+    protected int id;
 
     /**
      * This serializes the message to a JSON string
@@ -49,5 +49,9 @@ public class Transferable {
             case 102 -> gson.fromJson(json, TokenLoginSuccessResponse.class);
             default -> null;
         };
+    }
+
+    public int getId() {
+        return id;
     }
 }

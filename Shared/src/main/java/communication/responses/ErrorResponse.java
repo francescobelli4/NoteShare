@@ -10,12 +10,16 @@ import communication.Transferable;
  */
 public class ErrorResponse extends Transferable {
 
-    public int error_code;
+    private final int errorCode;
 
-    public ErrorResponse(int error_code) {
+    public ErrorResponse(int errorCode) {
 
         id = 3;
 
-        this.error_code = error_code;
+        this.errorCode = errorCode;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
     }
 }

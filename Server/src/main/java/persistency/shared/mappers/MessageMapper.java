@@ -9,6 +9,8 @@ import java.util.List;
 
 public class MessageMapper {
 
+    private MessageMapper() {}
+
     public static MessageDTO toDTO(MessageEntity messageEntity) {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setTitle(messageEntity.getTitle());
@@ -17,7 +19,7 @@ public class MessageMapper {
         messageDTO.setType(MessageType.fromString(messageEntity.getType()));
 
         return messageDTO;
-    };
+    }
 
     public static List<MessageDTO> toDTOList(List<MessageEntity> messages) {
         List<MessageDTO> messageDTOS = new ArrayList<>();

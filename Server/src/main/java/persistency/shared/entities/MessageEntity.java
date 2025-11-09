@@ -9,8 +9,6 @@ public class MessageEntity {
     /** Foreign key -> User*/
     String username;
 
-    public MessageEntity() {}
-
     public String getTitle() {
         return title;
     }

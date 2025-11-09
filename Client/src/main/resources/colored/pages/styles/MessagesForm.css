@@ -1,0 +1,9 @@
+#message_container {
+    -fx-background-radius: 20;
+    -fx-background-color: rgb(245, 245, 245);
+}
+
+.message {
+    -fx-background-radius: 20;
+    -fx-background-color: white;
+}
