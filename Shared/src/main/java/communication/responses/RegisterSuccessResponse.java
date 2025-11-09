@@ -1,6 +1,6 @@
-package messages.responses;
+package communication.responses;
 
-import messages.Message;
+import communication.Transferable;
 import persistency.dtos.UserDTO;
 
 /**
@@ -9,12 +9,12 @@ import persistency.dtos.UserDTO;
  *
  * It sends a UserDTO so the client can set up the user profile
  */
-public class RegisterSuccessMessage extends Message {
+public class RegisterSuccessResponse extends Transferable {
 
     public UserDTO userDTO;
     public String token;
 
-    public RegisterSuccessMessage(UserDTO userDTO, String token) {
+    public RegisterSuccessResponse(UserDTO userDTO, String token) {
 
         id = 100;
         this.userDTO = userDTO;

@@ -47,6 +47,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
 
+        BoundaryManager.getInstance().initializeViewMessagesBoundary();
         BoundaryManager.getInstance().initializeLoginBoundary();
         BoundaryManager.getInstance().getLoginBoundary().addListener(this);
     }

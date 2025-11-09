@@ -1,6 +1,6 @@
-package messages.responses;
+package communication.responses;
 
-import messages.Message;
+import communication.Transferable;
 
 /**
  * ERROR CODES
@@ -8,11 +8,11 @@ import messages.Message;
  * 1: Login failed (user not found)
  * 2: Login failed (wrong password)
  */
-public class ErrorMessage extends Message {
+public class ErrorResponse extends Transferable {
 
     public int error_code;
 
-    public ErrorMessage(int error_code) {
+    public ErrorResponse(int error_code) {
 
         id = 3;
 

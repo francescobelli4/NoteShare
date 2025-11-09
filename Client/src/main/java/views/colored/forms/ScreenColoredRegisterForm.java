@@ -147,20 +147,27 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
 
     @Override
     public void onRegisterFailed(RegisterResult registerResult) {
-        ScreenColoredGenericNotification notification = switch (registerResult) {
+
+        String title = Locales.get("error");
+        Icon icon = Icon.ERROR;
+
+        String description = switch (registerResult) {
             case RegisterResult.USERNAME_TOO_SHORT ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_short"), Icon.ERROR);
+                    Locales.get("error_username_too_short");
             case RegisterResult.USERNAME_TOO_LONG ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_long"), Icon.ERROR);
+                    Locales.get("error_username_too_long");
             case RegisterResult.PASSWORD_TOO_SHORT ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_short"), Icon.ERROR);
+                    Locales.get("error_password_too_short");
             case RegisterResult.PASSWORD_TOO_LONG ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_long"), Icon.ERROR);
+                    Locales.get("error_password_too_long");
             case RegisterResult.USERNAME_ALREADY_IN_USE ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_already_in_use"), Icon.ERROR);
+                    Locales.get("error_username_already_in_use");
             case RegisterResult.USER_TYPE_NOT_SELECTED ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_user_type_not_selected"), Icon.ERROR);
+                    Locales.get("error_user_type_not_selected");
         };
+
+        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);
+
         Platform.runLater(notification::display);
     }
 }

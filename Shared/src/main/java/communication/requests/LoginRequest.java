@@ -1,17 +1,17 @@
-package messages.requests;
+package communication.requests;
 
-import messages.Message;
+import communication.Transferable;
 
 /**
  * This message is sent from client to server to log in.
  */
-public class LoginMessage extends Message {
+public class LoginRequest extends Transferable {
 
     public String username;
     public String password;
 
 
-    public LoginMessage(String username, String password) {
+    public LoginRequest(String username, String password) {
 
         id = 2;
 

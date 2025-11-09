@@ -16,3 +16,13 @@
 #searchbar {
     -fx-background-radius: 30;
 }
+
+.hoverable:hover {
+    -fx-background-color: rgb(231, 231, 231);
+    -fx-background-radius: 40;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-background-radius: 40;
+}

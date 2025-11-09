@@ -1,5 +1,8 @@
 package app.mvc.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class (a model) represents the actual state of the user in the app. It should implement
  * methods for getting and setting the actual user state and domain-logic functions.
@@ -22,6 +25,7 @@ public class UserModel {
     private String userType;
     private String token;
     private int coins;
+    private List<MessageModel> messages = new ArrayList<>();
 
     /** This should always be the app's local folder out of demo mode.
      *  In demo mode, the root folder (just like all the other folders) is saved on the
@@ -80,6 +84,14 @@ public class UserModel {
 
     public void setCoins(int coins) {
         this.coins = coins;
+    }
+
+    public List<MessageModel> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageModel> messages) {
+        this.messages = messages;
     }
 
     /**

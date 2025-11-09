@@ -1,17 +1,17 @@
-package messages.requests;
+package communication.requests;
 
-import messages.Message;
+import communication.Transferable;
 
 /**
  * This message is sent from client to server to make the server register the user.
  */
-public class RegisterMessage extends Message {
+public class RegisterRequest extends Transferable {
 
     public String username;
     public String password;
     public String userType;
 
-    public RegisterMessage(String username, String password, String userType) {
+    public RegisterRequest(String username, String password, String userType) {
 
         id = 1;
 

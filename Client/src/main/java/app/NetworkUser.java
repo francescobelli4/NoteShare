@@ -1,16 +1,18 @@
 package app;
 
+import app.mvc.Boundary;
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginResult;
 import app.mvc.register.RegisterResult;
-import messages.Message;
-import messages.requests.LoginMessage;
-import messages.requests.RegisterMessage;
-import messages.requests.TokenLoginMessage;
-import messages.responses.ErrorMessage;
-import messages.responses.LoginSuccessMessage;
-import messages.responses.RegisterSuccessMessage;
-import messages.responses.TokenLoginSuccessMessage;
+import communication.Transferable;
+import communication.events.NewMessageEvent;
+import communication.requests.LoginRequest;
+import communication.requests.RegisterRequest;
+import communication.requests.TokenLoginRequest;
+import communication.responses.ErrorResponse;
+import communication.responses.LoginSuccessResponse;
+import communication.responses.RegisterSuccessResponse;
+import communication.responses.TokenLoginSuccessResponse;
 import utils.PathUtils;
 
 import java.io.*;
@@ -65,7 +67,7 @@ public class NetworkUser {
      * This is the correct way to block outputThread until a message actually needs to be sent.
      * bq.take() will do the job :D
      */
-    private final BlockingQueue<Message> bq = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Transferable> bq = new LinkedBlockingQueue<>();
 
     /**
      * This function connects the socket to the server
@@ -93,7 +95,7 @@ public class NetworkUser {
 
         if (path.toFile().exists()) {
             try {
-                enqueueMessage(new TokenLoginMessage(new String(Files.readAllBytes(path))));
+                enqueueMessage(new TokenLoginRequest(new String(Files.readAllBytes(path))));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -106,7 +108,7 @@ public class NetworkUser {
      * @param password
      */
     public void login(String username, String password) {
-        LoginMessage lm = new LoginMessage(username, password);
+        LoginRequest lm = new LoginRequest(username, password);
         enqueueMessage(lm);
     }
 
@@ -117,7 +119,7 @@ public class NetworkUser {
      * @param userType
      */
     public void register(String username, String password, String userType) {
-        RegisterMessage rm = new RegisterMessage(username, password, userType);
+        RegisterRequest rm = new RegisterRequest(username, password, userType);
         enqueueMessage(rm);
     }
 
@@ -138,15 +140,17 @@ public class NetworkUser {
 
                     System.out.println("INPUT: " + input);
 
-                    Message parsedMessage = Message.fromJson(input);
+                    Transferable parsedTransferable = Transferable.fromJson(input);
 
-                    if (parsedMessage instanceof RegisterSuccessMessage rsm) {
+                    if (parsedTransferable instanceof RegisterSuccessResponse rsm) {
                         handleRegisterSuccessMessage(rsm);
-                    } else if (parsedMessage instanceof LoginSuccessMessage lsm) {
+                    } else if (parsedTransferable instanceof LoginSuccessResponse lsm) {
                         handleLoginSuccessMessage(lsm);
-                    } else if (parsedMessage instanceof TokenLoginSuccessMessage tlsm) {
+                    } else if (parsedTransferable instanceof TokenLoginSuccessResponse tlsm) {
                         handleTokenLoginSuccessMessage(tlsm);
-                    } else if (parsedMessage instanceof ErrorMessage err) {
+                    } else if (parsedTransferable instanceof NewMessageEvent nme) {
+                        handleNewMessageEvent(nme);
+                    } else if (parsedTransferable instanceof ErrorResponse err) {
 
                         switch (err.error_code) {
                             case 0:
@@ -157,6 +161,7 @@ public class NetworkUser {
                                 break;
                             case 2:
                                 BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.WRONG_PASSWORD);
+                                break;
                             default:
                                 break;
                         }
@@ -186,8 +191,8 @@ public class NetworkUser {
 
                 while (server.isConnected()) {
 
-                    Message sendingMessage = bq.take();
-                    String json = sendingMessage.toJson();
+                    Transferable sendingTransferable = bq.take();
+                    String json = sendingTransferable.toJson();
 
                     System.out.println("OUTPUT: " + json);
 
@@ -214,17 +219,17 @@ public class NetworkUser {
     /**
      * This function adds a new message to the bq BlockingQueue.
      * This queue is actually a FIFO.
-     * @param sendingMessage a Message subclass
+     * @param sendingTransferable a Message subclass
      */
-    private void enqueueMessage(Message sendingMessage) {
-        bq.add(sendingMessage);
+    private void enqueueMessage(Transferable sendingTransferable) {
+        bq.add(sendingTransferable);
     }
 
     /**
      * This function handles the RegisterSuccessMessage. It also saves the access token sent by the server
      * @param rsm server response
      */
-    private void handleRegisterSuccessMessage(RegisterSuccessMessage rsm) {
+    private void handleRegisterSuccessMessage(RegisterSuccessResponse rsm) {
         BoundaryManager.getInstance().getRegisterBoundary().onRegisterSuccess(rsm.userDTO, rsm.token);
     }
 
@@ -232,8 +237,9 @@ public class NetworkUser {
      * This function handles the LoginSuccessMessage. It also saves the access token sent by the server
      * @param lsm server response
      */
-    private void handleLoginSuccessMessage(LoginSuccessMessage lsm) {
+    private void handleLoginSuccessMessage(LoginSuccessResponse lsm) {
         BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(lsm.userDTO, lsm.token);
+        BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(lsm.messages);
     }
 
     /**
@@ -241,8 +247,13 @@ public class NetworkUser {
      * It allows to log-in without writing credentials
      * @param tlsm server response
      */
-    private void handleTokenLoginSuccessMessage(TokenLoginSuccessMessage tlsm) {
+    private void handleTokenLoginSuccessMessage(TokenLoginSuccessResponse tlsm) {
         BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(tlsm.userDTO, tlsm.token);
+        BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(tlsm.messages);
+    }
+
+    private void handleNewMessageEvent(NewMessageEvent nme) {
+        BoundaryManager.getInstance().getViewMessagesBoundary().messageArrived(nme.message);
     }
 }
 

@@ -1,21 +1,19 @@
-package messages;
+package communication;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import messages.requests.LoginMessage;
-import messages.requests.RegisterMessage;
-import messages.requests.TokenLoginMessage;
-import messages.responses.ErrorMessage;
-import messages.responses.LoginSuccessMessage;
-import messages.responses.RegisterSuccessMessage;
-import messages.responses.TokenLoginSuccessMessage;
+import communication.events.NewMessageEvent;
+import communication.requests.LoginRequest;
+import communication.requests.RegisterRequest;
+import communication.requests.TokenLoginRequest;
+import communication.responses.*;
 
 /**
  * This class creates a unified way to interact with messages sent client <---> server
  * Every message should have a unique id and a serialize/deserialize function
  */
-public class Message {
+public class Transferable {
 
     /**
      * This should be unique
@@ -34,20 +32,21 @@ public class Message {
      * @param json a JSON formatted string
      * @return a Message subclass
      */
-    public static Message fromJson(String json) {
+    public static Transferable fromJson(String json) {
 
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
         int msgId = jsonObject.get("id").getAsInt();
         Gson gson = new Gson();
 
         return switch (msgId) {
-            case 1 -> gson.fromJson(json, RegisterMessage.class);
-            case 2 -> gson.fromJson(json, LoginMessage.class);
-            case 3 -> gson.fromJson(json, ErrorMessage.class);
-            case 4 -> gson.fromJson(json, TokenLoginMessage.class);
-            case 100 -> gson.fromJson(json, RegisterSuccessMessage.class);
-            case 101 -> gson.fromJson(json, LoginSuccessMessage.class);
-            case 102 -> gson.fromJson(json, TokenLoginSuccessMessage.class);
+            case 1 -> gson.fromJson(json, RegisterRequest.class);
+            case 2 -> gson.fromJson(json, LoginRequest.class);
+            case 3 -> gson.fromJson(json, ErrorResponse.class);
+            case 4 -> gson.fromJson(json, TokenLoginRequest.class);
+            case 5 -> gson.fromJson(json, NewMessageEvent.class);
+            case 100 -> gson.fromJson(json, RegisterSuccessResponse.class);
+            case 101 -> gson.fromJson(json, LoginSuccessResponse.class);
+            case 102 -> gson.fromJson(json, TokenLoginSuccessResponse.class);
             default -> null;
         };
     }

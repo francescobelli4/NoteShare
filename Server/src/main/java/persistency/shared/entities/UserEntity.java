@@ -16,15 +16,6 @@ public class UserEntity {
 
     public UserEntity() {}
 
-    public UserEntity(String username) {
-        this.username = username;
-    }
-
-    public UserEntity(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
     }

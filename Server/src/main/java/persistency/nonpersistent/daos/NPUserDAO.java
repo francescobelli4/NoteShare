@@ -27,7 +27,6 @@ public class NPUserDAO implements UserDAO {
 
         return instance;
     }
-
     private NPUserDAO() {};
 
     @Override

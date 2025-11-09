@@ -1,0 +1,89 @@
+package views.colored.forms;
+
+import app.mvc.Boundary;
+import app.mvc.BoundaryManager;
+import app.mvc.models.MessageModel;
+import app.mvc.models.UserModel;
+import app.mvc.viewmessages.ViewMessagesBoundary;
+import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import views.GraphicsController;
+import views.colored.Page;
+import views.colored.PageController;
+import views.colored.elements.ScreenColoredMessageElement;
+
+/**
+ * Class that represents the folders container
+ */
+public class ScreenColoredMessagesContainer extends ScreenColoredForm implements ViewMessagesBoundary.Listener {
+
+    @FXML
+    FlowPane messagesContainer;
+
+    @FXML
+    ScrollPane box;
+
+    /**
+     * Constructor with parent controller
+     *
+     * This constructor actually loads the FXMLLoader and sets the controller for the page
+     * @param parentController the controller of the parent page
+     */
+    public ScreenColoredMessagesContainer(PageController parentController) {
+
+        super(Page.MESSAGES_CONTAINER, parentController);
+
+        this.loader.setController(this);
+        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+
+        BoundaryManager.getInstance().getViewMessagesBoundary().addListener(this);
+
+        this.root.setOnMouseClicked(e -> close());
+    }
+
+
+    public void displayMessages() {
+
+        messagesContainer.getChildren().clear();
+
+        for (MessageModel message : UserModel.getInstance().getMessages()) {
+            ScreenColoredMessageElement messageElement = new ScreenColoredMessageElement(this, message);
+            messageElement.display(messagesContainer);
+        }
+    }
+
+    /**
+     * The initialize function adds the MessageElements
+     */
+    @FXML
+    public void initialize() {
+        displayMessages();
+    }
+
+
+
+    @Override
+    public void close() {
+        BoundaryManager.getInstance().getViewMessagesBoundary().removeListener(this);
+        ((StackPane)this.root.getParent()).getChildren().remove(this.root);
+    }
+
+    /**
+     * This function should display the folders container
+     */
+    public void display(double x, double y) {
+        super.display();
+
+        AnchorPane.setTopAnchor(box, y);
+        AnchorPane.setRightAnchor(box, x);
+    }
+
+    @Override
+    public void onMessageArrived(MessageModel message) {
+        displayMessages();
+    }
+}

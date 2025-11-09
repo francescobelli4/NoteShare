@@ -45,6 +45,8 @@ public class Locales {
         locales.put("choose_pdf", "Choose PDF");
         locales.put("note_pdf_not_set", "You did not choose a PDF file");
         locales.put("name", "Name");
+        locales.put("info", "Info");
+        locales.put("register_welcome", "Welcome to NoteShare!");
     }
 
     public static String get(String key) {

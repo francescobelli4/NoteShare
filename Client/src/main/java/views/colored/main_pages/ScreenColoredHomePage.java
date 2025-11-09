@@ -1,11 +1,24 @@
 package views.colored.main_pages;
 
+import app.mvc.Boundary;
+import app.mvc.BoundaryManager;
+import app.mvc.models.MessageModel;
 import app.mvc.models.UserModel;
+import app.mvc.viewmessages.ViewMessagesBoundary;
+import javafx.application.Platform;
+import javafx.geometry.Bounds;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import locales.Locales;
 import views.GraphicsController;
 import views.colored.Page;
 import views.colored.forms.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
+import views.colored.notifications.ScreenColoredGenericNotification;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 
 /**
  * Class that represents the home page.
@@ -17,8 +30,9 @@ import javafx.scene.layout.VBox;
  * -    toolsSlot:          ScreenColored[Student/Teacher/Administrator]ToolsBar
  * -    foldersContainer:   ScreenColoredFoldersContainer
  *
+ * A home page also supports a ScreenColoredMessagesContainer.
  */
-public class ScreenColoredHomePage extends ScreenColoredMainPage {
+public class ScreenColoredHomePage extends ScreenColoredMainPage implements ViewMessagesBoundary.Listener {
 
     /** The slot for left bar secondary page */
     @FXML
@@ -29,6 +43,9 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
     /** The slot for folders container */
     @FXML
     VBox foldersContainer;
+    /** The button used to open the messages form */
+    @FXML
+    Button messagesButton;
 
     /** The controller of the active left bar */
     ScreenColoredStudentLeftBar studentLeftBarController;
@@ -39,6 +56,9 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
     /** The controller of the folders container */
     ScreenColoredFoldersContainer foldersContainerController;
 
+    /** The controller of the messages container */
+    ScreenColoredMessagesContainer messagesContainerController;
+
     /**
      * Base constructor
      *
@@ -46,6 +66,8 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
      */
     public ScreenColoredHomePage() {
         super(Page.HOME_PAGE);
+
+        BoundaryManager.getInstance().getViewMessagesBoundary().addListener(this);
 
         this.loader.setController(this);
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
@@ -62,6 +84,8 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
         appendFoldersContainer();
         appendToolsBar();
         appendLeftBar();
+
+        messagesButton.setOnMouseClicked(e -> openMessagesForm());
     }
 
     /**
@@ -106,5 +130,18 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage {
     private void appendFoldersContainer() {
         foldersContainerController = new ScreenColoredFoldersContainer(this);
         foldersContainerController.display(foldersContainer);
+    }
+
+    private void openMessagesForm() {
+        Bounds boundsInScene = messagesButton.localToScene(messagesButton.getBoundsInLocal());
+
+        messagesContainerController = new ScreenColoredMessagesContainer(this);
+        messagesContainerController.display(GraphicsController.getInstance().getWindow().getWidth() - boundsInScene.getMinX(), boundsInScene.getMinY() + messagesButton.getHeight());
+    }
+
+    @Override
+    public void onMessageArrived(MessageModel message) {
+        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get(message.getTitle()), Locales.get(message.getDescription()), message.getIcon());
+        Platform.runLater(notification::display);
     }
 }

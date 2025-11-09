@@ -1,12 +1,15 @@
-import messages.Message;
-import messages.requests.LoginMessage;
-import messages.requests.RegisterMessage;
-import messages.requests.TokenLoginMessage;
-import messages.responses.ErrorMessage;
-import messages.responses.LoginSuccessMessage;
-import messages.responses.RegisterSuccessMessage;
-import messages.responses.TokenLoginSuccessMessage;
+import communication.Transferable;
+import communication.events.NewMessageEvent;
+import communication.requests.LoginRequest;
+import communication.requests.RegisterRequest;
+import communication.requests.TokenLoginRequest;
+import communication.responses.ErrorResponse;
+import communication.responses.LoginSuccessResponse;
+import communication.responses.RegisterSuccessResponse;
+import communication.responses.TokenLoginSuccessResponse;
+import persistency.shared.entities.MessageEntity;
 import persistency.shared.entities.UserEntity;
+import persistency.shared.mappers.MessageMapper;
 import persistency.shared.mappers.UserMapper;
 import utils.Auth;
 
@@ -15,6 +18,8 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,12 +41,12 @@ public class NetworkUser implements Runnable {
     /**
      *  UserEntity is a class that represent all the data associated to a user.
      */
-    private UserEntity userEntity;
+    private final UserEntity userEntity;
 
     private Thread outputThread;
     private Thread inputThread;
 
-    private final BlockingQueue<Message> bq = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Transferable> bq = new LinkedBlockingQueue<>();
 
     public NetworkUser (Socket client) {
         this.client = client;
@@ -58,7 +63,9 @@ public class NetworkUser implements Runnable {
             outputThread.interrupt();
 
             client.close();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            //TODO
+        }
 
         System.out.println("Connessione chiusa con " + client.getInetAddress());
 
@@ -82,7 +89,7 @@ public class NetworkUser implements Runnable {
                     handleRequest(in);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 closeConnection();
             }
         });
@@ -97,7 +104,7 @@ public class NetworkUser implements Runnable {
                 while (connected) {
 
                     try {
-                        Message msg = bq.take();
+                        Transferable msg = bq.take();
 
                         sendMessage(msg, out);
                     } catch (InterruptedException e) {
@@ -106,7 +113,7 @@ public class NetworkUser implements Runnable {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 closeConnection();
             }
 
@@ -127,13 +134,13 @@ public class NetworkUser implements Runnable {
             String data = in.readUTF();
             System.out.println("Received JSON: " + data);
 
-            Message msg = Message.fromJson(data);
+            Transferable msg = Transferable.fromJson(data);
 
-            if (msg instanceof RegisterMessage rm) {
+            if (msg instanceof RegisterRequest rm) {
                 handleRegisterRequest(rm);
-            } else if (msg instanceof LoginMessage lm) {
+            } else if (msg instanceof LoginRequest lm) {
                 handleLoginRequest(lm);
-            } else if (msg instanceof TokenLoginMessage tlm) {
+            } else if (msg instanceof TokenLoginRequest tlm) {
                 handleTokenLoginRequest(tlm);
             }
         } catch (EOFException e) {
@@ -147,14 +154,14 @@ public class NetworkUser implements Runnable {
     /**
      * This function has to send the client a Message subclass instance, that is serialized
      * and sent to the client as a JSON string.
-     * @param sendingMessage a Messsage subclass
+     * @param sendingTransferable a Messsage subclass
      * @param out the output stream
      */
-    private void sendMessage(Message sendingMessage, DataOutputStream out) {
+    private void sendMessage(Transferable sendingTransferable, DataOutputStream out) {
 
         try {
-            out.writeUTF(sendingMessage.toJson());
-            System.out.println("Sent: " + sendingMessage.toJson());
+            out.writeUTF(sendingTransferable.toJson());
+            System.out.println("Sent: " + sendingTransferable.toJson());
         } catch (IOException e) {
             //TODO
             closeConnection();
@@ -166,7 +173,7 @@ public class NetworkUser implements Runnable {
      * a RegisterSuccessMessage, otherwise it sends an ErrorMessage
      * @param rm the request the user sent
      */
-    private void handleRegisterRequest(RegisterMessage rm) {
+    private void handleRegisterRequest(RegisterRequest rm) {
 
         userEntity.setUsername(rm.username);
         userEntity.setPassword(rm.password);
@@ -175,9 +182,19 @@ public class NetworkUser implements Runnable {
         userEntity.setCoins(100);
 
         if (Server.userDAO.saveUser(userEntity)) {
-            bq.add(new RegisterSuccessMessage(UserMapper.toDTO(userEntity), userEntity.getToken()));
+            bq.add(new RegisterSuccessResponse(UserMapper.toDTO(userEntity), userEntity.getToken()));
+
+            MessageEntity mess = new MessageEntity();
+            mess.setTitle("info");
+            mess.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+            mess.setDescription("register_welcome");
+            mess.setType("info");
+            mess.setUsername(rm.username);
+            Server.messageDAO.save(mess);
+
+            bq.add(new NewMessageEvent(MessageMapper.toDTO(mess)));
         } else {
-            bq.add(new ErrorMessage(0));
+            bq.add(new ErrorResponse(0));
         }
     }
 
@@ -185,20 +202,21 @@ public class NetworkUser implements Runnable {
      * This function should check if login was successful
      * @param lm request
      */
-    private void handleLoginRequest(LoginMessage lm) {
+    private void handleLoginRequest(LoginRequest lm) {
 
         UserEntity userEntity = Server.userDAO.findUserByUsername(lm.username);
+
         if (userEntity == null) {
             // LOGIN FAILED (user not found)
-            bq.add(new ErrorMessage(1));
+            bq.add(new ErrorResponse(1));
             return;
         }
 
         if (Objects.equals(userEntity.getPassword(), lm.password)) {
-            bq.add(new LoginSuccessMessage(UserMapper.toDTO(userEntity), userEntity.getToken()));
+            bq.add(new LoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.messageDAO.get(lm.username)), userEntity.getToken()));
         } else {
             // LOGIN FAILED (wrong password)
-            bq.add(new ErrorMessage(2));
+            bq.add(new ErrorResponse(2));
         }
     }
 
@@ -208,12 +226,12 @@ public class NetworkUser implements Runnable {
      * or when the user registers.
      * @param tlm request
      */
-    private void handleTokenLoginRequest(TokenLoginMessage tlm) {
+    private void handleTokenLoginRequest(TokenLoginRequest tlm) {
 
         UserEntity userEntity = Server.userDAO.findUserByToken(tlm.token);
 
         if (userEntity != null) {
-            bq.add(new TokenLoginSuccessMessage(UserMapper.toDTO(userEntity), userEntity.getToken()));
+            bq.add(new TokenLoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.messageDAO.get(userEntity.getUsername())), userEntity.getToken()));
         }
     }
 }

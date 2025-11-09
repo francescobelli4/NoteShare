@@ -119,20 +119,24 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     @Override
     public void onLoginFailed(LoginResult loginResult) {
 
-        ScreenColoredGenericNotification notification = switch (loginResult) {
+        String title = Locales.get("error");
+        Icon icon = Icon.ERROR;
+        String description = switch (loginResult) {
             case LoginResult.USERNAME_TOO_SHORT ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_short"), Icon.ERROR);
+                    Locales.get("error_username_too_short");
             case LoginResult.USERNAME_TOO_LONG ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_username_too_long"), Icon.ERROR);
+                    Locales.get("error_username_too_long");
             case LoginResult.PASSWORD_TOO_SHORT ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_short"), Icon.ERROR);
+                    Locales.get("error_password_too_short");
             case LoginResult.PASSWORD_TOO_LONG ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_password_too_long"), Icon.ERROR);
+                    Locales.get("error_password_too_long");
             case LoginResult.USER_NOT_EXISTS ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_user_does_not_exist"), Icon.ERROR);
+                    Locales.get("error_user_does_not_exist");
             case LoginResult.WRONG_PASSWORD ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("error_wrong_password"), Icon.ERROR);
+                    Locales.get("error_wrong_password");
         };
+
+        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);
 
         Platform.runLater(notification::display);
     }

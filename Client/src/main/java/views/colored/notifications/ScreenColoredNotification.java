@@ -39,5 +39,6 @@ public abstract class ScreenColoredNotification extends PageController {
     @Override
     public void close() {
 
+        //Not needed
     }
 }

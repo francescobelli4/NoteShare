@@ -11,12 +11,13 @@ public enum Page {
     TEACHER_HOME_PAGE_LEFT_BAR("/colored/pages/forms/AdministratorHomePageLeftBar.fxml"),
     ADMINISTRATOR_HOME_PAGE_LEFT_BAR("/colored/pages/forms/TeacherHomePageLeftBar.fxml"),
     STUDENT_HOME_PAGE_TOOLS_BAR("/colored/pages/forms/StudentHomePageToolsBar.fxml"),
+    MESSAGES_CONTAINER("/colored/pages/forms/MessagesContainerForm.fxml"),
     FOLDER_CREATION_DIALOGUE("/colored/pages/dialogues/FolderCreationDialogue.fxml"),
     NOTE_CREATION_DIALOGUE("/colored/pages/dialogues/NoteCreationDialogue.fxml"),
     FOLDERS_CONTAINER("/colored/pages/forms/FoldersContainerForm.fxml"),
     FOLDER_ELEMENT("/colored/pages/elements/FolderElement.fxml"),
-    NOTE_ELEMENT("/colored/pages/elements/NoteElement.fxml");
-
+    NOTE_ELEMENT("/colored/pages/elements/NoteElement.fxml"),
+    MESSAGE_ELEMENT("/colored/pages/elements/MessageElement.fxml");
 
     private String path;
 

@@ -178,14 +178,18 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
 
     @Override
     public void onNoteCreationFailed(ManageNoteResult manageNoteResult) {
-        ScreenColoredGenericNotification notification = switch (manageNoteResult) {
-            case ManageNoteResult.NOTE_NAME_NOT_SPECIFIED ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_name_too_short"), Icon.ERROR);
-            case ManageNoteResult.NOTE_ALREADY_EXISTS ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_already_exists"), Icon.ERROR);
 
+        String title = Locales.get("error");
+        Icon icon = Icon.ERROR;
+
+        String description = switch (manageNoteResult) {
+            case ManageNoteResult.NOTE_NAME_NOT_SPECIFIED ->
+                    Locales.get("note_name_too_short");
+            case ManageNoteResult.NOTE_ALREADY_EXISTS ->
+                    Locales.get("note_already_exists");
         };
 
+        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);
         Platform.runLater(notification::display);
     }
 }

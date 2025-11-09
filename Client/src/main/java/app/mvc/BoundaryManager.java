@@ -10,6 +10,8 @@ import app.mvc.navigation.NavigationBoundary;
 import app.mvc.navigation.NavigationController;
 import app.mvc.register.RegisterBoundary;
 import app.mvc.register.RegisterController;
+import app.mvc.viewmessages.ViewMessagesBoundary;
+import app.mvc.viewmessages.ViewMessagesController;
 
 /**
  * Singleton
@@ -34,6 +36,7 @@ public class BoundaryManager {
     private NavigationBoundary navigationBoundary;
     private ManageFolderBoundary manageFolderBoundary;
     private ManageNoteBoundary manageNoteBoundary;
+    private ViewMessagesBoundary viewMessagesBoundary;
 
     public LoginBoundary getLoginBoundary() {
         return loginBoundary;
@@ -53,6 +56,10 @@ public class BoundaryManager {
 
     public ManageNoteBoundary getManageNoteBoundary() {
         return manageNoteBoundary;
+    }
+
+    public ViewMessagesBoundary getViewMessagesBoundary() {
+        return viewMessagesBoundary;
     }
 
     public void initializeLoginBoundary() {
@@ -80,6 +87,11 @@ public class BoundaryManager {
         manageNoteBoundary = new ManageNoteBoundary(manageNoteController);
     }
 
+    public void initializeViewMessagesBoundary() {
+        ViewMessagesController viewMessagesController = new ViewMessagesController();
+        viewMessagesBoundary = new ViewMessagesBoundary(viewMessagesController);
+    }
+
     public void destroyLoginBoundary() {
         loginBoundary.destroy();
         loginBoundary = null;
@@ -103,5 +115,10 @@ public class BoundaryManager {
     public void destroyManageNoteBoundary() {
         manageNoteBoundary.destroy();
         manageNoteBoundary = null;
+    }
+
+    public void destroyViewMessagesBoundary() {
+        viewMessagesBoundary.destroy();
+        viewMessagesBoundary = null;
     }
 }
