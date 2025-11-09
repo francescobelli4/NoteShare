@@ -8,48 +8,50 @@ import java.util.Map;
  */
 public class Locales {
 
-    private static final Map<String, String> locales = new HashMap<>();
+    private Locales() {}
+
+    private static final Map<String, String> localesLabels = new HashMap<>();
 
     public static void initializeLocales() {
-        locales.put("register", "Register");
-        locales.put("login", "Login");
-        locales.put("username", "Username");
-        locales.put("password", "Password");
-        locales.put("register_page_username_field_prompt", "Min %d Max %d chars");
-        locales.put("register_page_password_field_prompt", "Min %d Max %d chars");
-        locales.put("student", "Student");
-        locales.put("teacher", "Teacher");
-        locales.put("error", "Error");
-        locales.put("error_username_too_short", "This username is too short.");
-        locales.put("error_username_too_long", "This username is too long.");
-        locales.put("error_password_too_short", "This password is too short.");
-        locales.put("error_password_too_long", "This password is too long.");
-        locales.put("error_user_type_not_selected", "No user type was selected");
-        locales.put("error_username_already_in_use", "This username is already in use.");
-        locales.put("error_user_does_not_exist", "This user does not exist.");
-        locales.put("error_wrong_password", "You entered a wrong password");
-        locales.put("success", "Success");
-        locales.put("success_register", "You successfully registered!");
-        locales.put("your_notes", "Your Notes");
-        locales.put("browse_notes", "Browse Notes");
-        locales.put("shared_notes", "Shared Notes");
-        locales.put("reported_notes", "Reported Notes");
-        locales.put("folder_created", "Folder was created");
-        locales.put("folder_name_too_short", "Folder name is too short");
-        locales.put("folder_already_exists", "This folder already exists");
-        locales.put("create_folder", "Create Folder");
-        locales.put("note_created", "Note was created");
-        locales.put("note_name_too_short", "Note name is too short");
-        locales.put("note_already_exists", "This note already exists");
-        locales.put("create_note", "Create Note");
-        locales.put("choose_pdf", "Choose PDF");
-        locales.put("note_pdf_not_set", "You did not choose a PDF file");
-        locales.put("name", "Name");
-        locales.put("info", "Info");
-        locales.put("register_welcome", "Welcome to NoteShare!");
+        localesLabels.put("register", "Register");
+        localesLabels.put("login", "Login");
+        localesLabels.put("username", "Username");
+        localesLabels.put("password", "Password");
+        localesLabels.put("register_page_username_field_prompt", "Min %d Max %d chars");
+        localesLabels.put("register_page_password_field_prompt", "Min %d Max %d chars");
+        localesLabels.put("student", "Student");
+        localesLabels.put("teacher", "Teacher");
+        localesLabels.put("error", "Error");
+        localesLabels.put("error_username_too_short", "This username is too short.");
+        localesLabels.put("error_username_too_long", "This username is too long.");
+        localesLabels.put("error_password_too_short", "This password is too short.");
+        localesLabels.put("error_password_too_long", "This password is too long.");
+        localesLabels.put("error_user_type_not_selected", "No user type was selected");
+        localesLabels.put("error_username_already_in_use", "This username is already in use.");
+        localesLabels.put("error_user_does_not_exist", "This user does not exist.");
+        localesLabels.put("error_wrong_password", "You entered a wrong password");
+        localesLabels.put("success", "Success");
+        localesLabels.put("success_register", "You successfully registered!");
+        localesLabels.put("your_notes", "Your Notes");
+        localesLabels.put("browse_notes", "Browse Notes");
+        localesLabels.put("shared_notes", "Shared Notes");
+        localesLabels.put("reported_notes", "Reported Notes");
+        localesLabels.put("folder_created", "Folder was created");
+        localesLabels.put("folder_name_too_short", "Folder name is too short");
+        localesLabels.put("folder_already_exists", "This folder already exists");
+        localesLabels.put("create_folder", "Create Folder");
+        localesLabels.put("note_created", "Note was created");
+        localesLabels.put("note_name_too_short", "Note name is too short");
+        localesLabels.put("note_already_exists", "This note already exists");
+        localesLabels.put("create_note", "Create Note");
+        localesLabels.put("choose_pdf", "Choose PDF");
+        localesLabels.put("note_pdf_not_set", "You did not choose a PDF file");
+        localesLabels.put("name", "Name");
+        localesLabels.put("info", "Info");
+        localesLabels.put("register_welcome", "Welcome to NoteShare!");
     }
 
     public static String get(String key) {
-        return locales.get(key);
+        return localesLabels.get(key);
     }
 }

@@ -22,7 +22,7 @@ public abstract class ScreenColoredElement extends PageController {
      * @param page the page that should be displayed
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredElement(Page page, PageController parentController) {
+    protected ScreenColoredElement(Page page, PageController parentController) {
         super(page, parentController);
     }
 

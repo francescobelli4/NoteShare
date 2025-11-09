@@ -8,6 +8,8 @@ import persistency.dtos.UserDTO;
  */
 public class UserMapper {
 
+    private UserMapper() {}
+
     /**
      * This function builds a UserDTO from a UserModel
      * @param userModel the current user app status
@@ -19,7 +21,7 @@ public class UserMapper {
         userDTO.setUserType(userModel.getUserType());
         userDTO.setCoins(userModel.getCoins());
         return userDTO;
-    };
+    }
 
     /**
      * This function populates the UserModel starting from a UserDTO.

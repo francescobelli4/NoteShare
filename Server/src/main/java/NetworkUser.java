@@ -166,6 +166,8 @@ public class NetworkUser implements Runnable {
      */
     private void handleRegisterRequest(RegisterRequest rm) {
 
+        System.out.println("AABBABABAABABBABA");
+
         userEntity.setUsername(rm.getUsername());
         userEntity.setPassword(rm.getPassword());
         userEntity.setUserType(rm.getUserType());
@@ -222,8 +224,8 @@ public class NetworkUser implements Runnable {
 
         UserEntity user = Server.getUserDAO().findUserByToken(tlm.getToken());
 
-        if (userEntity != null) {
-            bq.add(new TokenLoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.getMessageDAO().get(userEntity.getUsername())), userEntity.getToken()));
+        if (user != null) {
+            bq.add(new TokenLoginSuccessResponse(UserMapper.toDTO(user), MessageMapper.toDTOList(Server.getMessageDAO().get(user.getUsername())), user.getToken()));
             this.userEntity = user;
         }
     }

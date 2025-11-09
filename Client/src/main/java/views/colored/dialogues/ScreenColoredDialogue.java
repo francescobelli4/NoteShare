@@ -17,7 +17,7 @@ public abstract class ScreenColoredDialogue extends PageController {
      *
      * @param page the page that should be loaded
      */
-    public ScreenColoredDialogue(Page page) {
+    protected ScreenColoredDialogue(Page page) {
         super(page);
     }
 

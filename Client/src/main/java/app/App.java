@@ -14,13 +14,9 @@ import utils.Utils;
 
 import java.util.Objects;
 
-/**
- *
- * TODO BOUNDARY NOTIFICHE
- */
 public class App {
 
-    public static boolean demoMode = false;
+    private static boolean demoMode = false;
 
     private static NoteDAO noteDAO;
     private static FolderDAO folderDAO;
@@ -50,6 +46,10 @@ public class App {
 
         // Now start the Graphics Controller!
         Application.launch(ColoredGraphicsController.class);
+    }
+
+    public static boolean getDemoMode() {
+        return demoMode;
     }
 
     public static NoteDAO getNoteDAO() {

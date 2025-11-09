@@ -2,7 +2,6 @@ package persistency.nonpersistent.daos;
 
 import app.mvc.models.FolderModel;
 import app.mvc.models.NoteModel;
-import app.mvc.models.UserModel;
 import persistency.shared.daos.NoteDAO;
 
 public class NPNoteDAO implements NoteDAO {

@@ -31,7 +31,7 @@ public abstract class Boundary {
      * should be notified that his boundary is up, so they are connected.
      * @param controller the right controller for the boundary
      */
-    public Boundary(Controller controller)  {
+    protected Boundary(Controller controller)  {
         this.controller = controller;
         this.controller.setBoundary(this);
     }

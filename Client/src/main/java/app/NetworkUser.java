@@ -14,6 +14,7 @@ import communication.responses.RegisterSuccessResponse;
 import communication.responses.TokenLoginSuccessResponse;
 import utils.PathUtils;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -25,7 +26,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * User should be a singleton class!
  * This class manages the client <--> server communication and the user's data
- * using a UserDTO
+ * using a UserDTO.
+ * 
+ * The best way to implement the communication with the server, is to create two threads:
+ * one for receiving and one for sending data to the server.
+ * The main thread will be occupied by the UI and I don't want blocking functions to ruin
+ * the user's experience by blocking the UI.
+ *      
+ * The communication is based on messages (Message in Shared module), which are
+ * serialized using Gson library.
+ * So, actually, data travels in JSON format and then the json string is parsed
+ * to match the right Message child class
  */
 public class NetworkUser {
 
@@ -47,19 +58,7 @@ public class NetworkUser {
      * This socket will be used to communicate with the server
      */
     private Socket server;
-    /**
-     * The best way to implement the communication with the server, is to create two threads:
-     * one for receiving and one for sending data to the server.
-     * The main thread will be occupied by the UI and I don't want blocking functions to ruin
-     * the user's experience by blocking the UI.
-     *
-     * The communication is based on messages (Message in Shared module), which are
-     * serialized using Gson library.
-     * So, actually, data travels in JSON format and then the json string is parsed
-     * to match the right Message child class
-     */
-    private Thread inputThread;
-    private Thread outputThread;
+
     /**
      * I use this BlockingQueue to "notify" the outputThread that a Message needs to be sent out
      * to the server.
@@ -83,8 +82,8 @@ public class NetworkUser {
             startInputThread();
             startOutputThread();
         } catch (IOException e) {
-            // TODO
             e.printStackTrace();
+            // TODO tenta la riconnessione con notifica anche
         }
     }
 
@@ -95,16 +94,14 @@ public class NetworkUser {
         if (path.toFile().exists()) {
             try {
                 enqueueTransferable(new TokenLoginRequest(new String(Files.readAllBytes(path))));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException _) { }
         }
     }
 
     /**
      * This function should send a LoginMessage to the server
-     * @param username
-     * @param password
+     * @param username the selected username
+     * @param password the selected password
      */
     public void login(String username, String password) {
         LoginRequest lm = new LoginRequest(username, password);
@@ -113,9 +110,9 @@ public class NetworkUser {
 
     /**
      * This function should send a RegisterMessage to the server
-     * @param username
-     * @param password
-     * @param userType
+     * @param username the selected username
+     * @param password the selected password
+     * @param userType the selected userType
      */
     public void register(String username, String password, String userType) {
         RegisterRequest rm = new RegisterRequest(username, password, userType);
@@ -128,10 +125,12 @@ public class NetworkUser {
      */
     private void startInputThread() {
 
-        inputThread = new Thread(() -> {
+        Thread inputThread = new Thread(() -> {
+
+            DataInputStream reader = null;
 
             try {
-                DataInputStream reader = new DataInputStream(server.getInputStream());
+                reader = new DataInputStream(server.getInputStream());
 
                 while (server.isConnected()) {
 
@@ -170,6 +169,14 @@ public class NetworkUser {
             } catch (IOException e) {
                 //TODO
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
+
+                try {
+                    if (reader != null)
+                        reader.close();
+                } catch (IOException ex) {
+                    System.exit(-1);
+                }
             }
         });
 
@@ -181,7 +188,7 @@ public class NetworkUser {
      */
     private void startOutputThread() {
 
-        outputThread = new Thread(() -> {
+        Thread outputThread = new Thread(() -> {
 
             DataOutputStream sender = null;
 

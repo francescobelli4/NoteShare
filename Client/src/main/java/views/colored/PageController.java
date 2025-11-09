@@ -40,7 +40,7 @@ public abstract class PageController {
      * by themselves because every controller should set their instance as the loader's controller.
      * @param page the Page that should be loaded
      */
-    public PageController(Page page) {
+    protected PageController(Page page) {
         this.loader = GraphicsController.getInstance().generateFXMLLoader(page);
     }
 
@@ -54,7 +54,7 @@ public abstract class PageController {
      * @param page the Page that should be loaded
      * @param parentController the controller of the parent page
      */
-    public PageController(Page page, PageController parentController) {
+    protected PageController(Page page, PageController parentController) {
         this.loader = GraphicsController.getInstance().generateFXMLLoader(page);
         this.parentController = parentController;
     }

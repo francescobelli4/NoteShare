@@ -70,12 +70,12 @@ public class FolderModel {
         if (this.getSubFolders().isEmpty()) return null;
 
         FolderModel temp = this;
-        for (String name : path.split("/")) {
+        for (String folderName : path.split("/")) {
 
             boolean found = false;
 
             for (FolderModel subFolder : temp.getSubFolders()) {
-                if (Objects.equals(subFolder.getName(), name)) {
+                if (Objects.equals(subFolder.getName(), folderName)) {
                     temp = subFolder;
                     found = true;
                     break;

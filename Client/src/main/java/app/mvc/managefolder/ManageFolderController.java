@@ -3,7 +3,6 @@ package app.mvc.managefolder;
 import app.App;
 import app.mvc.Controller;
 import app.mvc.models.FolderModel;
-import app.mvc.models.UserModel;
 
 /**
  * This class should implement all the logic needed to complete the "Manage Note" use case.

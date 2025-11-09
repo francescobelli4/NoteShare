@@ -26,7 +26,7 @@ public abstract class ScreenColoredForm extends PageController {
      * @param page the page that should be displayed
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredForm(Page page, PageController parentController) {
+    protected ScreenColoredForm(Page page, PageController parentController) {
         super(page, parentController);
     }
 

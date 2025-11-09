@@ -23,7 +23,7 @@ public abstract class ScreenColoredMainPage extends PageController {
      *
      * @param page the page that should be loaded
      */
-    public ScreenColoredMainPage(Page page) {
+    protected ScreenColoredMainPage(Page page) {
         super(page);
     }
 

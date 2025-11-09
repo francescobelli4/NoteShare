@@ -22,6 +22,9 @@ public class MessageMapper {
     }
 
     public static List<MessageDTO> toDTOList(List<MessageEntity> messages) {
+
+        if (messages == null) return null;
+
         List<MessageDTO> messageDTOS = new ArrayList<>();
 
         for (MessageEntity messageEntity : messages) {

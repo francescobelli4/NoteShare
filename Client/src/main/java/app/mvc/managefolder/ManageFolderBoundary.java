@@ -4,7 +4,6 @@ import app.mvc.Boundary;
 import app.mvc.Controller;
 import app.mvc.models.FolderModel;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**

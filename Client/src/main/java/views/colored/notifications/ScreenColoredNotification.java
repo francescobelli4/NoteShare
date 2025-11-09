@@ -21,7 +21,7 @@ public abstract class ScreenColoredNotification extends PageController {
      *
      * @param page the page that should be loaded
      */
-    public ScreenColoredNotification(Page page) {
+    protected ScreenColoredNotification(Page page) {
         super(page);
     }
 
