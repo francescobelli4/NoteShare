@@ -15,7 +15,6 @@ import utils.Auth;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.time.LocalDateTime;
@@ -41,7 +40,7 @@ public class NetworkUser implements Runnable {
     /**
      *  UserEntity is a class that represent all the data associated to a user.
      */
-    private final UserEntity userEntity;
+    private UserEntity userEntity;
 
     private Thread outputThread;
     private Thread inputThread;
@@ -196,16 +195,17 @@ public class NetworkUser implements Runnable {
      */
     private void handleLoginRequest(LoginRequest lm) {
 
-        UserEntity userEntity = Server.getUserDAO().findUserByUsername(lm.getUsername());
+        UserEntity user = Server.getUserDAO().findUserByUsername(lm.getUsername());
 
-        if (userEntity == null) {
+        if (user == null) {
             // LOGIN FAILED (user not found)
             bq.add(new ErrorResponse(1));
             return;
         }
 
-        if (Objects.equals(userEntity.getPassword(), lm.getPassword())) {
-            bq.add(new LoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.getMessageDAO().get(lm.getUsername())), userEntity.getToken()));
+        if (Objects.equals(user.getPassword(), lm.getPassword())) {
+            bq.add(new LoginSuccessResponse(UserMapper.toDTO(user), MessageMapper.toDTOList(Server.getMessageDAO().get(lm.getUsername())), user.getToken()));
+            this.userEntity = user;
         } else {
             // LOGIN FAILED (wrong password)
             bq.add(new ErrorResponse(2));
@@ -220,10 +220,11 @@ public class NetworkUser implements Runnable {
      */
     private void handleTokenLoginRequest(TokenLoginRequest tlm) {
 
-        UserEntity userEntity = Server.getUserDAO().findUserByToken(tlm.getToken());
+        UserEntity user = Server.getUserDAO().findUserByToken(tlm.getToken());
 
         if (userEntity != null) {
             bq.add(new TokenLoginSuccessResponse(UserMapper.toDTO(userEntity), MessageMapper.toDTOList(Server.getMessageDAO().get(userEntity.getUsername())), userEntity.getToken()));
+            this.userEntity = user;
         }
     }
 }
