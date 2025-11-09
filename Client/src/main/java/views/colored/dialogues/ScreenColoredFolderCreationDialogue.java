@@ -56,10 +56,12 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
         createFolderButton.setText(Locales.get("create_folder"));
         folderNameTextField.setPromptText(Locales.get("name"));
 
-        folderNameTextField.setTextFormatter(new TextFormatter<String>(change -> {
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
             return len < maxFolderNameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
-        }));
+        });
+
+        folderNameTextField.setTextFormatter(textFormatter);
 
         createFolderButton.setOnAction(e -> onCreateFolderButtonClick());
         closeButton.setOnAction(e -> onCloseButtonClick());
@@ -80,44 +82,6 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
     public void onCreateFolderButtonClick() {
 
         BoundaryManager.getInstance().getManageFolderBoundary().saveFolder(folderNameTextField.getText(), UserModel.getInstance().getActiveFolder());
-
-        /*if (folderNameTextField.getText().isEmpty()) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_name_too_short"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (UserModel.getInstance().getActiveFolder().searchSubFolder(folderNameTextField.getText()) != null) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_already_exists"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        UserModel.getInstance().getActiveFolder().addSubFolder(folderNameTextField.getText());
-
-        ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
-        ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());
-
-        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("success"), Locales.get("folder_created"), Icon.SUCCESS);
-        notification.display();*/
-
         close();
-    }
-
-    /**
-     * This function should close this page. It only needs to clear the parent's child slot
-     */
-    @Override
-    public void close() {
-        super.close();
-    }
-
-    /**
-     * This function should display the dialogue
-     */
-    @Override
-    public void display() {
-        super.display();
     }
 }

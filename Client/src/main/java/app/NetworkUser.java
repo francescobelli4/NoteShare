@@ -14,7 +14,6 @@ import communication.responses.RegisterSuccessResponse;
 import communication.responses.TokenLoginSuccessResponse;
 import utils.PathUtils;
 
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -94,7 +93,9 @@ public class NetworkUser {
         if (path.toFile().exists()) {
             try {
                 enqueueTransferable(new TokenLoginRequest(new String(Files.readAllBytes(path))));
-            } catch (IOException _) { }
+            } catch (IOException _) {
+                // Nothing to do...
+            }
         }
     }
 
@@ -140,31 +141,7 @@ public class NetworkUser {
 
                     Transferable parsedTransferable = Transferable.fromJson(input);
 
-                    if (parsedTransferable instanceof RegisterSuccessResponse rsm) {
-                        handleRegisterSuccessResponse(rsm);
-                    } else if (parsedTransferable instanceof LoginSuccessResponse lsm) {
-                        handleLoginSuccessResponse(lsm);
-                    } else if (parsedTransferable instanceof TokenLoginSuccessResponse tlsm) {
-                        handleTokenLoginSuccessResponse(tlsm);
-                    } else if (parsedTransferable instanceof NewMessageEvent nme) {
-                        handleNewMessageEvent(nme);
-                    } else if (parsedTransferable instanceof ErrorResponse err) {
-
-                        switch (err.getErrorCode()) {
-                            case 0:
-                                BoundaryManager.getInstance().getRegisterBoundary().onRegisterFailed(RegisterResult.USERNAME_ALREADY_IN_USE);
-                                break;
-                            case 1:
-                                BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.USER_NOT_EXISTS);
-                                break;
-                            case 2:
-                                BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.WRONG_PASSWORD);
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
+                    handleInputTransferable(parsedTransferable);
                 }
             } catch (IOException e) {
                 //TODO
@@ -174,13 +151,42 @@ public class NetworkUser {
                 try {
                     if (reader != null)
                         reader.close();
-                } catch (IOException ex) {
+                } catch (IOException _) {
                     System.exit(-1);
                 }
             }
         });
 
         inputThread.start();
+    }
+
+
+    private void handleInputTransferable(Transferable transferable) {
+        if (transferable instanceof RegisterSuccessResponse rsm) {
+            handleRegisterSuccessResponse(rsm);
+        } else if (transferable instanceof LoginSuccessResponse lsm) {
+            handleLoginSuccessResponse(lsm);
+        } else if (transferable instanceof TokenLoginSuccessResponse tlsm) {
+            handleTokenLoginSuccessResponse(tlsm);
+        } else if (transferable instanceof NewMessageEvent nme) {
+            handleNewMessageEvent(nme);
+        } else if (transferable instanceof ErrorResponse err) {
+
+            switch (err.getErrorCode()) {
+                case 0:
+                    BoundaryManager.getInstance().getRegisterBoundary().onRegisterFailed(RegisterResult.USERNAME_ALREADY_IN_USE);
+                    break;
+                case 1:
+                    BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.USER_NOT_EXISTS);
+                    break;
+                case 2:
+                    BoundaryManager.getInstance().getLoginBoundary().onLoginFailed(LoginResult.WRONG_PASSWORD);
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
 
     /**
@@ -213,7 +219,7 @@ public class NetworkUser {
                 try {
                     if (sender != null)
                         sender.close();
-                } catch (IOException ex) {
+                } catch (IOException _) {
                     System.exit(-1);
                 }
             }
