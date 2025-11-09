@@ -21,9 +21,11 @@ import views.colored.elements.ScreenColoredMessageElement;
  */
 public class ScreenColoredMessagesContainer extends ScreenColoredForm implements ViewMessagesBoundary.Listener {
 
+    /**
+     * This FlowPane contains the list of messages
+     */
     @FXML
     FlowPane messagesContainer;
-
     @FXML
     ScrollPane box;
 
@@ -45,7 +47,10 @@ public class ScreenColoredMessagesContainer extends ScreenColoredForm implements
         this.root.setOnMouseClicked(e -> close());
     }
 
-
+    /**
+     * This function should display the list of messages. It creates a MessageElement for
+     * each MessageModel
+     */
     public void displayMessages() {
 
         messagesContainer.getChildren().clear();
@@ -65,7 +70,9 @@ public class ScreenColoredMessagesContainer extends ScreenColoredForm implements
     }
 
 
-
+    /**
+     * This function should close this element and remove it from the listeners list
+     */
     @Override
     public void close() {
         BoundaryManager.getInstance().getViewMessagesBoundary().removeListener(this);
@@ -82,6 +89,11 @@ public class ScreenColoredMessagesContainer extends ScreenColoredForm implements
         AnchorPane.setRightAnchor(box, x);
     }
 
+    /**
+     * This function should update the list of messages if a new message is received while
+     * this element exists
+     * @param message the new message (a don't care condition at this moment...)
+     */
     @Override
     public void onMessageArrived(MessageModel message) {
         displayMessages();

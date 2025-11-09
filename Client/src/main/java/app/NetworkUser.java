@@ -1,6 +1,5 @@
 package app;
 
-import app.mvc.Boundary;
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginResult;
 import app.mvc.register.RegisterResult;
@@ -95,7 +94,7 @@ public class NetworkUser {
 
         if (path.toFile().exists()) {
             try {
-                enqueueMessage(new TokenLoginRequest(new String(Files.readAllBytes(path))));
+                enqueueTransferable(new TokenLoginRequest(new String(Files.readAllBytes(path))));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -109,7 +108,7 @@ public class NetworkUser {
      */
     public void login(String username, String password) {
         LoginRequest lm = new LoginRequest(username, password);
-        enqueueMessage(lm);
+        enqueueTransferable(lm);
     }
 
     /**
@@ -120,7 +119,7 @@ public class NetworkUser {
      */
     public void register(String username, String password, String userType) {
         RegisterRequest rm = new RegisterRequest(username, password, userType);
-        enqueueMessage(rm);
+        enqueueTransferable(rm);
     }
 
     /**
@@ -143,11 +142,11 @@ public class NetworkUser {
                     Transferable parsedTransferable = Transferable.fromJson(input);
 
                     if (parsedTransferable instanceof RegisterSuccessResponse rsm) {
-                        handleRegisterSuccessMessage(rsm);
+                        handleRegisterSuccessResponse(rsm);
                     } else if (parsedTransferable instanceof LoginSuccessResponse lsm) {
-                        handleLoginSuccessMessage(lsm);
+                        handleLoginSuccessResponse(lsm);
                     } else if (parsedTransferable instanceof TokenLoginSuccessResponse tlsm) {
-                        handleTokenLoginSuccessMessage(tlsm);
+                        handleTokenLoginSuccessResponse(tlsm);
                     } else if (parsedTransferable instanceof NewMessageEvent nme) {
                         handleNewMessageEvent(nme);
                     } else if (parsedTransferable instanceof ErrorResponse err) {
@@ -217,41 +216,46 @@ public class NetworkUser {
     }
 
     /**
-     * This function adds a new message to the bq BlockingQueue.
+     * This function adds a new transferable to the bq BlockingQueue.
      * This queue is actually a FIFO.
-     * @param sendingTransferable a Message subclass
+     * @param sendingTransferable a Transferable subclass
      */
-    private void enqueueMessage(Transferable sendingTransferable) {
+    private void enqueueTransferable(Transferable sendingTransferable) {
         bq.add(sendingTransferable);
     }
 
     /**
-     * This function handles the RegisterSuccessMessage. It also saves the access token sent by the server
+     * This function handles the RegisterSuccessResponse. It also saves the access token sent by the server
      * @param rsm server response
      */
-    private void handleRegisterSuccessMessage(RegisterSuccessResponse rsm) {
+    private void handleRegisterSuccessResponse(RegisterSuccessResponse rsm) {
         BoundaryManager.getInstance().getRegisterBoundary().onRegisterSuccess(rsm.userDTO, rsm.token);
     }
 
     /**
-     * This function handles the LoginSuccessMessage. It also saves the access token sent by the server
+     * This function handles the LoginSuccessResponse. It also saves the access token sent by the server
      * @param lsm server response
      */
-    private void handleLoginSuccessMessage(LoginSuccessResponse lsm) {
+    private void handleLoginSuccessResponse(LoginSuccessResponse lsm) {
         BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(lsm.userDTO, lsm.token);
         BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(lsm.messages);
     }
 
     /**
-     * This function handles the TokenLoginSuccessMessage.
+     * This function handles the TokenLoginSuccessResponse.
      * It allows to log-in without writing credentials
      * @param tlsm server response
      */
-    private void handleTokenLoginSuccessMessage(TokenLoginSuccessResponse tlsm) {
+    private void handleTokenLoginSuccessResponse(TokenLoginSuccessResponse tlsm) {
         BoundaryManager.getInstance().getLoginBoundary().onLoginSuccess(tlsm.userDTO, tlsm.token);
         BoundaryManager.getInstance().getViewMessagesBoundary().messagesListArrived(tlsm.messages);
     }
 
+    /**
+     * This function handles the NewMessageEvent.
+     * It allows to update UserModel's list of messages
+     * @param nme the event
+     */
     private void handleNewMessageEvent(NewMessageEvent nme) {
         BoundaryManager.getInstance().getViewMessagesBoundary().messageArrived(nme.message);
     }

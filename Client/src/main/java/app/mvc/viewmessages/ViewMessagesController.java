@@ -13,10 +13,18 @@ import java.util.List;
  */
 public class ViewMessagesController extends Controller {
 
+    /**
+     * This function should set the list of messages in the UserModel
+     * @param messages the list of messages
+     */
     public void setMessagesList(List<MessageDTO> messages) {
         UserModel.getInstance().setMessages(MessageMapper.toModelList(messages));
     }
 
+    /**
+     * This function should add the new message to the list
+     * @param message the new message
+     */
     public void addMessage(MessageDTO message) {
         UserModel.getInstance().getMessages().add(MessageMapper.toModel(message));
     }

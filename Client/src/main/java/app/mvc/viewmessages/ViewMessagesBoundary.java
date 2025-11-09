@@ -36,15 +36,28 @@ public class ViewMessagesBoundary extends Boundary {
         listeners.add(listener);
     }
 
+    /**
+     * This function should remove a listener from the list
+     * @param listener the listener that has to be removed
+     */
     public void removeListener(Listener listener) {
         listeners.remove(listener);
     }
 
-
+    /**
+     * This function should call the controller to set the list of messages received from
+     * the server.
+     * @param messages the list of message DTOs received from the server
+     */
     public void messagesListArrived(List<MessageDTO> messages) {
         getController().setMessagesList(messages);
     }
 
+    /**
+     * This function should call the controller to add a new received messages to the list
+     * and then it notifies the listeners
+     * @param message the received message DTO
+     */
     public void messageArrived(MessageDTO message) {
         getController().addMessage(message);
 
