@@ -3,7 +3,6 @@ package views.colored.forms;
 import app.mvc.BoundaryManager;
 import app.mvc.register.RegisterBoundary;
 import app.mvc.register.RegisterResult;
-import org.w3c.dom.Text;
 import views.GraphicsController;
 import views.colored.Icon;
 import views.colored.Page;
@@ -13,7 +12,6 @@ import views.colored.notifications.ScreenColoredGenericNotification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import locales.Locales;
 import utils.Utils;
 

@@ -11,7 +11,6 @@ import views.colored.dialogues.ScreenColoredNoteCreationDialogue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
 /**
  * Class that represents the left bar for the student user type.

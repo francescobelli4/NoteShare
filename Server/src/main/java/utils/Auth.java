@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Auth {
 
+    private Auth() {}
+
     public static String generateAccessToken() {
 
         Random rnd = new Random(System.currentTimeMillis());

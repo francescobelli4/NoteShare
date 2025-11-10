@@ -83,7 +83,7 @@ public class NetworkUser {
 
             startInputThread();
             startOutputThread();
-        } catch (IOException e) {
+        } catch (IOException _) {
             logger.severe("Failed connecting to the server!");
             // TODO tenta la riconnessione con notifica anche
         }
@@ -144,7 +144,7 @@ public class NetworkUser {
 
                     handleInputTransferable(parsedTransferable);
                 }
-            } catch (IOException e) {
+            } catch (IOException _) {
                 logger.severe("Failed reading from server!");
 
                 try {
@@ -210,7 +210,7 @@ public class NetworkUser {
                     sender.writeUTF(json);
                 }
 
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException | InterruptedException _) {
                 logger.severe("Failed sending data to server");
 
                 try {

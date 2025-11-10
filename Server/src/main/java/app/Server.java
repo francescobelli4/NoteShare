@@ -1,6 +1,7 @@
+package app;
+
 import persistency.nonpersistent.daos.NPMessageDAO;
 import persistency.nonpersistent.daos.NPUserDAO;
-import persistency.persistent.daos.PUserDAO;
 import persistency.shared.daos.MessageDAO;
 import persistency.shared.daos.UserDAO;
 
@@ -42,7 +43,7 @@ public class Server {
     /**
      * This function should set up the server socket and start a new thread every time
      * a user connects.
-     * Every NetworkUser thread will generate other 2 threads: one for reading and one for
+     * Every app.NetworkUser thread will generate other 2 threads: one for reading and one for
      * writing to the client.
      * @param port the server communication port number
      */
@@ -50,7 +51,7 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(port)){
 
-            logger.info("Server socket started up!\nWaiting for clients...");
+            logger.info("app.Server socket started up!\nWaiting for clients...");
 
             while (serverSocket.isBound()) {
                 Socket clientSocket = serverSocket.accept();

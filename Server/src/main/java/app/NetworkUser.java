@@ -1,3 +1,5 @@
+package app;
+
 import communication.Transferable;
 import communication.events.NewMessageEvent;
 import communication.requests.LoginRequest;
@@ -29,7 +31,7 @@ import java.util.logging.Logger;
  * Every user should have an inputThread, an outputThread and a BlockingQueue to properly
  * manage the communication.
  *
- * Every NetworkUser is associated with his UserEntity, that is mapped to UserDTO when it
+ * Every app.NetworkUser is associated with his UserEntity, that is mapped to UserDTO when it
  * has to be sent to the client.
  * A UserEntity is a class that represent all the data associated to a user.
  */
@@ -76,7 +78,7 @@ public class NetworkUser implements Runnable {
     }
 
     /**
-     * When a NetworkUser thread is launched, it should start the input and the
+     * When a app.NetworkUser thread is launched, it should start the input and the
      * output thread also
      */
     @Override

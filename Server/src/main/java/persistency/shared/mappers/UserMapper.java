@@ -16,7 +16,7 @@ public class UserMapper {
         userDTO.setUserType(userEntity.getUserType());
         userDTO.setCoins(userEntity.getCoins());
         return userDTO;
-    };
+    }
 
     public static UserEntity toEntity(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
