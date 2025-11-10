@@ -22,6 +22,12 @@ public class ManageNoteController extends Controller {
 
         if (name == null || name.isEmpty()) {
             getBoundary().onNoteCreationFailed(ManageNoteResult.NOTE_NAME_NOT_SPECIFIED);
+            return null;
+        }
+
+        if (name.length() > getBoundary().getMaxNoteNameLength()) {
+            getBoundary().onNoteCreationFailed(ManageNoteResult.NOTE_NAME_TOO_LONG);
+            return null;
         }
 
         return new NoteModel(name, pdf);

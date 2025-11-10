@@ -31,9 +31,6 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
     @FXML
     Button closeButton;
 
-    /** TextField limits */
-    private int maxFolderNameLength = 25;
-
     /**
      * Constructor with parent controller
      *
@@ -58,13 +55,13 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
 
         TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
-            return len < maxFolderNameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
+            return len < BoundaryManager.getInstance().getManageFolderBoundary().getMaxFolderNameLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
         });
 
         folderNameTextField.setTextFormatter(textFormatter);
 
-        createFolderButton.setOnAction(e -> onCreateFolderButtonClick());
-        closeButton.setOnAction(e -> onCloseButtonClick());
+        createFolderButton.setOnAction(_ -> onCreateFolderButtonClick());
+        closeButton.setOnAction(_ -> onCloseButtonClick());
     }
 
     /**

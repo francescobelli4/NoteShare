@@ -19,6 +19,12 @@ public class ManageFolderController extends Controller {
 
         if (name == null || name.isEmpty()) {
             getBoundary().onFolderCreationFailed(ManageFolderResult.FOLDER_NAME_NOT_SPECIFIED);
+            return null;
+        }
+
+        if (name.length() > getBoundary().getMaxFolderNameLength()) {
+            getBoundary().onFolderCreationFailed(ManageFolderResult.FOLDER_NAME_TOO_LONG);
+            return null;
         }
 
         return new FolderModel(name);

@@ -147,13 +147,19 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
     @Override
     public void onFolderCreationFailed(ManageFolderResult manageFolderResult) {
 
-        ScreenColoredGenericNotification notification = switch (manageFolderResult) {
-            case ManageFolderResult.FOLDER_NAME_NOT_SPECIFIED ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_name_too_short"), Icon.ERROR);
-            case ManageFolderResult.FOLDER_ALREADY_EXISTS ->
-                    new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("folder_already_exists"), Icon.ERROR);
+        String title = Locales.get("error");
+        Icon icon = Icon.ERROR;
 
+        String description = switch (manageFolderResult) {
+            case ManageFolderResult.FOLDER_NAME_NOT_SPECIFIED ->
+                    Locales.get("folder_name_too_short");
+            case ManageFolderResult.FOLDER_ALREADY_EXISTS ->
+                    Locales.get("folder_already_exists");
+            case ManageFolderResult.FOLDER_NAME_TOO_LONG ->
+                    Locales.get("folder_name_too_long");
         };
+
+        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);
 
         Platform.runLater(notification::display);
     }
@@ -187,6 +193,8 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
                     Locales.get("note_name_too_short");
             case ManageNoteResult.NOTE_ALREADY_EXISTS ->
                     Locales.get("note_already_exists");
+            case ManageNoteResult.NOTE_NAME_TOO_LONG ->
+                    Locales.get("note_name_too_long");
         };
 
         ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);

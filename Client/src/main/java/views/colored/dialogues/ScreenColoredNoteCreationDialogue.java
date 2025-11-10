@@ -35,8 +35,6 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
     @FXML
     Button closeButton;
 
-    /** TextField limits */
-    private int maxNoteNameLength = 25;
 
     /** Selected PDF */
     File pdf;
@@ -64,10 +62,12 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
         noteNameTextField.setPromptText(Locales.get("name"));
         choosePDFButton.setText(Locales.get("choose_pdf"));
 
-        noteNameTextField.setTextFormatter(new TextFormatter<String>(change -> {
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
-            return len < maxNoteNameLength && Utils.isAlphanumeric(change.getText()) ? change : null;
-        }));
+            return len < BoundaryManager.getInstance().getManageNoteBoundary().getMaxNoteNameLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
+        });
+
+        noteNameTextField.setTextFormatter(textFormatter);
 
         createNoteButton.setOnAction(e -> onCreateNoteButtonClick());
         closeButton.setOnAction(e -> onCloseButtonClick());
@@ -89,36 +89,6 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
     public void onCreateNoteButtonClick() {
 
         BoundaryManager.getInstance().getManageNoteBoundary().saveNote(noteNameTextField.getText(), pdf, UserModel.getInstance().getActiveFolder());
-        /*if (noteNameTextField.getText().isEmpty()) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_name_too_short"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (App.getNoteDAO().getNote(UserModel.getInstance().getActiveFolder(), noteNameTextField.getText()) != null) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_already_exists"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        if (pdf == null) {
-            ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("error"), Locales.get("note_pdf_not_set"), Icon.ERROR);
-            notification.display();
-            return;
-        }
-
-        ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(Locales.get("success"), Locales.get("note_created"), Icon.SUCCESS);
-        notification.display();
-
-        NoteEntity note = App.getNoteDAO().createNote(noteNameTextField.getText(), pdf.getAbsolutePath());
-        App.getNoteDAO().saveNote(UserModel.getInstance().getActiveFolder(), note);
-
-        ScreenColoredHomePage homePageController = (ScreenColoredHomePage)GraphicsController.getInstance().getMainPage();
-        ScreenColoredFoldersContainer foldersContainer = homePageController.getFoldersContainerController();
-        foldersContainer.displayFolder(UserModel.getInstance().getActiveFolder());*/
-
-
-
         close();
     }
 
