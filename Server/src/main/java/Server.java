@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Server {
 
@@ -21,10 +22,12 @@ public class Server {
     private static UserDAO userDAO;
     private static MessageDAO messageDAO;
 
+    private static final Logger logger = Logger.getLogger(Server.class.getName());
+
     static void main(String[] args) {
 
         if (Objects.equals(args[0], "demo")) {
-            System.out.println("Starting in DEMO mode...");
+            logger.info("Starting in DEMO mode...");
             demoMode = true;
         }
 
@@ -47,19 +50,18 @@ public class Server {
 
         try (ServerSocket serverSocket = new ServerSocket(port)){
 
-            System.out.println("Server socket started up!\nWaiting for clients...");
+            logger.info("Server socket started up!\nWaiting for clients...");
 
             while (serverSocket.isBound()) {
                 Socket clientSocket = serverSocket.accept();
 
-                System.out.println("Client connected!");
+                logger.info("Client connected!");
 
                 Thread t = new Thread(new NetworkUser(clientSocket));
                 t.start();
             }
-        } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
+        } catch (IOException _) {
+            logger.severe("Failed starting up server socket!");
         }
     }
 

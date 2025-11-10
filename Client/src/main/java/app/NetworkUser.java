@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
 
 
 /**
@@ -38,6 +39,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * to match the right Message child class
  */
 public class NetworkUser {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     /**
      * Singleton
@@ -76,12 +79,12 @@ public class NetworkUser {
         try {
             server = new Socket(host, port);
 
-            System.out.println("Connected! :D");
+            logger.info("Connected to the server!");
 
             startInputThread();
             startOutputThread();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("Failed connecting to the server!");
             // TODO tenta la riconnessione con notifica anche
         }
     }
@@ -137,16 +140,12 @@ public class NetworkUser {
 
                     String input = reader.readUTF();
 
-                    System.out.println("INPUT: " + input);
-
                     Transferable parsedTransferable = Transferable.fromJson(input);
 
                     handleInputTransferable(parsedTransferable);
                 }
             } catch (IOException e) {
-                //TODO
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
+                logger.severe("Failed reading from server!");
 
                 try {
                     if (reader != null)
@@ -154,6 +153,8 @@ public class NetworkUser {
                 } catch (IOException _) {
                     System.exit(-1);
                 }
+
+                Thread.currentThread().interrupt();
             }
         });
 
@@ -206,15 +207,11 @@ public class NetworkUser {
                     Transferable sendingTransferable = bq.take();
                     String json = sendingTransferable.toJson();
 
-                    System.out.println("OUTPUT: " + json);
-
                     sender.writeUTF(json);
                 }
 
             } catch (IOException | InterruptedException e) {
-                //TODO
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
+                logger.severe("Failed sending data to server");
 
                 try {
                     if (sender != null)
@@ -222,6 +219,8 @@ public class NetworkUser {
                 } catch (IOException _) {
                     System.exit(-1);
                 }
+
+                Thread.currentThread().interrupt();
             }
         });
 

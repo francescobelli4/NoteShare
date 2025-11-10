@@ -3,9 +3,6 @@ package locales;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * TODO: EN and IT
- */
 public class Locales {
 
     private Locales() {}

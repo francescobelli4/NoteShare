@@ -6,6 +6,7 @@ import persistency.shared.entities.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Singleton
@@ -14,6 +15,8 @@ import java.util.Objects;
  * It's used when the app is launched in demo mode.
  */
 public class NPUserDAO implements UserDAO {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     private static NPUserDAO instance;
 
@@ -37,7 +40,7 @@ public class NPUserDAO implements UserDAO {
         }
 
         users.add(user);
-        System.out.println("User " + user.getUsername() + " saved!");
+        logger.info("User " + user.getUsername() + " saved!");
 
         return true;
     }

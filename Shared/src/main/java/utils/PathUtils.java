@@ -4,6 +4,8 @@ import java.io.File;
 
 public class PathUtils {
 
+    private PathUtils() {}
+
     /**
      * This function returns a path to the local app's folder
      * @return

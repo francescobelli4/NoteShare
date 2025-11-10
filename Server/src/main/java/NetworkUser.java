@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Logger;
 
 /**
  * This class should manage the communication with the user by handling messages.
@@ -33,6 +34,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * A UserEntity is a class that represent all the data associated to a user.
  */
 public class NetworkUser implements Runnable {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     private final Socket client;
     private boolean connected = true;
@@ -57,16 +60,17 @@ public class NetworkUser implements Runnable {
         if (!connected) return;
 
         connected = false;
-        try {
-            inputThread.interrupt();
-            outputThread.interrupt();
 
+        inputThread.interrupt();
+        outputThread.interrupt();
+
+        try {
             client.close();
         } catch (IOException _) {
-            //TODO
+            logger.severe("Failed closing client " + client.getInetAddress() + " socket.");
         }
 
-        System.out.println("Connessione chiusa con " + client.getInetAddress());
+        logger.info("Closed connection with client: " + client.getInetAddress());
 
         Thread.currentThread().interrupt();
     }
@@ -78,7 +82,7 @@ public class NetworkUser implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("User Thread Started");
+        logger.info("User thread started for client " + client.getInetAddress());
 
         inputThread = new Thread(() -> {
 
@@ -88,6 +92,7 @@ public class NetworkUser implements Runnable {
                     handleRequest(in);
                 }
             } catch (IOException _) {
+                logger.severe("Broken DataInputStream for client " + client.getInetAddress());
                 closeConnection();
             }
         });
@@ -103,6 +108,7 @@ public class NetworkUser implements Runnable {
                     handleSendMessage(out);
                 }
             } catch (IOException _) {
+                logger.severe("Broken DataOutputStream for client " + client.getInetAddress());
                 closeConnection();
             }
         });
@@ -111,13 +117,17 @@ public class NetworkUser implements Runnable {
     }
 
     private void handleSendMessage(DataOutputStream out) {
-        try {
-            Transferable msg = bq.take();
+        Transferable msg;
 
-            sendMessage(msg, out);
+        try {
+            msg = bq.take();
         } catch (InterruptedException _) {
+            logger.severe("bq.take was interrupted. (Should probably deleted this log)");
             closeConnection();
+            return;
         }
+
+        sendMessage(msg, out);
     }
 
     /**
@@ -127,26 +137,30 @@ public class NetworkUser implements Runnable {
      * @param in the input stream
      */
     private void handleRequest(DataInputStream in) throws IOException {
+
+        String data;
+
         try {
-            String data = in.readUTF();
-            System.out.println("Received JSON: " + data);
-
-            Transferable msg = Transferable.fromJson(data);
-
-            if (msg instanceof RegisterRequest rm) {
-                handleRegisterRequest(rm);
-            } else if (msg instanceof LoginRequest lm) {
-                handleLoginRequest(lm);
-            } else if (msg instanceof TokenLoginRequest tlm) {
-                handleTokenLoginRequest(tlm);
-            }
+            data = in.readUTF();
         } catch (IOException _) {
+            logger.severe("Failed reading data from client " + client.getInetAddress());
             closeConnection();
+            return;
+        }
+
+        Transferable msg = Transferable.fromJson(data);
+
+        if (msg instanceof RegisterRequest rm) {
+            handleRegisterRequest(rm);
+        } else if (msg instanceof LoginRequest lm) {
+            handleLoginRequest(lm);
+        } else if (msg instanceof TokenLoginRequest tlm) {
+            handleTokenLoginRequest(tlm);
         }
     }
 
     /**
-     * This function has to send the client a Message subclass instance, that is serialized
+     * This function has to send to the client a Message subclass instance, that is serialized
      * and sent to the client as a JSON string.
      * @param sendingTransferable a Messsage subclass
      * @param out the output stream
@@ -155,9 +169,8 @@ public class NetworkUser implements Runnable {
 
         try {
             out.writeUTF(sendingTransferable.toJson());
-            System.out.println("Sent: " + sendingTransferable.toJson());
         } catch (IOException _) {
-            //TODO
+            logger.severe("Failed writing data to the client " + client.getInetAddress());
             closeConnection();
         }
     }
@@ -168,8 +181,6 @@ public class NetworkUser implements Runnable {
      * @param rm the request the user sent
      */
     private void handleRegisterRequest(RegisterRequest rm) {
-
-        System.out.println("AABBABABAABABBABA");
 
         userEntity.setUsername(rm.getUsername());
         userEntity.setPassword(rm.getPassword());

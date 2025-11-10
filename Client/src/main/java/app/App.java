@@ -13,8 +13,11 @@ import persistency.shared.daos.NoteDAO;
 import utils.Utils;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class App {
+
+    private static final Logger logger = Logger.getLogger(App.class.getName());
 
     private static boolean demoMode = false;
 
@@ -24,7 +27,7 @@ public class App {
     public static void main(String[] args) {
 
         if (Objects.equals(args[0], "demo")) {
-            System.out.println("Starting in DEMO mode...");
+            logger.info("Starting in DEMO mode...");
             demoMode = true;
         }
         Locales.initializeLocales();
