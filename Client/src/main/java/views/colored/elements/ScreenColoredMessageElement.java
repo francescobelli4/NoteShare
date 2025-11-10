@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import locales.Locales;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 

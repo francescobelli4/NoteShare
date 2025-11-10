@@ -1,7 +1,6 @@
 package views.colored.forms;
 
 import app.App;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import views.colored.main_pages.ScreenColoredAccessPage;

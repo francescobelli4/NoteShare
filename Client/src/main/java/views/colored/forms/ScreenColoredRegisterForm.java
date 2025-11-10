@@ -4,7 +4,6 @@ import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.register.RegisterBoundary;
 import app.mvc.register.RegisterResult;
-import views.GraphicsController;
 import views.colored.Icon;
 import views.colored.Page;
 import views.colored.PageController;

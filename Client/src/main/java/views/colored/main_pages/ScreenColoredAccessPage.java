@@ -4,7 +4,6 @@ import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginBoundary;
 import app.mvc.login.LoginResult;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.forms.ScreenColoredAccessForm;
 import views.colored.forms.ScreenColoredForm;

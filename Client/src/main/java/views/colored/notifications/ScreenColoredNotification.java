@@ -1,7 +1,6 @@
 package views.colored.notifications;
 
 import app.App;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import javafx.scene.layout.StackPane;

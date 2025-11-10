@@ -1,7 +1,6 @@
 package views.colored.main_pages;
 
 import app.App;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import javafx.scene.Parent;

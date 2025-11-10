@@ -1,7 +1,6 @@
 package views.colored;
 
 import app.App;
-import views.GraphicsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 

@@ -2,7 +2,6 @@ package views.colored.elements;
 
 import app.App;
 import app.mvc.BoundaryManager;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import javafx.fxml.FXML;

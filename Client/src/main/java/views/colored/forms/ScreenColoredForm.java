@@ -2,7 +2,6 @@ package views.colored.forms;
 
 import app.App;
 import javafx.scene.layout.StackPane;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import javafx.scene.layout.VBox;

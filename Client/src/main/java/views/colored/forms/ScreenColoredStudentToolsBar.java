@@ -4,7 +4,6 @@ import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
 import app.mvc.navigation.NavigationBoundary;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import views.colored.dialogues.ScreenColoredFolderCreationDialogue;

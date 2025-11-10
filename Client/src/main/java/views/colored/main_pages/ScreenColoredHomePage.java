@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import locales.Locales;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.forms.*;
 import javafx.fxml.FXML;

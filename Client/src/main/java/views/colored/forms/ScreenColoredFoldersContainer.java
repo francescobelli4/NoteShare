@@ -10,7 +10,6 @@ import app.mvc.models.FolderModel;
 import app.mvc.models.NoteModel;
 import app.mvc.models.UserModel;
 import app.mvc.navigation.NavigationBoundary;
-import views.GraphicsController;
 import views.colored.Icon;
 import views.colored.Page;
 import views.colored.PageController;

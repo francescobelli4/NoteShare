@@ -10,7 +10,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
 import views.colored.elements.ScreenColoredMessageElement;

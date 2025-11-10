@@ -3,7 +3,6 @@ package views.colored.dialogues;
 import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
-import views.GraphicsController;
 import views.colored.Page;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
