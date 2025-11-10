@@ -20,7 +20,6 @@ import views.colored.notifications.ScreenColoredNotification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import locales.Locales;
 
 /**
@@ -110,15 +109,6 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
         BoundaryManager.getInstance().destroyNavigationBoundary();
         BoundaryManager.getInstance().destroyManageFolderBoundary();
         BoundaryManager.getInstance().destroyManageNoteBoundary();
-    }
-
-    /**
-     * This function should display the folders container
-     * @param container the container that contains this page
-     */
-    @Override
-    public void display(VBox container) {
-        super.display(container);
     }
 
     @Override

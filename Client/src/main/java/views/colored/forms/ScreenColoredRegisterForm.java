@@ -3,6 +3,7 @@ package views.colored.forms;
 import app.mvc.BoundaryManager;
 import app.mvc.register.RegisterBoundary;
 import app.mvc.register.RegisterResult;
+import org.w3c.dom.Text;
 import views.GraphicsController;
 import views.colored.Icon;
 import views.colored.Page;
@@ -25,25 +26,25 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
      * FXML elements
      */
     @FXML
-    Label title_label;
+    Label titleLabel;
     @FXML
-    TextField username_text_field;
+    TextField usernameTextField;
     @FXML
-    TextField password_text_field;
+    TextField passwordTextField;
     @FXML
-    Label username_prompt;
+    Label usernamePrompt;
     @FXML
-    Label password_prompt;
+    Label passwordPrompt;
     @FXML
-    RadioButton student_radiobutton;
+    RadioButton studentRadioButton;
     @FXML
-    Label student_label;
+    Label studentLabel;
     @FXML
-    RadioButton teacher_radiobutton;
+    RadioButton teacherRadioButton;
     @FXML
-    Label teacher_label;
+    Label teacherLabel;
     @FXML
-    Button register_button;
+    Button registerButton;
 
     /**
      * Constructor with parent controller
@@ -69,27 +70,30 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
     @FXML
     public void initialize() {
 
-        title_label.setText(Locales.get("register"));
-        username_text_field.setPromptText(Locales.get("username"));
-        password_text_field.setPromptText(Locales.get("password"));
-        register_button.setText(Locales.get("register"));
-        username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()));
-        password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()));
-        student_label.setText(Locales.get("student"));
-        teacher_label.setText(Locales.get("teacher"));
-        student_radiobutton.setOnAction(e -> onStudentButtonClick());
-        teacher_radiobutton.setOnAction(e -> onTeacherButtonClick());
-        register_button.setOnAction(e -> onRegisterButtonClick());
+        titleLabel.setText(Locales.get("register"));
+        usernameTextField.setPromptText(Locales.get("username"));
+        passwordTextField.setPromptText(Locales.get("password"));
+        registerButton.setText(Locales.get("register"));
+        usernamePrompt.setText(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()));
+        passwordPrompt.setText(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()));
+        studentLabel.setText(Locales.get("student"));
+        teacherLabel.setText(Locales.get("teacher"));
+        studentRadioButton.setOnAction(_ -> onStudentButtonClick());
+        teacherRadioButton.setOnAction(_ -> onTeacherButtonClick());
+        registerButton.setOnAction(_ -> onRegisterButtonClick());
 
-        username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
+        TextFormatter<String> usernameTextFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
             return len < Utils.getMaxUsernameLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
-        }));
+        });
 
-        password_text_field.setTextFormatter(new TextFormatter<String>(change -> {
+        TextFormatter<String> passwordTextFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
             return len < Utils.getMaxPasswordLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
-        }));
+        });
+
+        usernameTextField.setTextFormatter(usernameTextFormatter);
+        passwordTextField.setTextFormatter(passwordTextFormatter);
     }
 
     /**
@@ -97,7 +101,7 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
      */
     @FXML
     public void onStudentButtonClick() {
-        teacher_radiobutton.setSelected(false);
+        teacherRadioButton.setSelected(false);
     }
 
     /**
@@ -105,7 +109,7 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
      */
     @FXML
     public void onTeacherButtonClick() {
-        student_radiobutton.setSelected(false);
+        studentRadioButton.setSelected(false);
     }
 
     /**
@@ -114,7 +118,16 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
      */
     @FXML
     public void onRegisterButtonClick() {
-        BoundaryManager.getInstance().getRegisterBoundary().performRegister(username_text_field.getText(), password_text_field.getText(), student_radiobutton.isSelected() ? "student" : teacher_radiobutton.isSelected() ? "teacher" : null);
+
+        String userType = null;
+
+        if (studentRadioButton.isSelected() && !teacherRadioButton.isSelected()) {
+            userType = "student";
+        } else if (teacherRadioButton.isSelected() && !studentRadioButton.isSelected()) {
+            userType = "teacher";
+        }
+
+        BoundaryManager.getInstance().getRegisterBoundary().performRegister(usernameTextField.getText(), passwordTextField.getText(), userType);
     }
 
     /**
@@ -123,15 +136,6 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
     @Override
     public void close() {
         this.container.getChildren().clear();
-    }
-
-    /**
-     * This function should actually show this page.
-     * @param container the container that contains this page
-     */
-    @Override
-    public void display(VBox container) {
-        super.display(container);
     }
 
     @Override

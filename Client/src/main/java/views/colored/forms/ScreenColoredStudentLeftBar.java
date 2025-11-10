@@ -20,15 +20,15 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
      * FXML elements
      */
     @FXML
-    Button your_notes_button;
+    Button yourNotesButton;
     @FXML
-    Button browse_notes_button;
+    Button browseNotesButton;
     @FXML
-    Button shared_notes_button;
+    Button sharedNotesButton;
     @FXML
-    Label username_label;
+    Label usernameLabel;
     @FXML
-    Label coins_label;
+    Label coinsLabel;
     @FXML
     VBox barContainer;
 
@@ -52,12 +52,12 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
     public void initialize() {
         VBox.setVgrow(barContainer, Priority.ALWAYS);
 
-        your_notes_button.setText(Locales.get("your_notes"));
-        browse_notes_button.setText(Locales.get("browse_notes"));
-        shared_notes_button.setText(Locales.get("shared_notes"));
+        yourNotesButton.setText(Locales.get("your_notes"));
+        browseNotesButton.setText(Locales.get("browse_notes"));
+        sharedNotesButton.setText(Locales.get("shared_notes"));
 
-        username_label.setText(UserModel.getInstance().getUsername());
-        coins_label.setText(UserModel.getInstance().getCoins() + "");
+        usernameLabel.setText(UserModel.getInstance().getUsername());
+        coinsLabel.setText(UserModel.getInstance().getCoins() + "");
     }
 
     /**
@@ -66,14 +66,5 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
     @Override
     public void close() {
         this.container.getChildren().clear();
-    }
-
-    /**
-     * This function should actually show this page.
-     * @param container the container that contains this page
-     */
-    @Override
-    public void display(VBox container) {
-        super.display(container);
     }
 }

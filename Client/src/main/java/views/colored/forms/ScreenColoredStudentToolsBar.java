@@ -24,11 +24,11 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
     @FXML
     Label pathLabel;
     @FXML
-    Button folder_add_button;
+    Button folderAddButton;
     @FXML
-    Button note_add_button;
+    Button noteAddButton;
     @FXML
-    Button back_button;
+    Button backButton;
 
     /**
      * Constructor with parent controller
@@ -50,9 +50,9 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
      */
     @FXML
     public void initialize() {
-        folder_add_button.setOnAction(e -> onFolderAddButtonClick());
-        note_add_button.setOnAction(e -> onNoteAddButtonClick());
-        back_button.setOnAction(e -> onBackButtonClick());
+        folderAddButton.setOnAction(e -> onFolderAddButtonClick());
+        noteAddButton.setOnAction(e -> onNoteAddButtonClick());
+        backButton.setOnAction(e -> onBackButtonClick());
         setPathLabel(UserModel.getInstance().getRootFolder().getPath());
     }
 
@@ -94,15 +94,6 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
     @Override
     public void close() {
         //Nothing to do (never closed)
-    }
-
-    /**
-     * This function should display the tools bar
-     * @param container the container that contains this page
-     */
-    @Override
-    public void display(VBox container) {
-        super.display(container);
     }
 
     @Override

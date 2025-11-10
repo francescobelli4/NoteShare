@@ -27,7 +27,7 @@ public class NPUserDAO implements UserDAO {
 
         return instance;
     }
-    private NPUserDAO() {};
+    private NPUserDAO() {}
 
     @Override
     public boolean saveUser(UserEntity user) {

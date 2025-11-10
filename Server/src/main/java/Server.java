@@ -1,5 +1,6 @@
 import persistency.nonpersistent.daos.NPMessageDAO;
 import persistency.nonpersistent.daos.NPUserDAO;
+import persistency.persistent.daos.PUserDAO;
 import persistency.shared.daos.MessageDAO;
 import persistency.shared.daos.UserDAO;
 
@@ -10,10 +11,12 @@ import java.util.Objects;
 
 public class Server {
 
+    private Server() {}
+
     /**
      * In demo mode, the app should use non-permanent memory ONLY!
      */
-    public static boolean demoMode = false;
+    private static boolean demoMode = false;
 
     private static UserDAO userDAO;
     private static MessageDAO messageDAO;
@@ -28,8 +31,6 @@ public class Server {
         if (demoMode) {
             userDAO = NPUserDAO.getInstance();
             messageDAO = NPMessageDAO.getInstance();
-        } else {
-            //userDAO = PUserDAO.getInstance();
         }
 
         setupServer(12345);
@@ -68,5 +69,9 @@ public class Server {
 
     public static MessageDAO getMessageDAO() {
         return messageDAO;
+    }
+
+    public static boolean getDemoMode() {
+        return demoMode;
     }
 }

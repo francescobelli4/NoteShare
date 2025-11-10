@@ -105,20 +105,4 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
 
         choosePDFButton.getStyleClass().add("selected");
     }
-
-    /**
-     * This function should close this page. It only needs to clear the parent's child slot
-     */
-    @Override
-    public void close() {
-        super.close();
-    }
-
-    /**
-     * This function should display the dialogue
-     */
-    @Override
-    public void display() {
-        super.display();
-    }
 }

@@ -12,7 +12,6 @@ import views.colored.notifications.ScreenColoredGenericNotification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import locales.Locales;
 import utils.Utils;
 
@@ -25,17 +24,17 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
      * FXML elements
      */
     @FXML
-    Label title_label;
+    Label titleLabel;
     @FXML
-    TextField username_text_field;
+    TextField usernameTextField;
     @FXML
-    TextField password_text_field;
+    TextField passwordTextField;
     @FXML
-    Label username_prompt;
+    Label usernamePrompt;
     @FXML
-    Label password_prompt;
+    Label passwordPrompt;
     @FXML
-    Button login_button;
+    Button loginButton;
 
     /**
      * Constructor with parent controller
@@ -50,7 +49,6 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
         this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().initializeLoginBoundary();
-
         BoundaryManager.getInstance().getLoginBoundary().addListener(this);
     }
 
@@ -61,22 +59,25 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     @FXML
     public void initialize() {
 
-        title_label.setText(Locales.get("login"));
-        username_text_field.setPromptText(Locales.get("username"));
-        password_text_field.setPromptText(Locales.get("password"));
-        username_prompt.setText(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()));
-        password_prompt.setText(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()));
-        login_button.setOnAction(e -> onLoginButtonClicked());
+        titleLabel.setText(Locales.get("login"));
+        usernameTextField.setPromptText(Locales.get("username"));
+        passwordTextField.setPromptText(Locales.get("password"));
+        usernamePrompt.setText(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()));
+        passwordPrompt.setText(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()));
+        loginButton.setOnAction(_ -> onLoginButtonClicked());
 
-        username_text_field.setTextFormatter(new TextFormatter<String>(change -> {
+        TextFormatter<String> usernameTextFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
             return len < Utils.getMaxUsernameLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
-        }));
+        });
 
-        password_text_field.setTextFormatter(new TextFormatter<String>(change -> {
+        TextFormatter<String> passwordTextFormatter = new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
             return len < Utils.getMaxPasswordLength() && Utils.isAlphanumeric(change.getText()) ? change : null;
-        }));
+        });
+
+        usernameTextField.setTextFormatter(usernameTextFormatter);
+        passwordTextField.setTextFormatter(passwordTextFormatter);
     }
 
     /**
@@ -85,9 +86,8 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
      */
     @FXML
     public void onLoginButtonClicked() {
-        BoundaryManager.getInstance().getLoginBoundary().performLogin(username_text_field.getText(), password_text_field.getText());
+        BoundaryManager.getInstance().getLoginBoundary().performLogin(usernameTextField.getText(), passwordTextField.getText());
     }
-
 
     /**
      * This function should close this page. It only needs to clear the parent's child slot
@@ -95,15 +95,6 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     @Override
     public void close() {
         this.container.getChildren().clear();
-    }
-
-    /**
-     * This function should actually show this page.
-     * @param container the container that contains this page
-     */
-    @Override
-    public void display(VBox container) {
-        super.display(container);
     }
 
     @Override

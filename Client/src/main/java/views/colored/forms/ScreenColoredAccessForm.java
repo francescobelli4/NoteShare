@@ -6,7 +6,6 @@ import views.colored.PageController;
 import views.colored.main_pages.ScreenColoredAccessPage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import locales.Locales;
 
 /**
@@ -16,9 +15,9 @@ public class ScreenColoredAccessForm extends ScreenColoredForm {
 
     /** FXML ELEMENTS */
     @FXML
-    Button login_button;
+    Button loginButton;
     @FXML
-    Button register_button;
+    Button registerButton;
 
 
     /**
@@ -39,12 +38,12 @@ public class ScreenColoredAccessForm extends ScreenColoredForm {
      */
     @FXML
     public void initialize() {
-        login_button.setText(Locales.get("login"));
-        register_button.setText(Locales.get("register"));
+        loginButton.setText(Locales.get("login"));
+        registerButton.setText(Locales.get("register"));
 
-        login_button.setOnAction(actionEvent -> onLoginButtonClicked());
+        loginButton.setOnAction(_ -> onLoginButtonClicked());
 
-        register_button.setOnAction(actionEvent -> onRegisterButtonClicked());
+        registerButton.setOnAction(_ -> onRegisterButtonClicked());
     }
 
     /**
@@ -61,21 +60,11 @@ public class ScreenColoredAccessForm extends ScreenColoredForm {
         ((ScreenColoredAccessPage) this.parentController).appendRegisterForm();
     }
 
-
     /**
      * This function should close this page. It only needs to clear the parent's child slot
      */
     @Override
     public void close() {
         this.container.getChildren().clear();
-    }
-
-    /**
-     * This function should actually show this page.
-     * @param container the container that contains this page
-     */
-    @Override
-    public void display(VBox container) {
-        super.display(container);
     }
 }

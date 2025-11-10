@@ -12,7 +12,7 @@
    <children>
       <HBox stylesheets="@../styles/StudentHomePageTools.css">
          <children>
-            <Button fx:id="back_button" mnemonicParsing="false" styleClass="hoverable">
+            <Button fx:id="backButton" mnemonicParsing="false" styleClass="hoverable">
                <font>
                   <Font size="29.0" />
                </font>
@@ -24,7 +24,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="folder_add_button" mnemonicParsing="false" styleClass="hoverable" HBox.hgrow="ALWAYS">
+            <Button fx:id="folderAddButton" mnemonicParsing="false" styleClass="hoverable" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="29.0" />
                </font>
@@ -36,7 +36,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="note_add_button" contentDisplay="CENTER" mnemonicParsing="false" styleClass="hoverable" HBox.hgrow="ALWAYS">
+            <Button fx:id="noteAddButton" contentDisplay="CENTER" mnemonicParsing="false" styleClass="hoverable" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="29.0" />
                </font>

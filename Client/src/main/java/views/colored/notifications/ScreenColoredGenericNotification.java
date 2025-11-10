@@ -32,7 +32,7 @@ public class ScreenColoredGenericNotification extends ScreenColoredNotification{
     @FXML
     Label description;
     @FXML
-    StackPane notification_container;
+    StackPane notificationContainer;
     @FXML
     HBox notification;
 
@@ -99,8 +99,8 @@ public class ScreenColoredGenericNotification extends ScreenColoredNotification{
                 slideOut.setFromY(notification.getTranslateY());
                 slideOut.setToY(-2*notification.prefHeight(-1));
                 slideOut.setOnFinished(event -> {
-                    if (notification_container.getParent() instanceof javafx.scene.layout.Pane parent) {
-                        parent.getChildren().remove(notification_container);
+                    if (notificationContainer.getParent() instanceof javafx.scene.layout.Pane parent) {
+                        parent.getChildren().remove(notificationContainer);
                     }
                 });
                 slideOut.play();

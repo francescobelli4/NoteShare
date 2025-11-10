@@ -16,7 +16,7 @@
    <children>
       <VBox VBox.vgrow="ALWAYS">
          <children>
-            <Button fx:id="your_notes_button" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Your Notes">
+            <Button fx:id="yourNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Your Notes">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
@@ -32,7 +32,7 @@
                   <String fx:value="selected" />
                </styleClass>
             </Button>
-            <Button fx:id="browse_notes_button" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Browse Notes">
+            <Button fx:id="browseNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Browse Notes">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
@@ -44,7 +44,7 @@
                   <Font name="Cantarell Regular" size="32.0" />
                </font>
             </Button>
-            <Button fx:id="shared_notes_button" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Shared Notes">
+            <Button fx:id="sharedNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Shared Notes">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
@@ -65,12 +65,12 @@
                   <Image url="@../styles/icons/user_image.png" />
                </image>
             </ImageView>
-            <Label fx:id="username_label" text="Username">
+            <Label fx:id="usernameLabel" text="Username">
                <font>
                   <Font name="Cantarell Regular" size="42.0" />
                </font>
             </Label>
-            <Label fx:id="coins_label" text="150">
+            <Label fx:id="coinsLabel" text="150">
                <font>
                   <Font name="Cantarell Regular" size="40.0" />
                </font>

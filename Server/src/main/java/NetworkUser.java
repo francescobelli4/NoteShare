@@ -100,14 +100,7 @@ public class NetworkUser implements Runnable {
                 DataOutputStream out = new DataOutputStream(client.getOutputStream());
 
                 while (connected) {
-
-                    try {
-                        Transferable msg = bq.take();
-
-                        sendMessage(msg, out);
-                    } catch (InterruptedException _) {
-                        closeConnection();
-                    }
+                    handleSendMessage(out);
                 }
             } catch (IOException _) {
                 closeConnection();
@@ -115,6 +108,16 @@ public class NetworkUser implements Runnable {
         });
 
         outputThread.start();
+    }
+
+    private void handleSendMessage(DataOutputStream out) {
+        try {
+            Transferable msg = bq.take();
+
+            sendMessage(msg, out);
+        } catch (InterruptedException _) {
+            closeConnection();
+        }
     }
 
     /**

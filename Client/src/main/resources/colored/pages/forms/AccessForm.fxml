@@ -25,7 +25,7 @@
                 </VBox.margin>
             </Label>
 
-            <Button id="register_button" fx:id="register_button" maxWidth="Infinity" styleClass="form_button" text="Register" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <Button id="register_button" fx:id="registerButton" maxWidth="Infinity" styleClass="form_button" text="Register" textFill="WHITE" VBox.vgrow="ALWAYS">
                 <font>
                     <Font name="Cantarell Regular" size="44.0" />
                 </font>
@@ -33,7 +33,7 @@
                     <Insets top="30.0" />
                 </VBox.margin>
             </Button>
-            <Button id="login_button" fx:id="login_button" maxWidth="Infinity" styleClass="form_button" text="Login">
+            <Button id="login_button" fx:id="loginButton" maxWidth="Infinity" styleClass="form_button" text="Login">
                 <font>
                     <Font name="Cantarell Regular" size="44.0" />
                 </font>
