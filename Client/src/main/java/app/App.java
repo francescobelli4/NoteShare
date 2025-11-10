@@ -1,6 +1,7 @@
 package app;
 
 import app.mvc.models.UserModel;
+import views.GraphicsController;
 import views.colored.ColoredGraphicsController;
 import javafx.application.Application;
 import locales.Locales;
@@ -21,6 +22,7 @@ public class App {
 
     private static boolean demoMode = false;
 
+    private static GraphicsController graphicsController;
     private static NoteDAO noteDAO;
     private static FolderDAO folderDAO;
 
@@ -61,5 +63,13 @@ public class App {
 
     public static FolderDAO getFolderDAO() {
         return folderDAO;
+    }
+
+    public static GraphicsController getGraphicsController() {
+        return graphicsController;
+    }
+
+    public static void setGraphicsController(GraphicsController controller) {
+        graphicsController = controller;
     }
 }

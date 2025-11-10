@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
 import app.mvc.navigation.NavigationBoundary;
@@ -39,7 +40,7 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
         super(Page.STUDENT_HOME_PAGE_TOOLS_BAR, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().getNavigationBoundary().addListener(this);
     }

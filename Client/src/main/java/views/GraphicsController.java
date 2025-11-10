@@ -1,5 +1,6 @@
 package views;
 
+import app.App;
 import views.colored.Page;
 import views.colored.main_pages.ScreenColoredMainPage;
 import javafx.application.Application;
@@ -14,13 +15,8 @@ import java.io.IOException;
 
 public abstract class GraphicsController extends Application {
 
-    private static GraphicsController instance;
     protected Stage window;
     protected ScreenColoredMainPage mainPage;
-
-    public static GraphicsController getInstance() {
-        return instance;
-    }
 
     public Stage getWindow() {
         return window;
@@ -60,7 +56,8 @@ public abstract class GraphicsController extends Application {
 
     @Override
     public void start(Stage stage) {
-        instance = this;
+
+        App.setGraphicsController(this);
 
         this.window = stage;
         this.window.setTitle("NoteShare");

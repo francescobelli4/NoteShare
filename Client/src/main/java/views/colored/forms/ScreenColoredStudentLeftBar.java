@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import app.mvc.models.UserModel;
 import views.GraphicsController;
 import views.colored.Page;
@@ -42,7 +43,7 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
         super(Page.STUDENT_HOME_PAGE_LEFT_BAR, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**

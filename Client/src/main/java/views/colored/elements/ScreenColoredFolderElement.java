@@ -1,5 +1,6 @@
 package views.colored.elements;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import views.GraphicsController;
 import views.colored.Page;
@@ -42,7 +43,7 @@ public class ScreenColoredFolderElement extends ScreenColoredElement{
         this.thisFolder = folderModel;
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**

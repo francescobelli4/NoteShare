@@ -1,5 +1,6 @@
 package views.colored.notifications;
 
+import app.App;
 import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
@@ -30,7 +31,7 @@ public abstract class ScreenColoredNotification extends PageController {
      * main page StackPane.
      */
     public void display() {
-        ((StackPane)GraphicsController.getInstance().getRoot()).getChildren().add(this.getRoot());
+        ((StackPane) App.getGraphicsController().getRoot()).getChildren().add(this.getRoot());
     }
 
     /**

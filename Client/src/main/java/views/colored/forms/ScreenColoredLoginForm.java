@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginResult;
 import app.mvc.login.LoginBoundary;
@@ -46,7 +47,7 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
         super(Page.LOGIN_FORM, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().initializeLoginBoundary();
         BoundaryManager.getInstance().getLoginBoundary().addListener(this);

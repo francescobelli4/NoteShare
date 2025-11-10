@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import javafx.scene.layout.StackPane;
 import views.GraphicsController;
 import views.colored.Page;
@@ -44,6 +45,6 @@ public abstract class ScreenColoredForm extends PageController {
      * This function should display a floating page. Any alignment is managed by the subclass.
      */
     public void display() {
-        ((StackPane)GraphicsController.getInstance().getMainPage().getRoot()).getChildren().add(this.root);
+        ((StackPane) App.getGraphicsController().getMainPage().getRoot()).getChildren().add(this.root);
     }
 }

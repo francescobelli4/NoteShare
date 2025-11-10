@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.managefolder.ManageFolderBoundary;
 import app.mvc.managefolder.ManageFolderResult;
@@ -40,7 +41,7 @@ public class ScreenColoredFoldersContainer extends ScreenColoredForm implements 
         super(Page.FOLDERS_CONTAINER, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().initializeNavigationBoundary();
         BoundaryManager.getInstance().initializeManageFolderBoundary();

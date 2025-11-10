@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
@@ -30,7 +31,7 @@ public class ScreenColoredAccessForm extends ScreenColoredForm {
         super(Page.ACCESS_FORM, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**

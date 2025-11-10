@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class ManageFolderBoundary extends Boundary {
 
-    private static final int maxFolderNameLength = 25;
+    private static final int MAXFOLDERNAMELENGTH = 25;
 
     /**
      * This arraylist of listeners that will be notified when events occur
@@ -84,7 +84,7 @@ public class ManageFolderBoundary extends Boundary {
     }
 
     public int getMaxFolderNameLength() {
-        return maxFolderNameLength;
+        return MAXFOLDERNAMELENGTH;
     }
 
     /**

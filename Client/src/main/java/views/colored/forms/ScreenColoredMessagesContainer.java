@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.MessageModel;
 import app.mvc.models.UserModel;
@@ -38,7 +39,7 @@ public class ScreenColoredMessagesContainer extends ScreenColoredForm implements
         super(Page.MESSAGES_CONTAINER, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().getViewMessagesBoundary().addListener(this);
 

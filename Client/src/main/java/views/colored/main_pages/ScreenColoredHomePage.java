@@ -1,5 +1,6 @@
 package views.colored.main_pages;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.MessageModel;
 import app.mvc.models.UserModel;
@@ -65,7 +66,7 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage implements View
         BoundaryManager.getInstance().getViewMessagesBoundary().addListener(this);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**
@@ -131,7 +132,7 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage implements View
         Bounds boundsInScene = messagesButton.localToScene(messagesButton.getBoundsInLocal());
 
         messagesContainerController = new ScreenColoredMessagesContainer(this);
-        messagesContainerController.display(GraphicsController.getInstance().getWindow().getWidth() - boundsInScene.getMinX(), boundsInScene.getMinY() + messagesButton.getHeight());
+        messagesContainerController.display(App.getGraphicsController().getWindow().getWidth() - boundsInScene.getMinX(), boundsInScene.getMinY() + messagesButton.getHeight());
     }
 
     @Override

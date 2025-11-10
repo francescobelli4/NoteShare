@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ManageNoteBoundary extends Boundary {
 
-    private static final int maxNoteNameLength = 25;
+    private static final int MAXNOTENAMELENGTH = 25;
 
     /**
      * The arraylist of listeners that will be notified when an event occurs
@@ -88,7 +88,7 @@ public class ManageNoteBoundary extends Boundary {
     }
 
     public int getMaxNoteNameLength() {
-        return maxNoteNameLength;
+        return MAXNOTENAMELENGTH;
     }
 
     /**

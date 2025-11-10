@@ -1,5 +1,6 @@
 package views.colored.main_pages;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.login.LoginBoundary;
 import app.mvc.login.LoginResult;
@@ -45,7 +46,7 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
         super(Page.ACCESS);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().initializeViewMessagesBoundary();
         BoundaryManager.getInstance().initializeLoginBoundary();

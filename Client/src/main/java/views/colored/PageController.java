@@ -1,5 +1,6 @@
 package views.colored;
 
+import app.App;
 import views.GraphicsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -41,7 +42,7 @@ public abstract class PageController {
      * @param page the Page that should be loaded
      */
     protected PageController(Page page) {
-        this.loader = GraphicsController.getInstance().generateFXMLLoader(page);
+        this.loader = App.getGraphicsController().generateFXMLLoader(page);
     }
 
     /**
@@ -55,7 +56,7 @@ public abstract class PageController {
      * @param parentController the controller of the parent page
      */
     protected PageController(Page page, PageController parentController) {
-        this.loader = GraphicsController.getInstance().generateFXMLLoader(page);
+        this.loader = App.getGraphicsController().generateFXMLLoader(page);
         this.parentController = parentController;
     }
 

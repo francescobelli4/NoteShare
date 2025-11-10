@@ -1,5 +1,6 @@
 package views.colored.dialogues;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
 import views.GraphicsController;
@@ -40,7 +41,7 @@ public class ScreenColoredFolderCreationDialogue extends ScreenColoredDialogue {
         super(Page.FOLDER_CREATION_DIALOGUE);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**

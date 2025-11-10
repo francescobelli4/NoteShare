@@ -1,5 +1,6 @@
 package views.colored.elements;
 
+import app.App;
 import app.mvc.models.MessageModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -47,7 +48,7 @@ public class ScreenColoredMessageElement extends ScreenColoredElement{
         this.message = message;
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**

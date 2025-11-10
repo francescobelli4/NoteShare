@@ -1,5 +1,6 @@
 package views.colored.notifications;
 
+import app.App;
 import views.GraphicsController;
 import views.colored.Icon;
 import views.colored.Page;
@@ -60,7 +61,7 @@ public class ScreenColoredGenericNotification extends ScreenColoredNotification{
         this.iconType = icon;
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**

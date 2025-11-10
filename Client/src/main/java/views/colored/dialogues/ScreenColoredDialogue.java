@@ -1,5 +1,6 @@
 package views.colored.dialogues;
 
+import app.App;
 import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
@@ -25,7 +26,7 @@ public abstract class ScreenColoredDialogue extends PageController {
      * This function should display the Dialog page by adding it to the main page's StackPane
      */
     public void display() {
-        ((StackPane) GraphicsController.getInstance().getRoot()).getChildren().add(this.root);
+        ((StackPane) App.getGraphicsController().getRoot()).getChildren().add(this.root);
     }
 
     /**
@@ -33,6 +34,6 @@ public abstract class ScreenColoredDialogue extends PageController {
      */
     @Override
     public void close() {
-        ((StackPane)GraphicsController.getInstance().getRoot()).getChildren().remove(this.root);
+        ((StackPane) App.getGraphicsController().getRoot()).getChildren().remove(this.root);
     }
 }

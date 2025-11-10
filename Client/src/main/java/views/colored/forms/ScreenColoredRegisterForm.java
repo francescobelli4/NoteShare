@@ -1,5 +1,6 @@
 package views.colored.forms;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.register.RegisterBoundary;
 import app.mvc.register.RegisterResult;
@@ -54,7 +55,7 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
         super(Page.REGISTER_FORM, parentController);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
 
         BoundaryManager.getInstance().initializeRegisterBoundary();
 

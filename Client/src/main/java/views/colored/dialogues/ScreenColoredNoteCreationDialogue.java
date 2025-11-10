@@ -1,5 +1,6 @@
 package views.colored.dialogues;
 
+import app.App;
 import app.mvc.BoundaryManager;
 import app.mvc.models.UserModel;
 import views.GraphicsController;
@@ -48,7 +49,7 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
         super(Page.NOTE_CREATION_DIALOGUE);
 
         this.loader.setController(this);
-        this.root = GraphicsController.getInstance().loadFXMLLoader(loader);
+        this.root = App.getGraphicsController().loadFXMLLoader(loader);
     }
 
     /**
@@ -97,7 +98,7 @@ public class ScreenColoredNoteCreationDialogue extends ScreenColoredDialogue {
      */
     @FXML
     public void onChoosePDFButtonClick() {
-        pdf = GraphicsController.getInstance().openFileChooser();
+        pdf = App.getGraphicsController().openFileChooser();
 
         if (pdf == null) {
             return;

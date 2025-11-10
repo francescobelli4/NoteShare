@@ -1,5 +1,6 @@
 package views.colored.main_pages;
 
+import app.App;
 import views.GraphicsController;
 import views.colored.Page;
 import views.colored.PageController;
@@ -31,9 +32,9 @@ public abstract class ScreenColoredMainPage extends PageController {
      * This function should actually display the page. A main page becomes the new root of a new scene.
      */
     public void display() {
-        GraphicsController.getInstance().getWindow().setScene(new Scene((Parent) this.root));
-        GraphicsController.getInstance().getWindow().show();
-        GraphicsController.getInstance().setMainPage(this);
+        App.getGraphicsController().getWindow().setScene(new Scene((Parent) this.root));
+        App.getGraphicsController().getWindow().show();
+        App.getGraphicsController().setMainPage(this);
     }
 
     /**
