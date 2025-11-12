@@ -14,7 +14,7 @@
       <DropShadow />
    </effect>
    <children>
-      <VBox VBox.vgrow="ALWAYS">
+      <VBox spacing="10.0" VBox.vgrow="ALWAYS">
          <children>
             <Button fx:id="yourNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Your Notes">
                <graphic>
@@ -58,7 +58,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="userData" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -84,9 +84,9 @@
             </Label>
          </children>
       </VBox>
-      <VBox managed="false" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+      <VBox fx:id="accessForm" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
          <children>
-            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Register" textAlignment="CENTER">
+            <Button fx:id="accessButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Access" textAlignment="CENTER">
                <font>
                   <Font name="Cantarell Regular" size="32.0" />
                </font>
@@ -94,11 +94,6 @@
                   <String fx:value="leftbar_button" />
                   <String fx:value="selected" />
                </styleClass>
-            </Button>
-            <Button fx:id="registerButton1" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Login" textAlignment="CENTER">
-               <font>
-                  <Font name="Cantarell Regular" size="32.0" />
-               </font>
             </Button>
          </children>
       </VBox>

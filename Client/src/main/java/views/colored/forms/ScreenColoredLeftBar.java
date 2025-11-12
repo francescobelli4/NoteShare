@@ -10,11 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import locales.Locales;
+import views.colored.main_pages.ScreenColoredAccessPage;
+import views.colored.main_pages.ScreenColoredHomePage;
+import views.colored.main_pages.ScreenColoredMainPage;
 
 /**
  * Class that represents the left bar for the student user type.
  */
-public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
+public class ScreenColoredLeftBar extends ScreenColoredForm {
 
     /**
      * FXML elements
@@ -31,6 +34,12 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
     Label coinsLabel;
     @FXML
     VBox barContainer;
+    @FXML
+    VBox accessForm;
+    @FXML
+    VBox userData;
+    @FXML
+    Button accessButton;
 
     /**
      * Constructor with parent controller
@@ -38,7 +47,7 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
      * This constructor actually loads the FXMLLoader and sets the controller for the page
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredStudentLeftBar(PageController parentController) {
+    public ScreenColoredLeftBar(PageController parentController) {
         super(Page.STUDENT_HOME_PAGE_LEFT_BAR, parentController);
 
         this.loader.setController(this);
@@ -58,6 +67,18 @@ public class ScreenColoredStudentLeftBar extends ScreenColoredForm {
 
         usernameLabel.setText(UserModel.getInstance().getUsername());
         coinsLabel.setText(UserModel.getInstance().getCoins() + "");
+
+        accessButton.setOnAction(_ -> displayAccessPage());
+
+        accessForm.setManaged(!UserModel.getInstance().isLoggedIn());
+        userData.setManaged(UserModel.getInstance().isLoggedIn());
+        accessForm.setVisible(!UserModel.getInstance().isLoggedIn());
+        userData.setVisible(UserModel.getInstance().isLoggedIn());
+    }
+
+    public void displayAccessPage() {
+        ScreenColoredMainPage screenColoredAccessPage = new ScreenColoredAccessPage();
+        screenColoredAccessPage.display();
     }
 
     /**

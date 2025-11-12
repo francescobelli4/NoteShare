@@ -3,6 +3,7 @@ package app.mvc.login;
 import app.NetworkUser;
 import app.mvc.Controller;
 import app.mvc.mappers.UserMapper;
+import app.mvc.models.UserModel;
 import persistency.dtos.UserDTO;
 import utils.Utils;
 
@@ -48,6 +49,7 @@ public class LoginController extends Controller {
      * This function should perform the login with the token using UserModel
      */
     public void performTokenLogin() {
+        System.out.println("TOKENLOGIN");
         NetworkUser.getInstance().tokenLogin();
     }
 
@@ -58,8 +60,8 @@ public class LoginController extends Controller {
      * @param token the received access token
      */
     public void onLoginSuccess(UserDTO userDTO, String token) {
-
         UserMapper.mapToModel(userDTO, token);
+        UserModel.getInstance().setLoggedIn(true);
         Utils.saveAccessToken(token);
     }
 

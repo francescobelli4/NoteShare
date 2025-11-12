@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
 /**
  * Class that represents the left bar for the student user type.
  */
-public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements NavigationBoundary.Listener {
+public class ScreenColoredToolsBar extends ScreenColoredForm implements NavigationBoundary.Listener {
 
     /**
      * FXML elements
@@ -35,7 +35,7 @@ public class ScreenColoredStudentToolsBar extends ScreenColoredForm implements N
      * This constructor actually loads the FXMLLoader and sets the controller for the page
      * @param parentController the controller of the parent page
      */
-    public ScreenColoredStudentToolsBar(PageController parentController) {
+    public ScreenColoredToolsBar(PageController parentController) {
         super(Page.STUDENT_HOME_PAGE_TOOLS_BAR, parentController);
 
         this.loader.setController(this);

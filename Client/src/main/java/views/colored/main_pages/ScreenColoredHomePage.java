@@ -43,10 +43,10 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage implements View
     Button messagesButton;
 
     /** The controller of the active left bar */
-    ScreenColoredStudentLeftBar studentLeftBarController;
+    ScreenColoredLeftBar leftBarController;
 
     /** The controller of the active tools bar */
-    ScreenColoredStudentToolsBar studentToolsBarController;
+    ScreenColoredToolsBar toolsBarController;
 
     /** The controller of the folders container */
     ScreenColoredFoldersContainer foldersContainerController;
@@ -62,6 +62,7 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage implements View
     public ScreenColoredHomePage() {
         super(Page.HOME_PAGE);
 
+        BoundaryManager.getInstance().initializeViewMessagesBoundary();
         BoundaryManager.getInstance().getViewMessagesBoundary().addListener(this);
 
         this.loader.setController(this);
@@ -80,7 +81,7 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage implements View
         appendToolsBar();
         appendLeftBar();
 
-        messagesButton.setOnMouseClicked(e -> openMessagesForm());
+        messagesButton.setOnMouseClicked(_ -> openMessagesForm());
     }
 
     /**
@@ -88,38 +89,16 @@ public class ScreenColoredHomePage extends ScreenColoredMainPage implements View
      */
     private void appendToolsBar() {
 
-        switch (UserModel.getInstance().getUserType()) {
-            case "student":
-                studentToolsBarController = new ScreenColoredStudentToolsBar(this);
-                studentToolsBarController.display(toolsSlot);
-                break;
-            case "teacher":
-                break;
-            case "administrator":
-                break;
-            default:
-                break;
-
-        }
+        toolsBarController = new ScreenColoredToolsBar(this);
+        toolsBarController.display(toolsSlot);
     }
 
     /**
      * This function should append the left bar to the leftBarSlot
      */
     private void appendLeftBar() {
-        switch (UserModel.getInstance().getUserType()) {
-            case "student":
-                studentLeftBarController = new ScreenColoredStudentLeftBar(this);
-                studentLeftBarController.display(leftBarSlot);
-                break;
-            case "teacher":
-                break;
-            case "administrator":
-                break;
-            default:
-                break;
-
-        }
+        leftBarController = new ScreenColoredLeftBar(this);
+        leftBarController.display(leftBarSlot);
     }
 
     private void appendFoldersContainer() {

@@ -3,6 +3,7 @@ package app.mvc.register;
 import app.NetworkUser;
 import app.mvc.Controller;
 import app.mvc.mappers.UserMapper;
+import app.mvc.models.UserModel;
 import persistency.dtos.UserDTO;
 import utils.Utils;
 
@@ -56,6 +57,7 @@ public class RegisterController extends Controller {
      */
     public void onRegisterSuccess(UserDTO userDTO, String token) {
         UserMapper.mapToModel(userDTO, token);
+        UserModel.getInstance().setLoggedIn(true);
         Utils.saveAccessToken(token);
     }
 

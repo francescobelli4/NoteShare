@@ -60,7 +60,6 @@ public class ScreenColoredAccessPage extends ScreenColoredMainPage implements Lo
     @Override
     public void display() {
         super.display();
-        BoundaryManager.getInstance().getLoginBoundary().performTokenLogin();
         appendAccessForm();
     }
 

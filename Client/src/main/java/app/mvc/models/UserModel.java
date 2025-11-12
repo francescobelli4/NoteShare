@@ -1,5 +1,8 @@
 package app.mvc.models;
 
+import app.mvc.Boundary;
+import app.mvc.BoundaryManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +16,11 @@ public class UserModel {
      * Singleton
      */
     private static UserModel instance;
-    private UserModel() {}
+    private UserModel() {
+        BoundaryManager.getInstance().initializeLoginBoundary();
+        BoundaryManager.getInstance().initializeViewMessagesBoundary();
+        BoundaryManager.getInstance().getLoginBoundary().performTokenLogin();
+    }
     public static UserModel getInstance() {
         if (instance == null) {
             instance = new UserModel();
@@ -21,6 +28,7 @@ public class UserModel {
         return instance;
     }
 
+    private boolean loggedIn = false;
     private String username;
     private String userType;
     private String token;
@@ -92,6 +100,14 @@ public class UserModel {
 
     public void setMessages(List<MessageModel> messages) {
         this.messages = messages;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     /**
