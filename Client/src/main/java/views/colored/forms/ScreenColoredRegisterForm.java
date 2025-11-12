@@ -7,6 +7,7 @@ import app.mvc.register.RegisterResult;
 import views.colored.Icon;
 import views.colored.Page;
 import views.colored.PageController;
+import views.colored.main_pages.ScreenColoredAccessPage;
 import views.colored.main_pages.ScreenColoredHomePage;
 import views.colored.notifications.ScreenColoredGenericNotification;
 import javafx.application.Platform;
@@ -43,6 +44,8 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
     Label teacherLabel;
     @FXML
     Button registerButton;
+    @FXML
+    Button backButton;
 
     /**
      * Constructor with parent controller
@@ -92,6 +95,8 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
 
         usernameTextField.setTextFormatter(usernameTextFormatter);
         passwordTextField.setTextFormatter(passwordTextFormatter);
+
+        backButton.setOnAction(_ -> goBack());
     }
 
     /**
@@ -134,17 +139,17 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
     @Override
     public void close() {
         this.container.getChildren().clear();
+        BoundaryManager.getInstance().destroyRegisterBoundary();
+        BoundaryManager.getInstance().destroyLoginBoundary();
     }
 
     @Override
     public void onRegisterSuccess() {
         Platform.runLater(() -> {
+            close();
             ScreenColoredHomePage screenColoredHomePage = new ScreenColoredHomePage();
             screenColoredHomePage.display();
         });
-
-        BoundaryManager.getInstance().destroyRegisterBoundary();
-        BoundaryManager.getInstance().destroyLoginBoundary();
     }
 
     @Override
@@ -171,5 +176,9 @@ public class ScreenColoredRegisterForm extends ScreenColoredForm implements Regi
         ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);
 
         Platform.runLater(notification::display);
+    }
+
+    public void goBack() {
+        ((ScreenColoredAccessPage)this.parentController).appendAccessForm();
     }
 }

@@ -7,6 +7,7 @@ import app.mvc.login.LoginBoundary;
 import views.colored.Icon;
 import views.colored.Page;
 import views.colored.PageController;
+import views.colored.main_pages.ScreenColoredAccessPage;
 import views.colored.main_pages.ScreenColoredHomePage;
 import views.colored.notifications.ScreenColoredGenericNotification;
 import javafx.application.Platform;
@@ -35,6 +36,8 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     Label passwordPrompt;
     @FXML
     Button loginButton;
+    @FXML
+    Button backButton;
 
     /**
      * Constructor with parent controller
@@ -78,6 +81,8 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
 
         usernameTextField.setTextFormatter(usernameTextFormatter);
         passwordTextField.setTextFormatter(passwordTextFormatter);
+
+        backButton.setOnAction(_ -> goBack());
     }
 
     /**
@@ -95,6 +100,7 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
     @Override
     public void close() {
         this.container.getChildren().clear();
+        BoundaryManager.getInstance().destroyLoginBoundary();
     }
 
     @Override
@@ -104,7 +110,7 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
             screenColoredHomePage.display();
         });
 
-        BoundaryManager.getInstance().destroyLoginBoundary();
+        close();
     }
 
     @Override
@@ -130,5 +136,10 @@ public class ScreenColoredLoginForm extends ScreenColoredForm implements LoginBo
         ScreenColoredGenericNotification notification = new ScreenColoredGenericNotification(title, description, icon);
 
         Platform.runLater(notification::display);
+    }
+
+    public void goBack() {
+        close();
+        ((ScreenColoredAccessPage)this.parentController).appendAccessForm();
     }
 }

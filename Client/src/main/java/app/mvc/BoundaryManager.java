@@ -93,31 +93,43 @@ public class BoundaryManager {
     }
 
     public void destroyLoginBoundary() {
+        if (loginBoundary == null) return;
+
         loginBoundary.destroy();
         loginBoundary = null;
     }
 
     public void destroyRegisterBoundary() {
+        if (registerBoundary == null) return;
+
         registerBoundary.destroy();
         registerBoundary = null;
     }
 
     public void destroyNavigationBoundary() {
+        if (navigationBoundary == null) return;
+
         navigationBoundary.destroy();
         navigationBoundary = null;
     }
 
     public void destroyManageFolderBoundary() {
+        if (manageFolderBoundary == null) return;
+
         manageFolderBoundary.destroy();
         manageFolderBoundary = null;
     }
 
     public void destroyManageNoteBoundary() {
+        if (manageNoteBoundary == null) return;
+
         manageNoteBoundary.destroy();
         manageNoteBoundary = null;
     }
 
     public void destroyViewMessagesBoundary() {
+        if (viewMessagesBoundary == null) return;
+
         viewMessagesBoundary.destroy();
         viewMessagesBoundary = null;
     }

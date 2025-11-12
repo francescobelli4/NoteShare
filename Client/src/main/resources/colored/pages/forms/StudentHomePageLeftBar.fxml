@@ -84,5 +84,23 @@
             </Label>
          </children>
       </VBox>
+      <VBox managed="false" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Register" textAlignment="CENTER">
+               <font>
+                  <Font name="Cantarell Regular" size="32.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="leftbar_button" />
+                  <String fx:value="selected" />
+               </styleClass>
+            </Button>
+            <Button fx:id="registerButton1" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Login" textAlignment="CENTER">
+               <font>
+                  <Font name="Cantarell Regular" size="32.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </VBox>

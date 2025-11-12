@@ -65,7 +65,7 @@
                 </children>
             </HBox>
 
-            <Button id="register_button" fx:id="loginButton" maxWidth="Infinity" styleClass="form_button" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <Button id="register_button" fx:id="loginButton" maxWidth="Infinity" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS">
                 <font>
                     <Font name="Cantarell Regular" size="44.0" />
                 </font>
@@ -73,6 +73,18 @@
                     <Insets top="30.0" />
                 </VBox.margin>
             </Button>
+      <Button id="back_button" fx:id="backButton" mnemonicParsing="false">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../styles/icons/back-button.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </Button>
         </children>
         <padding>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
