@@ -1,5 +1,7 @@
 Software Engineering course project (2025/26). 
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=francescobelli4_NoteShareApp&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=francescobelli4_NoteShareApp)
+
 **User stories:**
 
 1) As a student, I want to sell and buy lecture notes using platform’s internal coins, which I earn by
