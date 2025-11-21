@@ -1,10 +1,10 @@
 name: SonarCloud
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
   build:
     name: Build and analyze
@@ -38,9 +38,4 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=francescobelli4_NoteShareApp \
-            -Dsonar.organization=francescobelli4 \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.token=$SONAR_TOKEN
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=francescobelli4_NoteShareApp
