@@ -15,11 +15,11 @@ jobs:
         with:
           fetch-depth: 0  # necessary for SonarCloud to detect branches correctly
 
-      - name: Set up JDK 17
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: 17
+          java-version: 25
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
