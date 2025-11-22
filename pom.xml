@@ -22,22 +22,13 @@
 
         <maven.compiler.version>3.13.0</maven.compiler.version>
         <maven.surefire.version>3.2.5</maven.surefire.version>
-        <jacoco.version>0.8.12</jacoco.version>
+        <jacoco.version>0.8.14</jacoco.version>
 
         <sonar.organization>francescobelli4</sonar.organization>
         <sonar.projectKey>francescobelli4_NoteShareApp</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-        <sonar.java.binaries>
-            Client/target/classes,
-            Shared/target/classes,
-            Server/target/classes
-        </sonar.java.binaries>
-        <sonar.sources>
-            Client/src/main/java,
-            Shared/src/main/java,
-            Server/src/main/java
-        </sonar.sources>
+
 
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.build.directory}/site/jacoco-aggregate/jacoco.xml
