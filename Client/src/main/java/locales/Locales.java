@@ -60,7 +60,7 @@ public class Locales {
         localesLabels.put("student", "Studente");
         localesLabels.put("teacher", "Insegnante");
         localesLabels.put("error", "Errore");
-        localesLabels.put("error_username_too_short", "Questo nome utente è troppo corto.");
+        localesLabels.put("error_username_too_short", "Questo nome utente è troppo corto");
         localesLabels.put("error_username_too_long", "Questo nome utente è troppo lungo.");
         localesLabels.put("error_password_too_short", "Questa password è troppo corta.");
         localesLabels.put("error_password_too_long", "Questa password è troppo lunga.");
