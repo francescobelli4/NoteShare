@@ -44,6 +44,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven.surefire.version}</version>
                     <configuration>
+                        <!--suppress UnresolvedMavenProperty -->
                         <argLine>${jacoco.agent.argLine}</argLine>
                     </configuration>
                 </plugin>
@@ -55,6 +56,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+
+                <configuration>
+                    <dataFileIncludes>
+                        <dataFileInclude>**/target/jacoco.exec</dataFileInclude>
+                    </dataFileIncludes>
+                </configuration>
+
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
