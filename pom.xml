@@ -20,7 +20,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <sonar.organization>francescobelli4</sonar.organization>
+        <sonar.projectKey>francescobelli4_NoteShareApp</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.pullrequest.provider>GitHub</sonar.pullrequest.provider>
+        <sonar.projectName>NoteShareApp</sonar.projectName>
+        <sonar.projectBaseDir>${project.basedir}</sonar.projectBaseDir>
+
+        <sonar.java.binaries>
+            Client/target/classes,
+            Shared/target/classes,
+            Server/target/classes
+        </sonar.java.binaries>
+
+        <sonar.jacoco.reportPaths>
+            Client/target/jacoco.exec,
+            Shared/target/jacoco.exec,
+            Server/target/jacoco.exec
+        </sonar.jacoco.reportPaths>
 
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.basedir}/target/site/jacoco-aggregate/jacoco.xml
@@ -57,25 +73,20 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
 
-                <configuration>
-                    <dataFileIncludes>
-                        <dataFileInclude>**/target/jacoco.exec</dataFileInclude>
-                    </dataFileIncludes>
-                </configuration>
-
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <goals> <goal>prepare-agent</goal> </goals>
                     </execution>
                     <execution>
                         <id>report-aggregate</id>
                         <phase>verify</phase>
-                        <goals>
-                            <goal>report-aggregate</goal>
-                        </goals>
+                        <goals> <goal>report-aggregate</goal> </goals>
+                        <configuration>
+                            <dataFileIncludes>
+                                <dataFileInclude>**/target/jacoco.exec</dataFileInclude>
+                            </dataFileIncludes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
