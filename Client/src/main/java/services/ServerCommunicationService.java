@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ServerCommunicationService {
 
-    private final Logger LOGGER = Logger.getLogger("ServerCommunicationService");
+    private static final Logger LOGGER = Logger.getLogger("ServerCommunicationService");
 
     private Socket socket;
     private DataInputStream dataInputStream;
@@ -19,14 +19,12 @@ public class ServerCommunicationService {
 
     private final ConcurrentHashMap<String, CompletableFuture<SocketMessage>> pendingRequests = new ConcurrentHashMap<>();
 
-    private final int MAX_PARALLEL_THREADS = 10;
+    private static final int MAX_PARALLEL_THREADS = 10;
     private final ExecutorService executorService = Executors.newFixedThreadPool(MAX_PARALLEL_THREADS);
     private final Object writeLock = new Object();
 
     private static ServerCommunicationService instance;
-
     private ServerCommunicationService() {}
-
     public static ServerCommunicationService getInstance() {
         if (instance == null) {
             instance = new ServerCommunicationService();
@@ -101,6 +99,22 @@ public class ServerCommunicationService {
     }
 
     /**
+     * This function should close the communication socket with the server.
+     */
+    private void closeCommunication() {
+        try {
+            if (this.dataInputStream != null) {
+                this.dataInputStream.close();
+            }
+            if (this.socket != null) {
+                this.socket.close();
+            }
+        } catch (IOException cleanupException) {
+            LOGGER.warning(String.format("Error during resource cleanup: %s", cleanupException.getMessage()));
+        }
+    }
+
+    /**
      * This function should start a thread that reads from the server.
      */
     private void startReaderThread() {
@@ -111,32 +125,29 @@ public class ServerCommunicationService {
                 assert socket != null;
                 if (!socket.isConnected()) break;
 
-                try {
-
-                    String data = this.dataInputStream.readUTF();
-                    LOGGER.info("RECEIVED " + data);
-                    handleIncomingData(data);
-                } catch (EOFException eofException) {
-                    LOGGER.severe("Connection closed from server!");
-                } catch (IOException ioException) {
-                    LOGGER.severe("Connection from server lost!");
-                } finally {
-
-                    try {
-                        if (this.dataInputStream != null) {
-                            this.dataInputStream.close();
-                        }
-                        if (this.socket != null) {
-                            this.socket.close();
-                        }
-                    } catch (IOException cleanupException) {
-                        LOGGER.warning("Error during resource cleanup.");
-                    }
-                }
+                read();
             }
         });
 
         reader.start();
+    }
+
+    /**
+     * This function should actually read from the socket.
+     */
+    private void read() {
+        try {
+
+            String data = this.dataInputStream.readUTF();
+            LOGGER.info(String.format("RECEIVED %s", data));
+            handleIncomingData(data);
+        } catch (EOFException eofException) {
+            LOGGER.severe(String.format("Connection closed from server: %s", eofException.getMessage()));
+        } catch (IOException ioException) {
+            LOGGER.severe(String.format("Connection from server lost!: %s", ioException.getMessage()));
+        } finally {
+            closeCommunication();
+        }
     }
 
     /**

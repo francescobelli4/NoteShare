@@ -26,7 +26,4 @@ public class StudentUserModel extends UserModel {
         this.coins = coins;
     }
 
-    public void login() {
-
-    }
 }

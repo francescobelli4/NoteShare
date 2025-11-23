@@ -9,6 +9,8 @@ public class Server {
 
     private static final Logger LOGGER = Logger.getLogger("Server");
 
+    private Server() {}
+
     /**
      * This function should set the app's options.
      * @param args the array of args provided at the startup

@@ -1,7 +1,5 @@
 package utils;
 
-import app.App;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,7 +31,7 @@ public class Utils {
         }
 
         if (dir.mkdirs()) {
-            logger.info("Folder in " + path + " created!");
+            logger.info(String.format("Folder in %s created!", path));
         }
     }
 

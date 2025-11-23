@@ -5,7 +5,6 @@ import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import models.UserModel;
 import services.ServerCommunicationService;
 import utils.Utils;
 
@@ -44,23 +43,15 @@ public class Launcher extends Application {
 
             String accessToken = Utils.readFile(accessTokenFile);
 
-            try {
+            SocketMessage response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createLoginUsingTokenRequest(accessToken));
 
-                SocketMessage response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createLoginUsingTokenRequest(accessToken));
-
-                if (response.getSocketMessageType() == SocketMessageType.LOGIN_SUCCESS) {
-                    //TODO
-                }
-
-            } catch (IOException | InterruptedException | ExecutionException ioException) {
-
-                LOGGER.warning("Failed attempting login using token. Retry.");
-                ServerCommunicationService.getInstance().initializeConnection();
-                attemptLoginUsingToken();
+            if (response.getSocketMessageType() == SocketMessageType.LOGIN_SUCCESS) {
+                //TODO
             }
-
         } catch (IOException ioException) {
-            LOGGER.warning("Failed reading access_token.txt file");
+            LOGGER.warning(String.format("Failed reading access_token.txt file: %s", ioException.getMessage()));
+        } catch (InterruptedException | ExecutionException exc) {
+            LOGGER.warning(String.format("Failed attempting login using token (error in sending the request): %s", exc.getMessage()));
         }
     }
 }

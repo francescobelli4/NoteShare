@@ -1,7 +1,5 @@
 package app;
 
-import communication.SocketMessage;
-import communication.SocketMessageFactory;
 import exceptions.ArgsException;
 import locales.Locales;
 import services.ServerCommunicationService;
@@ -10,8 +8,6 @@ import utils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class App {
@@ -78,7 +74,7 @@ public class App {
             LOGGER.severe(argsException.getMessage());
             System.exit(-1);
         } catch (IOException ioException) {
-            LOGGER.severe("Connection to server failed! " + ioException.getMessage());
+            LOGGER.severe(String.format("Connection to server failed: %s", ioException.getMessage()));
             System.exit(-1);
         }
     }

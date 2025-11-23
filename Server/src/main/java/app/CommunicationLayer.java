@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class CommunicationLayer {
 
-    private final Logger LOGGER = Logger.getLogger("Communication Layer");
+    private static final Logger LOGGER = Logger.getLogger("Communication Layer");
     private ServerSocket server;
 
     private static CommunicationLayer instance;
@@ -26,7 +26,7 @@ public class CommunicationLayer {
     public void initializeServerSocket() throws IOException {
         this.server = new ServerSocket(12345);
 
-        LOGGER.info("Server socket initialized and listening on port " + CommunicationLayer.getInstance().getServerSocket().getLocalPort() + "!");
+        LOGGER.info(String.format("Server socket initialized and listening on port %d!", server.getLocalPort()));
 
         while (!server.isClosed()) {
 
@@ -35,11 +35,11 @@ public class CommunicationLayer {
             try {
                 client = this.server.accept();
             } catch (IOException ioException) {
-                LOGGER.warning("A client could not connect to the server. Skipping...");
+                LOGGER.warning(String.format("A client could not connect to the server: %s. Skipping...", ioException.getMessage()));
                 continue;
             }
 
-            LOGGER.info("A new client (" + client.getInetAddress().getHostAddress() + ") connected!");
+            LOGGER.info(String.format("A new client (%s) connected!", client.getInetAddress().getHostAddress()));
             Thread t = new Thread(new NetworkUser(client));
             t.start();
         }

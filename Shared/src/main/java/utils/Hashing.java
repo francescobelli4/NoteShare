@@ -6,6 +6,8 @@ public class Hashing {
 
     private static final int HASHING_COST = 10;
 
+    private Hashing() {}
+
     public static String hashString(String str) {
        return BCrypt.withDefaults().hashToString(HASHING_COST, str.toCharArray());
     }

@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class NetworkUser implements Runnable {
 
-    private final Logger LOGGER;
+    private final Logger logger;
 
     private final String address;
     private final Socket user;
@@ -23,7 +23,7 @@ public class NetworkUser implements Runnable {
     public NetworkUser(Socket user) {
         this.user = user;
         this.address = user.getInetAddress().getHostAddress();
-        this.LOGGER = Logger.getLogger("Client (" + this.address + ")");
+        this.logger = Logger.getLogger(String.format("Client (%s)", this.address));
     }
 
     /**
@@ -32,13 +32,15 @@ public class NetworkUser implements Runnable {
      */
     private void destroy() {
 
-        LOGGER.info("Destroying client (" + address + ").");
+        logger.info(String.format("Destroying client (%s).", address));
 
         if (dataInputStream != null) {
 
             try {
                 dataInputStream.close();
-            } catch (IOException _) {}
+            } catch (IOException _) {
+                // Not needed
+            }
             dataInputStream = null;
         }
 
@@ -46,14 +48,18 @@ public class NetworkUser implements Runnable {
 
             try {
                 dataOutputStream.close();
-            } catch (IOException _) {}
+            } catch (IOException _) {
+                // Not needed
+            }
             dataOutputStream = null;
         }
 
         if (user != null && user.isConnected()) {
             try {
                 user.close();
-            } catch (IOException _){}
+            } catch (IOException _){
+                // Not needed
+            }
         }
 
         Thread.currentThread().interrupt();
@@ -66,12 +72,12 @@ public class NetworkUser implements Runnable {
     @Override
     public void run() {
 
-        LOGGER.info("Thread for client (" + address + ") started!");
+        logger.info(String.format("Thread for client (%s) started!", address));
 
         try {
             setUpCommunication();
         } catch (IOException ioException) {
-            LOGGER.severe("Could note get client (" + address + ") input/output stream. Closing connection.");
+            logger.severe(String.format("Could not get client (%s) input/output stream: %s. Closing connection.", address, ioException.getMessage()));
             destroy();
             return;
         }
@@ -99,11 +105,11 @@ public class NetworkUser implements Runnable {
     private void read() {
         try {
             String data = dataInputStream.readUTF();
-            LOGGER.info("Received " + data + " from client (" + address + ").");
+            logger.info(String.format("Received %s from client (%s).", data, address));
 
             MessageHandler.getInstance().handleMessage(data, this);
         } catch (IOException ioException) {
-            LOGGER.severe("Connection with client (" + address + ") lost!");
+            logger.severe(String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));
             destroy();
         }
     }
@@ -121,7 +127,7 @@ public class NetworkUser implements Runnable {
                 dataOutputStream.writeUTF(message.toJson());
                 dataOutputStream.flush();
             } catch (IOException ioException) {
-                LOGGER.severe("Connection with client (" + address + ") lost!");
+                logger.severe(String.format("Connection with client (%s) lost: %s.", address, ioException.getMessage()));
                 destroy();
             }
         }
