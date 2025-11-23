@@ -224,12 +224,6 @@ public class ServerCommunicationService {
         this.dataOutputStream = dos;
     }
 
-    void destroyInputStream() throws IOException {
-
-        dataInputStream.close();
-        dataInputStream = null;
-    }
-
     DataInputStream getDataInputStream() {
         return dataInputStream;
     }
