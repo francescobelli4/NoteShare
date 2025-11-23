@@ -133,7 +133,15 @@ public class ServerCommunicationService {
                 assert socket != null;
                 if (!socket.isConnected()) break;
 
-                read();
+                try {
+                    read();
+                } catch (EOFException eofException) {
+                    LOGGER.severe(String.format("Connection closed from server: %s", eofException.getMessage()));
+                    closeCommunication();
+                } catch (IOException ioException) {
+                    LOGGER.severe(String.format("Connection from server lost!: %s", ioException.getMessage()));
+                    closeCommunication();
+                }
             }
         });
 
@@ -143,22 +151,15 @@ public class ServerCommunicationService {
     /**
      * This function should actually read from the socket.
      */
-    void read() {
-        try {
+    void read() throws IOException{
 
-            String data = this.dataInputStream.readUTF();
+        String data = this.dataInputStream.readUTF();
 
-            if (LOGGER.isLoggable(Level.INFO))
-                LOGGER.info(String.format("RECEIVED %s", data));
-
-            handleIncomingData(data);
-        } catch (EOFException eofException) {
-            LOGGER.severe(String.format("Connection closed from server: %s", eofException.getMessage()));
-            closeCommunication();
-        } catch (IOException ioException) {
-            LOGGER.severe(String.format("Connection from server lost!: %s", ioException.getMessage()));
-            closeCommunication();
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.info(String.format("RECEIVED %s", data));
         }
+
+        handleIncomingData(data);
     }
 
     /**
@@ -239,5 +240,9 @@ public class ServerCommunicationService {
 
     Socket getSocket() {
         return socket;
+    }
+
+    void setSocket(Socket socket) {
+        this.socket = socket;
     }
 }

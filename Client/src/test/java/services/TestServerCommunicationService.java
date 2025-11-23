@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
@@ -14,21 +16,60 @@ import static org.junit.Assert.*;
 public class TestServerCommunicationService {
 
     private ServerCommunicationService service;
-    private DataOutputStream dataOutputStream;
-    private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    private DataInputStream dataInputStream;
-    private final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
 
+    DataInputStream dataInputStream;
+    DataOutputStream dataOutputStream;
+    private ServerSocket serverSocket;
+    private Socket acceptedSocket;
+
+    private int findFreePort() {
+        int port;
+        try (ServerSocket tempSocket = new ServerSocket(0)) {
+            port = tempSocket.getLocalPort();
+        } catch (IOException e) {
+            return -1;
+        }
+
+        return port;
+    }
+
+    /**
+     * I need those latches to avoid socket initialization failures.
+     * They are similar to semaphores in C...
+     */
+    private CountDownLatch serverReadyLatch;
+    private CountDownLatch connectionEstablishedLatch;
 
     @Before
-    public void setUp() {
-        // Getting an instance of ServerCommunicationService
+    public void setUp() throws Exception {
+        int freePort = findFreePort();
         service = ServerCommunicationService.getInstance();
 
-        // Setting a mocked outputStream in service
-        dataOutputStream = new DataOutputStream(byteArrayOutputStream);
-        dataInputStream = new DataInputStream(byteArrayInputStream);
+        serverReadyLatch = new CountDownLatch(1);
+        connectionEstablishedLatch = new CountDownLatch(1);
 
+        Thread t = new Thread(() -> {
+            try {
+
+                serverSocket = new ServerSocket(freePort);
+                serverReadyLatch.countDown();
+
+                acceptedSocket = serverSocket.accept();
+                connectionEstablishedLatch.countDown();
+            } catch (IOException e) {
+                throw new RuntimeException("Server thread setup failed.", e);
+            }
+        });
+        t.start();
+
+        serverReadyLatch.await(5, TimeUnit.SECONDS);
+        Socket socket = new Socket("localhost", freePort);
+        connectionEstablishedLatch.await(5, TimeUnit.SECONDS);
+
+        dataInputStream = new DataInputStream(socket.getInputStream());
+        dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+        service.setSocket(socket);
         service.setStreamsForTest(dataInputStream, dataOutputStream);
     }
 
@@ -40,6 +81,16 @@ public class TestServerCommunicationService {
         CompletableFuture<SocketMessage> future = service.sendAsync(testRequest);
 
         assertTrue(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
+    }
+
+    @Test
+    public void testSendAsyncFailure() throws Exception {
+
+        // The fake message that will be sent through the dataOutputStream
+        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
+        dataOutputStream.close();
+
+        assertThrows(IOException.class, () -> service.sendAsync(testRequest));
     }
 
     @Test
@@ -68,12 +119,24 @@ public class TestServerCommunicationService {
     }
 
     @Test
-    public void testCloseCommunication() {
+    public void testSendSyncFailure() throws Exception {
+
+        // The fake message that will be sent through the dataOutputStream
+        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
+
+        dataOutputStream.close();
+
+        assertThrows(IOException.class, ()-> service.sendSync(testRequest));
+    }
+
+    @Test
+    public void testCloseCommunication() throws Exception {
         service.closeCommunication();
 
         assertTrue(service.getPendingRequests().isEmpty());
-        assertNull(service.getSocket());
-        assertThrows(EOFException.class , () -> service.getDataInputStream().readUTF());
+        assertTrue(service.getSocket().isClosed());
+        assertThrows(IOException.class , () -> service.getDataInputStream().readUTF());
+        assertThrows(IOException.class , () -> service.getDataOutputStream().writeUTF("aaa"));
     }
 
     @Test
@@ -81,16 +144,25 @@ public class TestServerCommunicationService {
 
         String testJson = SocketMessageFactory.createLoginRequest("abcd", "def").toJson();
 
-        dataOutputStream = new DataOutputStream(byteArrayOutputStream);
-
-        dataOutputStream.writeUTF(testJson);
-
-        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-        service.setStreamsForTest(new DataInputStream(byteIn), dataOutputStream);
+        DataOutputStream out = new DataOutputStream(acceptedSocket.getOutputStream());
+        out.writeUTF(testJson);
 
         service.read();
 
         assertEquals(0, service.getDataInputStream().available());
     }
 
+    @Test
+    public void testReadFailure() throws Exception {
+
+        String testJson = SocketMessageFactory.createLoginRequest("abcd", "def").toJson();
+
+        DataOutputStream out = new DataOutputStream(acceptedSocket.getOutputStream());
+        out.writeUTF(testJson);
+
+        dataInputStream.close();
+        dataOutputStream.close();
+
+        assertThrows(IOException.class, ()-> service.read());
+    }
 }
