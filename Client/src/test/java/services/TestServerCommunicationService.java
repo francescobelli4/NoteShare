@@ -113,7 +113,7 @@ public class TestServerCommunicationService {
     @Test
     public void testRead() throws IOException {
 
-        String testJson = SocketMessageFactory.createLoginRequest("abc", "def").toJson();
+        String testJson = SocketMessageFactory.createLoginRequest("abcd", "def").toJson();
 
         dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
