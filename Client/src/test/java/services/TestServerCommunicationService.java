@@ -30,7 +30,7 @@ public class TestServerCommunicationService {
         service = ServerCommunicationService.getInstance();
 
         // Setting a mocked outputStream in service
-        dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+        dataOutputStream = new DataOutputStream(OutputStream.nullOutputStream());
         dataInputStream = new DataInputStream(byteArrayInputStream);
 
         service.setStreamsForTest(dataInputStream, dataOutputStream);
@@ -42,6 +42,8 @@ public class TestServerCommunicationService {
         // The fake message that will be sent through the dataOutputStream
         SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
         CompletableFuture<SocketMessage> future = service.sendAsync(testRequest);
+
+
 
         assertTrue(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
     }
@@ -105,13 +107,15 @@ public class TestServerCommunicationService {
         assertTrue(service.getPendingRequests().isEmpty());
         assertNull(service.getSocket());
         assertThrows(IOException.class, () -> service.getDataOutputStream().writeUTF("abc"));
-        assertThrows(NullPointerException.class , () -> service.getDataInputStream().readUTF());
+        assertThrows(EOFException.class , () -> service.getDataInputStream().readUTF());
     }
 
     @Test
     public void testRead() throws IOException {
 
         String testJson = SocketMessageFactory.createLoginRequest("abc", "def").toJson();
+
+        dataOutputStream = new DataOutputStream(byteArrayOutputStream);
 
         dataOutputStream.writeUTF(testJson);
 
