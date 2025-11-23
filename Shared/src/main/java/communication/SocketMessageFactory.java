@@ -6,6 +6,8 @@ import communication.dtos.RegisterRequestDTO;
 
 public class SocketMessageFactory {
 
+    private SocketMessageFactory() {}
+
     public static SocketMessage createLoginRequest(String username, String password) {
         return new SocketMessage(SocketMessageType.LOGIN_REQUEST, new LoginRequestDTO(username, password));
     }

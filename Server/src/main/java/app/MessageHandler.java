@@ -5,6 +5,7 @@ import communication.SocketMessageType;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageHandler {
@@ -61,7 +62,9 @@ public class MessageHandler {
      */
     private void handleRequest(SocketMessage message, NetworkUser networkUser) {
 
-        LOGGER.info("Received Request " + message.getSocketMessageType() + " from client (" + networkUser.getAddress() + ").");
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("Received Request " + message.getSocketMessageType() + " from client (" + networkUser.getAddress() + ").");
+
         switch (message.getSocketMessageType()) {
 
             case LOGIN_USING_TOKEN_REQUEST -> handleLoginUsingTokenRequest(message, networkUser);

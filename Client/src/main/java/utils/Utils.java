@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -30,12 +31,8 @@ public class Utils {
             return;
         }
 
-        boolean created = dir.mkdirs();
-
-        if (created) {
-            logger.info(String.format("Folder in %s created!", path));
-        } else {
-            logger.warning(String.format("Unable to create folder in %s!", path));
+        if (dir.mkdirs() && logger.isLoggable(Level.INFO)) {
+            logger.info("Folder in " + path + " created!");
         }
     }
 

@@ -3,6 +3,7 @@ package app;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CommunicationLayer {
@@ -26,9 +27,8 @@ public class CommunicationLayer {
     public void initializeServerSocket() throws IOException {
         this.server = new ServerSocket(12345);
 
-        if (!server.isClosed()) {
+        if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info(String.format("Server socket initialized and listening on port %d!", server.getLocalPort()));
-        }
 
         while (!server.isClosed()) {
 
@@ -36,16 +36,13 @@ public class CommunicationLayer {
 
             try {
                 client = this.server.accept();
-
-                if (!client.isConnected())
-                    continue;
-
             } catch (IOException ioException) {
                 LOGGER.warning(String.format("A client could not connect to the server: %s. Skipping...", ioException.getMessage()));
                 continue;
             }
 
-            LOGGER.info(String.format("A new client (%s) connected!", client.getInetAddress().getHostAddress()));
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info(String.format("A new client (%s) connected!", client.getInetAddress().getHostAddress()));
             Thread t = new Thread(new NetworkUser(client));
             t.start();
         }

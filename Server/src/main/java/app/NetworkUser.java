@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NetworkUser implements Runnable {
@@ -32,7 +33,8 @@ public class NetworkUser implements Runnable {
      */
     private void destroy() {
 
-        logger.info(String.format("Destroying client (%s).", address));
+        if (logger.isLoggable(Level.INFO))
+            logger.info(String.format("Destroying client (%s).", address));
 
         if (dataInputStream != null) {
 
@@ -72,7 +74,8 @@ public class NetworkUser implements Runnable {
     @Override
     public void run() {
 
-        logger.info(String.format("Thread for client (%s) started!", address));
+        if (logger.isLoggable(Level.INFO))
+            logger.info(String.format("Thread for client (%s) started!", address));
 
         try {
             setUpCommunication();
@@ -105,7 +108,8 @@ public class NetworkUser implements Runnable {
     private void read() {
         try {
             String data = dataInputStream.readUTF();
-            logger.info(String.format("Received %s from client (%s).", data, address));
+            if (logger.isLoggable(Level.INFO))
+                logger.info(String.format("Received %s from client (%s).", data, address));
 
             MessageHandler.getInstance().handleMessage(data, this);
         } catch (IOException ioException) {
