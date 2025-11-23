@@ -5,11 +5,14 @@ import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import exceptions.UnrecognisedResponseException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
 import java.util.concurrent.*;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestServerCommunicationService {
@@ -29,12 +32,64 @@ public class TestServerCommunicationService {
     }
 
     @Test
-    public void sendAsync_ShouldRegisterFutureAndWriteCorrectJson() throws Exception {
+    public void testSendAsync() throws Exception {
 
         // The fake message that will be sent through the dataOutputStream
         SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
         CompletableFuture<SocketMessage> future = service.sendAsync(testRequest);
 
         assertTrue(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
+    }
+
+    @Test
+    public void testSendAsyncFailure() throws Exception {
+
+        dataOutputStream.close();
+
+        // The fake message that will be sent through the dataOutputStream
+        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
+        Assert.assertThrows(IOException.class, () -> service.sendAsync(testRequest));
+
+        assertFalse(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
+    }
+
+    @Test
+    public void testSendSync() throws Exception {
+
+        // The fake message that will be sent through the dataOutputStream
+        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
+
+        Thread t = new Thread(() -> {
+
+            while (!service.getPendingRequests().containsKey(testRequest.getSocketMessageID())) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            service.getPendingRequests().remove(testRequest.getSocketMessageID()).complete(testRequest);
+        });
+        t.start();
+
+        SocketMessage response = service.sendSync(testRequest);
+
+        assertFalse(service.getPendingRequests().containsKey(response.getSocketMessageID()));
+    }
+
+    @Test
+    public void testSendSyncFailure() throws Exception {
+
+        // The fake message that will be sent through the dataOutputStream
+        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
+
+        dataOutputStream.close();
+
+        Assert.assertThrows(IOException.class, () -> {
+            service.sendSync(testRequest);
+            assertFalse(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
+        });
+
     }
 }

@@ -148,6 +148,7 @@ public class ServerCommunicationService {
 
             if (LOGGER.isLoggable(Level.INFO))
                 LOGGER.info(String.format("RECEIVED %s", data));
+
             handleIncomingData(data);
         } catch (EOFException eofException) {
             LOGGER.severe(String.format("Connection closed from server: %s", eofException.getMessage()));
