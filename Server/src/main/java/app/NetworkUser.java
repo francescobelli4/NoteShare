@@ -108,8 +108,6 @@ public class NetworkUser implements Runnable {
     private void read() {
         try {
             String data = dataInputStream.readUTF();
-            if (logger.isLoggable(Level.INFO))
-                logger.info(String.format("Received %s from client (%s).", data, address));
 
             MessageHandler.getInstance().handleMessage(data, this);
         } catch (IOException ioException) {
