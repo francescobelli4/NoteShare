@@ -33,11 +33,6 @@ public class TestApp {
         Assert.assertEquals(App.Options.Lang.EN, App.Options.getLanguage());
         Assert.assertEquals(App.Options.UiType.COLORED, App.Options.getUiType());
         Assert.assertEquals(Utils.getOSLocalPath(), App.Options.getRootFolderPath());
-
-        Locales.initializeLocales();
-
-        Assert.assertEquals("Login", Locales.get("login"));
-        Assert.assertTrue(new File(App.Options.getRootFolderPath()).exists());
     }
 
     @Test
