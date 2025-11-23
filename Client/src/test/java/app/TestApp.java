@@ -6,11 +6,7 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import utils.Utils;
 
-import java.io.File;
-import java.lang.module.FindException;
-
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 
 
 public class TestApp {
@@ -54,19 +50,6 @@ public class TestApp {
         Assert.assertThrows(ArgsException.class, () -> App.parseArgs(args));
     }
 
-    /*@Test
-    public void testInitializeApp() {
-        String[] args = {"demo", "en", "colored"};
-        App.initializeApp(args);
-
-        Assert.assertEquals(App.Options.AppMode.DEMO, App.Options.getAppMode());
-        Assert.assertEquals(App.Options.Lang.EN, App.Options.getLanguage());
-        Assert.assertEquals(App.Options.UiType.COLORED, App.Options.getUiType());
-        Assert.assertEquals(Utils.getOSLocalPath(), App.Options.getRootFolderPath());
-
-
-    }*/
-
     @Test
     public void testSetupAppFolders() {
         try (MockedStatic<Utils> utilsMock = mockStatic(Utils.class)) {
@@ -76,7 +59,6 @@ public class TestApp {
             App.setupAppFolders();
 
             utilsMock.verify(() -> Utils.createDir("test/path"), times(1));
-
         }
     }
 }

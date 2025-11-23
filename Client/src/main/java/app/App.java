@@ -51,7 +51,7 @@ public class App {
      * This function should start the connection to server
      * @throws IOException connection goes wrong
      */
-    private static void setupConnectionToServer() throws IOException {
+    static void setupConnectionToServer() throws IOException {
         ServerCommunicationService.getInstance().initializeConnection();
     }
 
