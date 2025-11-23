@@ -203,7 +203,7 @@ public class ServerCommunicationService {
         return executorService;
     }
 
-    public ConcurrentHashMap<String, CompletableFuture<SocketMessage>> getPendingRequests() {
+    public ConcurrentMap<String, CompletableFuture<SocketMessage>> getPendingRequests() {
         return pendingRequests;
     }
 }
