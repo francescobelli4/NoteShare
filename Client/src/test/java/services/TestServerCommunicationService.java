@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
@@ -18,6 +19,9 @@ public class TestServerCommunicationService {
 
     private ServerCommunicationService service;
     private DataOutputStream dataOutputStream;
+    private final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    private DataInputStream dataInputStream;
+    private final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
 
 
     @Before
@@ -26,8 +30,10 @@ public class TestServerCommunicationService {
         service = ServerCommunicationService.getInstance();
 
         // Setting a mocked outputStream in service
-        dataOutputStream = new DataOutputStream(OutputStream.nullOutputStream());
-        service.setStreamsForTest(null, dataOutputStream);
+        dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+        dataInputStream = new DataInputStream(byteArrayInputStream);
+
+        service.setStreamsForTest(dataInputStream, dataOutputStream);
     }
 
     @Test
@@ -98,7 +104,22 @@ public class TestServerCommunicationService {
 
         assertTrue(service.getPendingRequests().isEmpty());
         assertNull(service.getSocket());
-        assertThrows(IOException.class , () -> service.getDataOutputStream().writeUTF("abc"));
+        assertThrows(IOException.class, () -> service.getDataOutputStream().writeUTF("abc"));
         assertThrows(NullPointerException.class , () -> service.getDataInputStream().readUTF());
+    }
+
+    @Test
+    public void testRead() throws IOException {
+
+        String testJson = SocketMessageFactory.createLoginRequest("abc", "def").toJson();
+
+        dataOutputStream.writeUTF(testJson);
+
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+        service.setStreamsForTest(new DataInputStream(byteIn), dataOutputStream);
+
+        service.read();
+
+        assertEquals(0, service.getDataInputStream().available());
     }
 }

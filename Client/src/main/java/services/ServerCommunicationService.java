@@ -143,7 +143,7 @@ public class ServerCommunicationService {
     /**
      * This function should actually read from the socket.
      */
-    private void read() {
+    void read() {
         try {
 
             String data = this.dataInputStream.readUTF();
