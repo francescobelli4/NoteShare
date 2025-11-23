@@ -20,7 +20,7 @@ public class App {
      * @throws ArgsException wrong number of args or invalid argument
      * @throws IllegalArgumentException could not find value in enum
      */
-    private static void parseArgs(String[] args) throws ArgsException, IllegalArgumentException {
+    static void parseArgs(String[] args) throws ArgsException, IllegalArgumentException {
 
         if (args.length < 3 || args.length > 4) {
             throw new ArgsException("Illegal number of args: appMode, language, uiType, [rootFolderPath]");
@@ -59,7 +59,7 @@ public class App {
      * This function should set up the app by reading the Options
      * @param args the array of arguments passed to the app at the startup
      */
-    private static void initializeApp(String[] args) {
+    static void initializeApp(String[] args) {
         try {
             parseArgs(args);
             LOGGER.info("Options set successfully");
