@@ -3,10 +3,14 @@ package app;
 import exceptions.ArgsException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.MockedStatic;
 import utils.Utils;
 
 import java.io.File;
 import java.lang.module.FindException;
+
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
 
 
 public class TestApp {
@@ -65,7 +69,14 @@ public class TestApp {
 
     @Test
     public void testSetupAppFolders() {
-        App.setupAppFolders();
-        Assert.assertTrue(new File(App.Options.getRootFolderPath()).exists());
+        try (MockedStatic<Utils> utilsMock = mockStatic(Utils.class)) {
+
+            App.Options.setRootFolderPath("test/path");
+
+            App.setupAppFolders();
+
+            utilsMock.verify(() -> Utils.createDir("test/path"), times(1));
+
+        }
     }
 }
