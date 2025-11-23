@@ -47,11 +47,6 @@ public class ServerCommunicationService {
         startReaderThread();
     }
 
-    void setStreamsForTest(DataInputStream dis, DataOutputStream dos) {
-        this.dataInputStream = dis;
-        this.dataOutputStream = dos;
-    }
-
     /**
      * This function should send an async request to the server.
      * An async request awaits an answer from the server, but it does not block the thread.
@@ -107,11 +102,18 @@ public class ServerCommunicationService {
     /**
      * This function should close the communication socket with the server.
      */
-    private void closeCommunication() {
+    void closeCommunication() {
         try {
+            this.pendingRequests.clear();
+
             if (this.dataInputStream != null) {
                 this.dataInputStream.close();
             }
+
+            if (this.dataOutputStream != null) {
+                this.dataOutputStream.close();
+            }
+
             if (this.socket != null) {
                 this.socket.close();
             }
@@ -211,5 +213,25 @@ public class ServerCommunicationService {
 
     public ConcurrentMap<String, CompletableFuture<SocketMessage>> getPendingRequests() {
         return pendingRequests;
+    }
+
+    /**
+     * TESTING
+     */
+    void setStreamsForTest(DataInputStream dis, DataOutputStream dos) {
+        this.dataInputStream = dis;
+        this.dataOutputStream = dos;
+    }
+
+    DataInputStream getDataInputStream() {
+        return dataInputStream;
+    }
+
+    DataOutputStream getDataOutputStream() {
+        return dataOutputStream;
+    }
+
+    Socket getSocket() {
+        return socket;
     }
 }

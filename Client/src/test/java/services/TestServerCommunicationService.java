@@ -12,8 +12,7 @@ import org.junit.Test;
 import java.io.*;
 import java.util.concurrent.*;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TestServerCommunicationService {
 
@@ -91,5 +90,15 @@ public class TestServerCommunicationService {
             assertFalse(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
         });
 
+    }
+
+    @Test
+    public void testCloseCommunication() {
+        service.closeCommunication();
+
+        assertTrue(service.getPendingRequests().isEmpty());
+        assertNull(service.getSocket());
+        assertThrows(IOException.class , () -> service.getDataOutputStream().writeUTF("abc"));
+        assertThrows(NullPointerException.class , () -> service.getDataInputStream().readUTF());
     }
 }
