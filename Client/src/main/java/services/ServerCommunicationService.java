@@ -7,6 +7,7 @@ import exceptions.UnrecognisedResponseException;
 import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ServerCommunicationService {
@@ -140,7 +141,8 @@ public class ServerCommunicationService {
 
             String data = this.dataInputStream.readUTF();
 
-            LOGGER.info(String.format("RECEIVED %s", data));
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info(String.format("RECEIVED %s", data));
             handleIncomingData(data);
         } catch (EOFException eofException) {
             LOGGER.severe(String.format("Connection closed from server: %s", eofException.getMessage()));
