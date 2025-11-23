@@ -47,6 +47,11 @@ public class ServerCommunicationService {
         startReaderThread();
     }
 
+    void setStreamsForTest(DataInputStream dis, DataOutputStream dos) {
+        this.dataInputStream = dis;
+        this.dataOutputStream = dos;
+    }
+
     /**
      * This function should send an async request to the server.
      * An async request awaits an answer from the server, but it does not block the thread.
