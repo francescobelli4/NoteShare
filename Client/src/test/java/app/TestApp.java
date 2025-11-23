@@ -7,12 +7,9 @@ import org.junit.Test;
 import utils.Utils;
 
 import java.io.File;
-import java.util.Locale;
-import java.util.logging.FileHandler;
 
 
 public class TestApp {
-
     @Test
     public void parseArgsSuccessFourArgs() {
         String[] args = {"demo", "en", "colored", "/test/path"};
@@ -27,6 +24,7 @@ public class TestApp {
 
     @Test
     public void parseArgsSuccessThreeArgs() {
+        App.Options.setRootFolderPath(Utils.getOSLocalPath());
         String[] args = {"demo", "en", "colored"};
 
         App.parseArgs(args);
@@ -36,7 +34,9 @@ public class TestApp {
         Assert.assertEquals(App.Options.UiType.COLORED, App.Options.getUiType());
         Assert.assertEquals(Utils.getOSLocalPath(), App.Options.getRootFolderPath());
 
-        Assert.assertNotNull(Locales.get("login"));
+        Locales.initializeLocales();
+
+        Assert.assertEquals("Login", Locales.get("login"));
         Assert.assertTrue(new File(App.Options.getRootFolderPath()).exists());
     }
 
