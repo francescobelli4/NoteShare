@@ -26,7 +26,9 @@ public class CommunicationLayer {
     public void initializeServerSocket() throws IOException {
         this.server = new ServerSocket(12345);
 
-        LOGGER.info(String.format("Server socket initialized and listening on port %d!", server.getLocalPort()));
+        if (!server.isClosed()) {
+            LOGGER.info(String.format("Server socket initialized and listening on port %d!", server.getLocalPort()));
+        }
 
         while (!server.isClosed()) {
 
@@ -34,6 +36,10 @@ public class CommunicationLayer {
 
             try {
                 client = this.server.accept();
+
+                if (!client.isConnected())
+                    continue;
+
             } catch (IOException ioException) {
                 LOGGER.warning(String.format("A client could not connect to the server: %s. Skipping...", ioException.getMessage()));
                 continue;

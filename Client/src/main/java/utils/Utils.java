@@ -30,8 +30,12 @@ public class Utils {
             return;
         }
 
-        if (dir.mkdirs()) {
+        boolean created = dir.mkdirs();
+
+        if (created) {
             logger.info(String.format("Folder in %s created!", path));
+        } else {
+            logger.warning(String.format("Unable to create folder in %s!", path));
         }
     }
 

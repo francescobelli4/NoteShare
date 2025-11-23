@@ -139,13 +139,14 @@ public class ServerCommunicationService {
         try {
 
             String data = this.dataInputStream.readUTF();
+
             LOGGER.info(String.format("RECEIVED %s", data));
             handleIncomingData(data);
         } catch (EOFException eofException) {
             LOGGER.severe(String.format("Connection closed from server: %s", eofException.getMessage()));
+            closeCommunication();
         } catch (IOException ioException) {
             LOGGER.severe(String.format("Connection from server lost!: %s", ioException.getMessage()));
-        } finally {
             closeCommunication();
         }
     }

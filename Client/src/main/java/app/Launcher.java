@@ -50,8 +50,11 @@ public class Launcher extends Application {
             }
         } catch (IOException ioException) {
             LOGGER.warning(String.format("Failed reading access_token.txt file: %s", ioException.getMessage()));
-        } catch (InterruptedException | ExecutionException exc) {
-            LOGGER.warning(String.format("Failed attempting login using token (error in sending the request): %s", exc.getMessage()));
+        } catch (InterruptedException interruptedException) {
+            Thread.currentThread().interrupt();
+            LOGGER.warning(String.format("Failed attempting login using token (error in sending the request): %s", interruptedException.getMessage()));
+        } catch (ExecutionException executionException) {
+            LOGGER.warning(String.format("Failed attempting login using token (error in sending the request): %s", executionException.getMessage()));
         }
     }
 }
