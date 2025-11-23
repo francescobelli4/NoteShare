@@ -43,7 +43,7 @@ public class App {
     /**
      * This function should create the app's local folder if it does not exist
      */
-    private static void setupAppFolders() {
+    static void setupAppFolders() {
         Utils.createDir(Options.getRootFolderPath());
     }
 

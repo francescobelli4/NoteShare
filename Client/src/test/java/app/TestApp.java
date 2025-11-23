@@ -1,12 +1,12 @@
 package app;
 
 import exceptions.ArgsException;
-import locales.Locales;
 import org.junit.Assert;
 import org.junit.Test;
 import utils.Utils;
 
 import java.io.File;
+import java.lang.module.FindException;
 
 
 public class TestApp {
@@ -62,4 +62,10 @@ public class TestApp {
 
 
     }*/
+
+    @Test
+    public void testSetupAppFolders() {
+        App.setupAppFolders();
+        Assert.assertTrue(new File(App.Options.getRootFolderPath()).exists());
+    }
 }
