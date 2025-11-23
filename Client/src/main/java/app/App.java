@@ -1,17 +1,29 @@
 package app;
 
+import communication.SocketMessage;
+import communication.SocketMessageFactory;
 import exceptions.ArgsException;
 import locales.Locales;
+import services.ServerCommunicationService;
 import utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 public class App {
 
     private static final Logger LOGGER = Logger.getLogger("App");
 
+    /**
+     * This function should set the app's options.
+     * @param args the array of args provided at the startup
+     * @throws ArgsException wrong number of args or invalid argument
+     * @throws IllegalArgumentException could not find value in enum
+     */
     private static void parseArgs(String[] args) throws ArgsException, IllegalArgumentException {
 
         if (args.length < 3 || args.length > 4) {
@@ -32,22 +44,47 @@ public class App {
         }
     }
 
-    private static void setOptions(String[] args) {
+    /**
+     * This function should create the app's local folder if it does not exist
+     */
+    private static void setupAppFolders() {
+        Utils.createDir(Options.getRootFolderPath());
+    }
+
+    /**
+     * This function should start the connection to server
+     * @throws IOException connection goes wrong
+     */
+    private static void setupConnectionToServer() throws IOException {
+        ServerCommunicationService.getInstance().initializeConnection();
+    }
+
+    /**
+     * This function should set up the app by reading the Options
+     * @param args the array of arguments passed to the app at the startup
+     */
+    private static void initializeApp(String[] args) {
         try {
             parseArgs(args);
             LOGGER.info("Options set successfully");
             Locales.initializeLocales();
             LOGGER.info("Locales initialized");
+            setupAppFolders();
+            setupConnectionToServer();
+            LOGGER.info("Connection to server established");
 
+            Launcher.launchApp();
         } catch (ArgsException argsException) {
             LOGGER.severe(argsException.getMessage());
+            System.exit(-1);
+        } catch (IOException ioException) {
+            LOGGER.severe("Connection to server failed! " + ioException.getMessage());
             System.exit(-1);
         }
     }
 
     public static void main(String[] args) {
-
-        setOptions(args);
+        initializeApp(args);
     }
 
     public static class Options {
@@ -99,10 +136,6 @@ public class App {
                 this.identifier = identifier;
             }
 
-            public String getIdentifier() {
-                return identifier;
-            }
-
             public static AppMode fromIdentifier(String id) throws ArgsException {
                 List<String> legalIdentifiers = new ArrayList<>();
 
@@ -126,10 +159,6 @@ public class App {
                 this.identifier = identifier;
             }
 
-            public String getIdentifier() {
-                return identifier;
-            }
-
             public static Lang fromIdentifier(String id) throws ArgsException {
                 List<String> legalIdentifiers = new ArrayList<>();
 
@@ -151,10 +180,6 @@ public class App {
 
             UiType(String identifier) {
                 this.identifier = identifier;
-            }
-
-            public String getIdentifier() {
-                return identifier;
             }
 
             public static UiType fromIdentifier(String id) throws ArgsException {

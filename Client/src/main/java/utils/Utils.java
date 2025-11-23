@@ -1,8 +1,12 @@
 package utils;
 
+import app.App;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 
@@ -17,16 +21,39 @@ public class Utils {
 
     private Utils() {}
 
-    public static void createUserSubfolders() {
-        File dir = new File(getOSLocalPath() + "MyNotes");
-        if (dir.mkdirs()) {
-            logger.info("Subfolders created!");
+    /**
+     * This function should create a new directory
+     * @param path the new directory's path
+     */
+    public static void createDir(String path) {
+        File dir = new File(path);
+
+        if (dir.exists()) {
+            return;
         }
+
+        if (dir.mkdirs()) {
+            logger.info("Folder in " + path + " created!");
+        }
+    }
+
+    public static File findFile(String path) {
+        File file = new File(path);
+
+        if (file.exists() && file.isFile()) {
+            return file;
+        }
+
+        return null;
+    }
+
+    public static String readFile(File file) throws IOException {
+        return Files.readString(Path.of(file.getAbsolutePath()));
     }
 
     /**
      * This function should save the access token in a file
-     * @param token
+     * @param token the received access token
      */
     public static void saveAccessToken(String token) {
 
@@ -38,8 +65,8 @@ public class Utils {
     }
 
     /**
-     * This function returns a path to the local app's folder
-     * @return
+     * This function returns a path to the app's local folder
+     * @return the path to the app's local folder
      */
     public static String getOSLocalPath() {
         String path;
@@ -50,11 +77,6 @@ public class Utils {
         } else {
             path = System.getProperty("user.home") + "/.local/share/NoteShare/";
         }
-
-        File dir = new File(path);
-
-
-        dir.mkdirs();
 
         return path;
     }
