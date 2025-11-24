@@ -1,7 +1,12 @@
 package app;
 
 import communication.SocketMessage;
+import communication.SocketMessageFactory;
 import communication.SocketMessageType;
+import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
+import communication.dtos.responses.login.LoginFailureReason;
+import entities.UserEntity;
+import mappers.UserMapper;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,14 +70,17 @@ public class MessageHandler {
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info("Received Request " + message.getSocketMessageType() + " from client (" + networkUser.getAddress() + ").");
 
-        switch (message.getSocketMessageType()) {
+        executorService.submit(() -> {
 
-            case LOGIN_USING_TOKEN_REQUEST -> handleLoginUsingTokenRequest(message, networkUser);
-            case REGISTER_REQUEST -> handleRegisterRequest(message, networkUser);
-            case LOGIN_REQUEST -> handleLoginRequest(message, networkUser);
+            switch (message.getSocketMessageType()) {
 
-            default -> LOGGER.warning("Received an invalid request from client (" + networkUser.getAddress() + ").");
-        }
+                case LOGIN_USING_TOKEN_REQUEST -> handleLoginUsingTokenRequest(message, networkUser);
+                case REGISTER_REQUEST -> handleRegisterRequest(message, networkUser);
+                case LOGIN_REQUEST -> handleLoginRequest(message, networkUser);
+
+                default -> LOGGER.warning("Received an invalid request from client (" + networkUser.getAddress() + ").");
+            }
+        });
     }
 
     /**
@@ -82,7 +90,16 @@ public class MessageHandler {
      * @param networkUser the user connection manager instance
      */
     private void handleLoginUsingTokenRequest(SocketMessage message, NetworkUser networkUser) {
-        //TODO
+
+        LoginUsingTokenRequestDTO payload = (LoginUsingTokenRequestDTO) message.getPayload();
+
+        UserEntity userEntity = Server.getUserDAO().findUserByToken(payload.getToken());
+
+        if (userEntity != null) {
+            networkUser.write(SocketMessageFactory.createLoginSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID()));
+        } else {
+            networkUser.write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_TOKEN, message.getSocketMessageID()));
+        }
     }
 
     /**

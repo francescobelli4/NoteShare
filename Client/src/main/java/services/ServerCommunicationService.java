@@ -55,29 +55,39 @@ public class ServerCommunicationService {
      *
      * @param request the request that has to be sent
      * @return a CompletableFuture<SocketMessage> that will be notified when the answer arrives
-     * @throws IOException error writing to server socket
      */
-    public CompletableFuture<SocketMessage> sendAsync(SocketMessage request) throws IOException {
+    public CompletableFuture<SocketMessage> sendAsync(SocketMessage request) {
 
         CompletableFuture<SocketMessage> future = new CompletableFuture<>();
-        String data = request.toJson();
 
-        try {
+        executorService.submit(() -> {
+            String data = request.toJson();
 
-            synchronized (writeLock) {
-                pendingRequests.put(request.getSocketMessageID(), future);
-                dataOutputStream.writeUTF(data);
-                dataOutputStream.flush();
+            try {
+
+                synchronized (writeLock) {
+                    pendingRequests.put(request.getSocketMessageID(), future);
+                    dataOutputStream.writeUTF(data);
+                    dataOutputStream.flush();
+                }
+            } catch (IOException ioException) {
+                if (pendingRequests.containsKey(request.getSocketMessageID()))
+                    pendingRequests.remove(request.getSocketMessageID()).completeExceptionally(ioException);
             }
-        } catch (IOException ioException) {
-            if (pendingRequests.containsKey(request.getSocketMessageID()))
-                pendingRequests.remove(request.getSocketMessageID()).completeExceptionally(ioException);
-            throw ioException;
-        }
+        });
 
         return future;
     }
 
+
+    /**
+     * This function should send a sync request to the server.
+     * A sync request blocks the running thread until the answer is received from
+     * the server.
+     *
+     * @param request the request that has to be sent
+     * @return the SocketMessage received as response
+     */
     public SocketMessage sendSync(SocketMessage request) throws IOException, InterruptedException, ExecutionException {
 
         CompletableFuture<SocketMessage> future = new CompletableFuture<>();
@@ -159,7 +169,9 @@ public class ServerCommunicationService {
             LOGGER.info(String.format("RECEIVED %s", data));
         }
 
-        handleIncomingData(data);
+        executorService.submit(() -> {
+            handleIncomingData(data);
+        });
     }
 
     /**

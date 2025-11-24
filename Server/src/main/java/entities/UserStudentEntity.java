@@ -1,13 +1,13 @@
-package models;
+package entities;
 
 import communication.user.UserType;
 
-public class StudentUserModel extends UserModel {
+public class UserStudentEntity extends UserEntity {
 
     private int coins;
 
-    public StudentUserModel() {
-        setUserType(UserType.STUDENT);
+    public UserStudentEntity() {
+        this.setUserType(UserType.STUDENT);
     }
 
     public int getCoins() {
@@ -17,5 +17,4 @@ public class StudentUserModel extends UserModel {
     public void setCoins(int coins) {
         this.coins = coins;
     }
-
 }

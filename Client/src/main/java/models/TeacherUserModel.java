@@ -1,8 +1,10 @@
 package models;
 
+import communication.user.UserType;
+
 public class TeacherUserModel extends UserModel {
 
     public TeacherUserModel() {
-        setUserType("teacher");
+        setUserType(UserType.TEACHER);
     }
 }

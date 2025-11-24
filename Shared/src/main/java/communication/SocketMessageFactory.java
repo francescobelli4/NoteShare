@@ -1,8 +1,12 @@
 package communication;
 
-import communication.dtos.LoginRequestDTO;
-import communication.dtos.LoginUsingTokenRequestDTO;
-import communication.dtos.RegisterRequestDTO;
+import communication.dtos.requests.login.LoginRequestDTO;
+import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
+import communication.dtos.requests.register.RegisterRequestDTO;
+import communication.dtos.responses.login.LoginFailureReason;
+import communication.dtos.responses.login.LoginFailureResponseDTO;
+import communication.dtos.responses.login.LoginSuccessResponseDTO;
+import communication.user.UserDTO;
 
 public class SocketMessageFactory {
 
@@ -18,5 +22,13 @@ public class SocketMessageFactory {
 
     public static SocketMessage createRegisterRequest(String username, String password, String userType) {
         return new SocketMessage(SocketMessageType.REGISTER_REQUEST, new RegisterRequestDTO(username, password, userType));
+    }
+
+    public static SocketMessage createLoginSuccessResponse(UserDTO userDTO, String messageID) {
+        return new SocketMessage(SocketMessageType.LOGIN_SUCCESS, messageID, new LoginSuccessResponseDTO(userDTO.getUserType(), userDTO));
+    }
+
+    public static SocketMessage createLoginFailureResponse(LoginFailureReason loginFailureReason, String messageID) {
+        return new SocketMessage(SocketMessageType.LOGIN_FAILURE, messageID, new LoginFailureResponseDTO(loginFailureReason));
     }
 }

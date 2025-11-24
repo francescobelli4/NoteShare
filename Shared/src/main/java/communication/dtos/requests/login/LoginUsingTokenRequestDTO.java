@@ -1,4 +1,4 @@
-package communication.dtos;
+package communication.dtos.requests.login;
 
 public class LoginUsingTokenRequestDTO {
 

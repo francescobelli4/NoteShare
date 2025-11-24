@@ -1,15 +1,13 @@
-package communication.dtos;
+package communication.dtos.requests.login;
 
-public class RegisterRequestDTO {
+public class LoginRequestDTO {
 
     private String username;
     private String password;
-    private String userType;
 
-    public RegisterRequestDTO(String username, String password, String userType) {
+    public LoginRequestDTO(String username, String password) {
         this.username = username;
         this.password = password;
-        this.userType = userType;
     }
 
     public String getUsername() {
@@ -26,13 +24,5 @@ public class RegisterRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
     }
 }

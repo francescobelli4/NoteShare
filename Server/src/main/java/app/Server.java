@@ -1,5 +1,8 @@
 package app;
 
+import daos.user.NonPersistentUserDAO;
+import daos.user.UserDAO;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.logging.Logger;
 public class Server {
 
     private static final Logger LOGGER = Logger.getLogger("Server");
+
+    private static UserDAO userDAO;
 
     private Server() {}
 
@@ -27,6 +32,16 @@ public class Server {
     }
 
     /**
+     * This function should initialize the right DAOs for this AppMode.
+     */
+    private static void initializeDAOs() {
+
+        if (Options.getAppMode() == Options.AppMode.DEMO) {
+            userDAO = new NonPersistentUserDAO();
+        }
+    }
+
+    /**
      * This function should do all the operations needed to initialize the server.
      * @param args the arguments received at the startup
      */
@@ -40,6 +55,8 @@ public class Server {
         }
         LOGGER.info("Options set successfully");
 
+        initializeDAOs();
+
         try {
             CommunicationLayer.getInstance().initializeServerSocket();
         } catch (IOException ioException) {
@@ -50,6 +67,10 @@ public class Server {
 
     static void main(String[] args) {
         initializeServer(args);
+    }
+
+    public static UserDAO getUserDAO() {
+        return userDAO;
     }
 
     public static class Options {

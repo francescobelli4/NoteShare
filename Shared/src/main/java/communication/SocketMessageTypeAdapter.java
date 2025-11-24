@@ -3,9 +3,10 @@ package communication;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import communication.dtos.LoginRequestDTO;
-import communication.dtos.LoginUsingTokenRequestDTO;
-import communication.dtos.RegisterRequestDTO;
+import communication.dtos.requests.login.LoginRequestDTO;
+import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
+import communication.dtos.requests.register.RegisterRequestDTO;
+import communication.dtos.responses.login.LoginFailureResponseDTO;
 
 /**
  * <a href="https://www.tutorialspoint.com/gson/gson_custom_adapters.htm">Taken from here :D</a>
@@ -34,6 +35,7 @@ public class SocketMessageTypeAdapter extends TypeAdapter<SocketMessage> {
             case LOGIN_REQUEST -> payloadType = LoginRequestDTO.class;
             case LOGIN_USING_TOKEN_REQUEST -> payloadType = LoginUsingTokenRequestDTO.class;
             case REGISTER_REQUEST -> payloadType = RegisterRequestDTO.class;
+            case LOGIN_FAILURE -> payloadType = LoginFailureResponseDTO.class;
             default -> payloadType = null;
         }
 

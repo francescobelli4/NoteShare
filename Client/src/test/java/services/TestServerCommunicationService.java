@@ -191,4 +191,17 @@ public class TestServerCommunicationService {
         assertThrows(UnrecognisedResponseException.class, () -> service.handleResponse(testMessage));
     }
 
+    @Test
+    public void testHandleIncomingData() {
+
+        SocketMessage testMessage = SocketMessageFactory.createLoginRequest("abc", "def");
+
+        ServerCommunicationService spyService = spy(service);
+
+        doNothing().when(spyService).handleResponse(any(SocketMessage.class));
+
+        service.handleIncomingData(testMessage.toJson());
+
+        verify(spyService, times(1)).handleResponse(any(SocketMessage.class));
+    }
 }

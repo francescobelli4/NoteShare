@@ -1,19 +1,21 @@
 package models;
 
+import communication.user.UserType;
+
 public class UserModel {
 
     protected UserModel() {}
 
     private String username;
-    private String userType;
+    private UserType userType;
 
     private boolean loggedIn = false;
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
