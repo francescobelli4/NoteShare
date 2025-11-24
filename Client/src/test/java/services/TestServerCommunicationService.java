@@ -3,6 +3,7 @@ package services;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
+import exceptions.UnrecognisedResponseException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -164,5 +165,27 @@ public class TestServerCommunicationService {
         dataOutputStream.close();
 
         assertThrows(IOException.class, ()-> service.read());
+    }
+
+    @Test
+    public void testHandleResponse() {
+        SocketMessage testMessage = SocketMessageFactory.createLoginRequest("abc", "def");
+
+        CompletableFuture<SocketMessage> testFuture = new CompletableFuture<>();
+
+        service.getPendingRequests().put(testMessage.getSocketMessageID(), testFuture);
+
+        service.handleResponse(testMessage);
+
+        assertFalse(service.getPendingRequests().containsKey(testMessage.getSocketMessageID()));
+
+        assertTrue(testFuture.isDone());
+    }
+
+    @Test
+    public void testHandleFailure() {
+        SocketMessage testMessage = SocketMessageFactory.createLoginRequest("abc", "def");
+
+        assertThrows(UnrecognisedResponseException.class, () -> service.handleResponse(testMessage));
     }
 }

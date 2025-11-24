@@ -194,7 +194,7 @@ public class ServerCommunicationService {
      * @param socketMessage the received SocketMessage
      * @throws UnrecognisedResponseException there is no CompletableFuture waiting for that response
      */
-    private void handleResponse(SocketMessage socketMessage) throws UnrecognisedResponseException {
+    void handleResponse(SocketMessage socketMessage) throws UnrecognisedResponseException {
         CompletableFuture<SocketMessage> future = pendingRequests.remove(socketMessage.getSocketMessageID());
 
         if (future != null) {
