@@ -6,7 +6,8 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import utils.Utils;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
 
 
 public class TestApp {

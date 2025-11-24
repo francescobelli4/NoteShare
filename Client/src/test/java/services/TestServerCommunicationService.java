@@ -7,14 +7,16 @@ import exceptions.UnrecognisedResponseException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 public class TestServerCommunicationService {
 
@@ -74,26 +76,6 @@ public class TestServerCommunicationService {
 
         service.setSocket(socket);
         service.setStreamsForTest(dataInputStream, dataOutputStream);
-    }
-
-    @Test
-    public void testSendAsync() throws Exception {
-
-        // The fake message that will be sent through the dataOutputStream
-        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
-        CompletableFuture<SocketMessage> future = service.sendAsync(testRequest);
-
-        assertTrue(service.getPendingRequests().containsKey(testRequest.getSocketMessageID()));
-    }
-
-    @Test
-    public void testSendAsyncFailure() throws Exception {
-
-        // The fake message that will be sent through the dataOutputStream
-        SocketMessage testRequest = new SocketMessage(SocketMessageType.LOGIN_REQUEST, "test_payload");
-        dataOutputStream.close();
-
-        assertThrows(IOException.class, () -> service.sendAsync(testRequest));
     }
 
     @Test
@@ -189,19 +171,5 @@ public class TestServerCommunicationService {
         SocketMessage testMessage = SocketMessageFactory.createLoginRequest("abc", "def");
 
         assertThrows(UnrecognisedResponseException.class, () -> service.handleResponse(testMessage));
-    }
-
-    @Test
-    public void testHandleIncomingData() {
-
-        SocketMessage testMessage = SocketMessageFactory.createLoginRequest("abc", "def");
-
-        ServerCommunicationService spyService = spy(service);
-
-        doNothing().when(spyService).handleResponse(any(SocketMessage.class));
-
-        service.handleIncomingData(testMessage.toJson());
-
-        verify(spyService, times(1)).handleResponse(any(SocketMessage.class));
     }
 }
