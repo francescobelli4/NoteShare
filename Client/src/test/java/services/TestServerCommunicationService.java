@@ -13,6 +13,8 @@ import java.net.Socket;
 import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class TestServerCommunicationService {
 
@@ -188,4 +190,5 @@ public class TestServerCommunicationService {
 
         assertThrows(UnrecognisedResponseException.class, () -> service.handleResponse(testMessage));
     }
+
 }

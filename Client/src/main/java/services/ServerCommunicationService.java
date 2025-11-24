@@ -176,7 +176,7 @@ public class ServerCommunicationService {
      * @param data the received JSON string
      * @throws UnrecognisedResponseException there is no CompletableFuture waiting for that response
      */
-    private void handleIncomingData(String data) throws UnrecognisedResponseException {
+    void handleIncomingData(String data) throws UnrecognisedResponseException {
         SocketMessage receivedMessage = SocketMessage.fromJson(data);
         SocketMessageType socketMessageType = receivedMessage.getSocketMessageType();
 
