@@ -5,11 +5,9 @@ import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.*;
 import exceptions.LoginFailureException;
-import exceptions.RegisterFailureException;
 import mappers.UserMapper;
 import sessions.UserSession;
 import services.ServerCommunicationService;
-import utils.Hashing;
 import utils.Utils;
 
 import java.io.File;

@@ -2,12 +2,10 @@ package views;
 
 import graphics_controllers.GraphicsController;
 import graphics_controllers.LoginFormViewController;
-import graphics_controllers.RegisterFormViewController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import locales.Locales;

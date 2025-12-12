@@ -14,7 +14,6 @@ import entities.UserEntity;
 import mappers.UserMapper;
 import utils.Hashing;
 
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -121,7 +120,6 @@ public class MessageHandler {
 
         if (userEntity != null) {
 
-            System.out.println("A " + userEntity.getPassword() + " B " + payload.getPassword());
             if (!Hashing.verifyHash(payload.getPassword(), userEntity.getPassword())) {
                 networkUser.write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_PASSWORD, message.getSocketMessageID()));
                 return;

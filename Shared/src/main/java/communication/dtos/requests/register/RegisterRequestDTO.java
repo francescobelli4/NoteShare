@@ -1,6 +1,5 @@
 package communication.dtos.requests.register;
 
-import communication.user.UserDTO;
 import communication.user.UserType;
 
 public class RegisterRequestDTO {
@@ -25,5 +24,17 @@ public class RegisterRequestDTO {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

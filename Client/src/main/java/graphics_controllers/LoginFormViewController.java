@@ -1,17 +1,11 @@
 package graphics_controllers;
 
 import app_controllers.LoginController;
-import app_controllers.RegisterController;
-import communication.user.UserType;
 import exceptions.LoginFailureException;
-import exceptions.RegisterFailureException;
 import locales.Locales;
 import views.*;
 
 import java.net.SocketException;
-
-import static communication.dtos.responses.login.LoginFailureReason.*;
-import static communication.dtos.responses.login.RegisterFailureReason.USERNAME_ALREADY_TAKEN;
 
 public class LoginFormViewController extends GraphicsController<LoginFormView> {
 

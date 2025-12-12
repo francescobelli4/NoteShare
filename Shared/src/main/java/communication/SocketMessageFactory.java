@@ -32,7 +32,7 @@ public class SocketMessageFactory {
     }
 
     public static SocketMessage createRegisterSuccessRequest(UserDTO userDTO, String accessToken, String messageID) {
-        return new SocketMessage(SocketMessageType.REGISTER_SUCCESS, messageID, new RegisterSuccessResponseDTO(userDTO.getUserType(), userDTO, accessToken));
+        return new SocketMessage(SocketMessageType.REGISTER_SUCCESS, messageID, new RegisterSuccessResponseDTO<>(userDTO.getUserType(), userDTO, accessToken));
     }
 
     public static SocketMessage createRegisterFailureResponse(RegisterFailureReason registerFailureReason, String messageID) {
