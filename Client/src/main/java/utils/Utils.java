@@ -1,5 +1,6 @@
 package utils;
 
+import java.awt.desktop.SystemEventListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,16 +37,25 @@ public class Utils {
         }
     }
 
+    /**
+     * This function should find a file from its path
+     * @param path the file's path
+     * @return the file or null if it's not found
+     */
     public static File findFile(String path) {
         File file = new File(path);
-
         if (file.exists() && file.isFile()) {
             return file;
         }
-
         return null;
     }
 
+    /**
+     * This function should read a file content
+     * @param file the file that has to be red
+     * @return the content of the file
+     * @throws IOException failed to read the file (does not exist?)
+     */
     public static String readFile(File file) throws IOException {
         return Files.readString(Path.of(file.getAbsolutePath()));
     }
@@ -56,7 +66,7 @@ public class Utils {
      */
     public static void saveAccessToken(String token) {
 
-        try (FileWriter fileWriter = new FileWriter(getOSLocalPath() + "token.txt")) {
+        try (FileWriter fileWriter = new FileWriter(getOSLocalPath() + "access_token.txt")) {
             fileWriter.write(token);
         } catch (IOException _) {
             logger.severe("Failed writing access token to file");

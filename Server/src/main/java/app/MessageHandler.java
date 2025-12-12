@@ -4,7 +4,9 @@ import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
+import communication.dtos.requests.register.RegisterRequestDTO;
 import communication.dtos.responses.login.LoginFailureReason;
+import communication.dtos.responses.login.RegisterFailureReason;
 import entities.UserEntity;
 import mappers.UserMapper;
 
@@ -48,7 +50,6 @@ public class MessageHandler {
     public void handleMessage(String json, NetworkUser networkUser) {
 
         executorService.submit(() -> {
-
             SocketMessage message = SocketMessage.fromJson(json);
             SocketMessageType messageType = message.getSocketMessageType();
 
@@ -70,12 +71,14 @@ public class MessageHandler {
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info("Received Request " + message.getSocketMessageType() + " from client (" + networkUser.getAddress() + ").");
 
+
         executorService.submit(() -> {
 
             switch (message.getSocketMessageType()) {
 
                 case LOGIN_USING_TOKEN_REQUEST -> handleLoginUsingTokenRequest(message, networkUser);
                 case REGISTER_REQUEST -> handleRegisterRequest(message, networkUser);
+
                 case LOGIN_REQUEST -> handleLoginRequest(message, networkUser);
 
                 default -> LOGGER.warning("Received an invalid request from client (" + networkUser.getAddress() + ").");
@@ -119,7 +122,19 @@ public class MessageHandler {
      * @param networkUser the user connection manager instance
      */
     private void handleRegisterRequest(SocketMessage message, NetworkUser networkUser) {
-        //TODO
+        LOGGER.info("RECEIVED " + message.toJson());
+
+        RegisterRequestDTO<?> payload = (RegisterRequestDTO<?>) message.getPayload();
+
+        UserEntity userEntity = Server.getUserDAO().findUserByUsername(payload.getUserDTO().getUsername());
+
+        if (userEntity == null) {
+            UserEntity user = UserMapper.toEntity(payload.getUserDTO(), payload.getPassword());
+            networkUser.write(SocketMessageFactory.createRegisterSuccessRequest(UserMapper.toDTO(user), user.getToken(), message.getSocketMessageID()));
+            Server.getUserDAO().saveUser(user);
+        } else {
+            networkUser.write(SocketMessageFactory.createRegisterFailureResponse(RegisterFailureReason.USERNAME_ALREADY_TAKEN, message.getSocketMessageID()));
+        }
     }
 
     /**

@@ -1,0 +1,69 @@
+package app_controllers;
+
+import communication.SocketMessage;
+import communication.SocketMessageFactory;
+import communication.SocketMessageType;
+import communication.dtos.responses.login.RegisterFailureReason;
+import communication.dtos.responses.login.RegisterSuccessResponseDTO;
+import communication.user.UserDTO;
+import communication.user.UserDTOFactory;
+import communication.user.UserType;
+import exceptions.RegisterFailureException;
+import services.ServerCommunicationService;
+import utils.Hashing;
+import utils.Utils;
+
+import java.io.IOException;
+import java.net.SocketException;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
+
+public class RegisterController {
+
+    private static final Logger LOGGER = Logger.getLogger("RegisterController");
+
+    private RegisterController() {}
+
+    public static void register(String username, String password, UserType userType) throws RegisterFailureException, SocketException {
+
+        if (username.length() < Utils.getMinUsernameLength()) {
+            throw new RegisterFailureException(RegisterFailureReason.USERNAME_TOO_SHORT);
+        }
+
+        if (username.length() > Utils.getMaxUsernameLength()) {
+            throw new RegisterFailureException(RegisterFailureReason.USERNAME_TOO_LONG);
+        }
+
+        if (password.length() < Utils.getMinPasswordLength()) {
+            throw new RegisterFailureException(RegisterFailureReason.PASSWORD_TOO_SHORT);
+        }
+
+        if (password.length() > Utils.getMaxPasswordLength()) {
+            throw new RegisterFailureException(RegisterFailureReason.PASSWORD_TOO_LONG);
+        }
+
+        SocketMessage response;
+
+        UserDTO userDTO = switch (userType) {
+            case STUDENT -> UserDTOFactory.createUserStudentDTO(username, 0, userType);
+            case TEACHER, ADMINISTRATOR -> null;
+        };
+
+        try {
+            response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createRegisterRequest(userDTO, Hashing.hashString(password)));
+
+            if (response.getSocketMessageType() == SocketMessageType.REGISTER_SUCCESS) {
+                LOGGER.info("Register success! :D");
+                RegisterSuccessResponseDTO payload = (RegisterSuccessResponseDTO) response.getPayload();
+                Utils.saveAccessToken(payload.getAccessToken());
+            } else if (response.getSocketMessageType() == SocketMessageType.REGISTER_FAILURE) {
+                throw new RegisterFailureException(RegisterFailureReason.USERNAME_ALREADY_TAKEN);
+            }
+
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            throw new SocketException("Failed communicating with server");
+        }
+    }
+}
+
+

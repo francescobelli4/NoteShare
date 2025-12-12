@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" styleClass="form" stylesheets="@../../styles/RegisterForm.css" GridPane.columnIndex="1" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+        <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                <image>
+                    <Image url="@../../styles/icons/app_icon.png" />
+                </image>
+            </ImageView>
+            <Label fx:id="titleLabel" alignment="CENTER" text="Register">
+                <font>
+                    <Font name="Cantarell Regular" size="75.0" />
+                </font>
+                <VBox.margin>
+                    <Insets bottom="50.0" />
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="usernameTextField" alignment="CENTER" promptText="Username">
+                <font>
+                    <Font name="Cantarell Regular" size="45.0" />
+                </font>
+                <opaqueInsets>
+                    <Insets bottom="20.0" />
+                </opaqueInsets>
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+            </TextField>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <children>
+                    <Label fx:id="usernamePrompt" text="Alea iacta est" textFill="#b5b5b5">
+                        <font>
+                            <Font name="Cantarell Regular" size="31.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
+            <PasswordField fx:id="passwordTextField" alignment="CENTER" promptText="Password">
+                <font>
+                    <Font name="Cantarell Regular" size="45.0" />
+                </font>
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+            </PasswordField>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <children>
+                    <Label fx:id="passwordPrompt" text="Alea iacta est" textFill="#b5b5b5">
+                        <font>
+                            <Font name="Cantarell Regular" size="31.0" />
+                        </font>
+                    </Label>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                <children>
+                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                        <children>
+                            <RadioButton fx:id="studentRadioButton" mnemonicParsing="false" selected="true" />
+                            <Label fx:id="studentLabel" text="Student">
+                                <font>
+                                    <Font name="Cantarell Regular" size="25.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </VBox>
+                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                        <children>
+                            <RadioButton fx:id="teacherRadioButton" mnemonicParsing="false" />
+                            <Label fx:id="teacherLabel" text="Teacher">
+                                <font>
+                                    <Font name="Cantarell Regular" size="25.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </VBox>
+                </children>
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+            </HBox>
+
+            <Button id="register_button" fx:id="registerButton" maxWidth="Infinity" styleClass="form_button" text="Register" textFill="WHITE" VBox.vgrow="ALWAYS">
+                <font>
+                    <Font name="Cantarell Regular" size="44.0" />
+                </font>
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+            </Button>
+      <Button id="back_button" fx:id="backButton" mnemonicParsing="false">
+         <graphic>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../styles/icons/back-button.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </Button>
+        </children>
+        <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+        </padding>
+    </VBox>

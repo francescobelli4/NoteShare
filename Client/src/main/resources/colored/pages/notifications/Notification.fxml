@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="notificationContainer" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox id="notification_container" fx:id="notification" alignment="TOP_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-1" minWidth="-1" prefHeight="-1" prefWidth="-1" spacing="10" stylesheets="@../../styles/Notification.css">
+            <ImageView fx:id="icon" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../styles/icons/app_icon.png" />
+                </image>
+            </ImageView>
+            <VBox prefWidth="500.0" HBox.hgrow="ALWAYS">
+                <children>
+                    <Label fx:id="title" text="Title">
+                        <font>
+                            <Font name="Cantarell Regular" size="41.0" />
+                        </font>
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </Label>
+                    <Label fx:id="description" text="DescriptionDescriptionDescriptionDescriptionDescriptionDescrDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescrDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescrDescriptionDescriptionDescriptionDescriptionDescriptioniptioniptioniption" wrapText="true">
+                        <font>
+                            <Font name="Cantarell Regular" size="25.0" />
+                        </font>
+                    </Label>
+                </children>
+            </VBox>
+        </HBox>
+    </children>
+</StackPane>

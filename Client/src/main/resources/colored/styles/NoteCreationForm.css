@@ -1,0 +1,37 @@
+#background {
+    -fx-background-color: rgba(0, 0, 0, 0.349);
+}
+
+#form {
+    -fx-background-color: white;
+    -fx-background-radius: 40;
+}
+
+.x-button {
+    -fx-background-color: transparent;
+}
+
+.x-button:hover {
+    -fx-background-color: rgb(241, 241, 241);
+}
+
+.folder_name_field {
+    -fx-background-radius: 40;
+}
+
+.btn {
+    -fx-background-color: linear-gradient(to bottom right, #bab7c4, #dad1fc);
+    -fx-background-radius: 40;
+}
+
+.selected {
+    -fx-background-color: linear-gradient(to bottom right, #805dff, #b6a2ff);
+}
+
+#choose_pdf_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #a39ac4, #a994f3);
+}
+
+#confirm_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6e4bec, #9881e9);
+}

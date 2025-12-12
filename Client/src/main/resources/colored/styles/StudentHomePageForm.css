@@ -1,0 +1,26 @@
+#leftbar {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-padding: 30;
+}
+
+.leftbar_button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-background-radius: 30;
+}
+
+.leftbar_button:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: black;
+}
+
+.leftbar_button.selected {
+    -fx-background-color: linear-gradient(to bottom right, #805dff, #c1afff);
+    -fx-text-fill: white;
+}
+
+.leftbar_button.selected:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6f4de6, #ae9af5);
+    -fx-text-fill: white;
+}

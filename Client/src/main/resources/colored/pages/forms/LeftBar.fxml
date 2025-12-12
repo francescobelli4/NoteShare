@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="leftbar" fx:id="barContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../../styles/StudentHomePageForm.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <effect>
+      <DropShadow />
+   </effect>
+   <children>
+      <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="yourNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Your Notes">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../styles/icons/spiral_note_pad.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Cantarell Regular" size="32.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="leftbar_button" />
+                  <String fx:value="selected" />
+               </styleClass>
+            </Button>
+            <Button fx:id="browseNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Browse Notes">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../styles/icons/globe_with_meridians.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Cantarell Regular" size="32.0" />
+               </font>
+            </Button>
+            <Button fx:id="sharedNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Shared Notes">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../styles/icons/female-teacher.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Cantarell Regular" size="32.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="userData" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../styles/icons/user_image.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="usernameLabel" text="Username">
+               <font>
+                  <Font name="Cantarell Regular" size="42.0" />
+               </font>
+            </Label>
+            <Label fx:id="coinsLabel" text="150">
+               <font>
+                  <Font name="Cantarell Regular" size="40.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../styles/icons/coin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+      </VBox>
+      <VBox fx:id="accessForm" alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <Button fx:id="accessButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Access" textAlignment="CENTER">
+               <font>
+                  <Font name="Cantarell Regular" size="32.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="leftbar_button" />
+                  <String fx:value="selected" />
+               </styleClass>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</VBox>

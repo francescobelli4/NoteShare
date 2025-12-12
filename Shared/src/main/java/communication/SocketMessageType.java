@@ -11,7 +11,7 @@ public enum SocketMessageType {
     // Server -> Client
     LOGIN_SUCCESS(SocketMessageCategory.RESPONSE),
     LOGIN_FAILURE(SocketMessageCategory.RESPONSE),
-    REGISTER_SUCCCESS(SocketMessageCategory.RESPONSE),
+    REGISTER_SUCCESS(SocketMessageCategory.RESPONSE),
     REGISTER_FAILURE(SocketMessageCategory.RESPONSE);
 
     private final SocketMessageCategory category;

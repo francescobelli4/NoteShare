@@ -1,0 +1,7 @@
+#notification_container {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 5, 15);
+}
+

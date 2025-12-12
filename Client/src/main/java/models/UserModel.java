@@ -2,6 +2,11 @@ package models;
 
 import communication.user.UserType;
 
+/**
+ * This class should represent a user in the system.
+ * Actually, a user can be a Student, a Teacher, or an Admin.
+ * Every UserModel subclass inherits common functionalities from this class.
+ */
 public class UserModel {
 
     protected UserModel() {}

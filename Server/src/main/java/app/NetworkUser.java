@@ -108,10 +108,11 @@ public class NetworkUser implements Runnable {
     private void read() {
         try {
             String data = dataInputStream.readUTF();
-
             MessageHandler.getInstance().handleMessage(data, this);
         } catch (IOException ioException) {
             logger.severe(String.format("Connection with client (%s) lost: %s", address, ioException.getMessage()));
+            destroy();
+        } catch (NullPointerException _) {
             destroy();
         }
     }

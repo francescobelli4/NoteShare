@@ -1,38 +1,30 @@
 package communication.dtos.requests.register;
 
-public class RegisterRequestDTO {
+import communication.user.UserDTO;
 
-    private String username;
+public class RegisterRequestDTO<U extends UserDTO> {
+
+    private U userDTO;
     private String password;
-    private String userType;
 
-    public RegisterRequestDTO(String username, String password, String userType) {
-        this.username = username;
+    public RegisterRequestDTO(U userDTO, String password) {
+        this.userDTO = userDTO;
         this.password = password;
-        this.userType = userType;
     }
 
-    public String getUsername() {
-        return username;
+    public void setUserDTO(U userDTO) {
+        this.userDTO = userDTO;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
+    public U getUserDTO() {
+        return userDTO;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public String getPassword() {
+        return password;
     }
 }

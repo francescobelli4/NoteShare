@@ -13,6 +13,11 @@ public class UserMapper {
 
     private UserMapper() {}
 
+    /**
+     * This function should convert a UserDTO to a UserModel subclass.
+     * @param userDTO the UserDTO that has to be converted
+     * @return a UserModel subclass
+     */
     public static UserModel toModel(UserDTO userDTO) {
 
         return switch (userDTO.getUserType()) {

@@ -12,6 +12,7 @@ public class Locales {
     private static final Map<String, String> localesLabels = new HashMap<>();
 
     private static void initializeENLocales() {
+        localesLabels.put("note_share", "Note Share");
         localesLabels.put("register", "Register");
         localesLabels.put("login", "Login");
         localesLabels.put("username", "Username");
@@ -20,6 +21,7 @@ public class Locales {
         localesLabels.put("register_page_password_field_prompt", "Min %d Max %d chars");
         localesLabels.put("student", "Student");
         localesLabels.put("teacher", "Teacher");
+        localesLabels.put("communication_failed", "Error communicating with server");
         localesLabels.put("error", "Error");
         localesLabels.put("error_username_too_short", "This username is too short.");
         localesLabels.put("error_username_too_long", "This username is too long.");
@@ -51,6 +53,7 @@ public class Locales {
     }
 
     private static void initializeITLocales() {
+        localesLabels.put("note_share", "Note Share");
         localesLabels.put("register", "Registrati");
         localesLabels.put("login", "Accedi");
         localesLabels.put("username", "Nome utente");

@@ -1,11 +1,11 @@
-package appControllers;
+package app_controllers;
 
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.LoginSuccessResponseDTO;
 import mappers.UserMapper;
-import services.LoginSessionService;
+import sessions.UserSession;
 import services.ServerCommunicationService;
 import utils.Utils;
 
@@ -40,8 +40,9 @@ public class LoginController {
             SocketMessage response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createLoginUsingTokenRequest(accessToken));
 
             if (response.getSocketMessageType() == SocketMessageType.LOGIN_SUCCESS) {
-                LoginSuccessResponseDTO loginSuccessResponse = (LoginSuccessResponseDTO) response.getPayload();
-                LoginSessionService.setSessionUser(UserMapper.toModel(loginSuccessResponse.getUserDTO()));
+                LoginSuccessResponseDTO<?> loginSuccessResponse = (LoginSuccessResponseDTO<?>) response.getPayload();
+                UserSession.getInstance().setSessionUser(UserMapper.toModel(loginSuccessResponse.getUserDTO()));
+                UserSession.getInstance().getCurrentUser().setLoggedIn(true);
                 return true;
             }
         } catch (IOException ioException) {

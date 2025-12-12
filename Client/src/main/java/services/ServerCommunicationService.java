@@ -1,5 +1,6 @@
 package services;
 
+import com.google.gson.JsonParseException;
 import communication.SocketMessage;
 import communication.SocketMessageType;
 import exceptions.UnrecognisedResponseException;
@@ -100,6 +101,7 @@ public class ServerCommunicationService {
 
             synchronized (writeLock) {
                 pendingRequests.put(request.getSocketMessageID(), future);
+                LOGGER.info("SENDING " + data);
                 dataOutputStream.writeUTF(data);
                 dataOutputStream.flush();
             }
@@ -192,7 +194,15 @@ public class ServerCommunicationService {
      * @throws UnrecognisedResponseException there is no CompletableFuture waiting for that response
      */
     void handleIncomingData(String data) throws UnrecognisedResponseException {
-        SocketMessage receivedMessage = SocketMessage.fromJson(data);
+        SocketMessage receivedMessage;
+
+        try {
+            receivedMessage = SocketMessage.fromJson(data);
+        } catch (JsonParseException e) {
+            LOGGER.warning(e.getMessage());
+            return;
+        }
+
         SocketMessageType socketMessageType = receivedMessage.getSocketMessageType();
 
         if (socketMessageType.getCategory() == SocketMessageType.SocketMessageCategory.RESPONSE) {

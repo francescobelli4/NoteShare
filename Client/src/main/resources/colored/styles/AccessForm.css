@@ -1,0 +1,32 @@
+.form {
+    -fx-background-color: white;
+
+    -fx-background-radius: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 5, 15);
+}
+
+.form_button {
+    -fx-background-radius: 60;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 5, 15);
+}
+
+#login_button {
+    -fx-background-color: linear-gradient(to bottom right, #f3f3f3, #ffffff);
+}
+
+#register_button {
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to bottom right, #805dff, #b6a2ff);
+}
+
+#login_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #dddddd, #eeeeee);
+}
+
+#register_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6e4bec, #9881e9);
+}
+
+.prompt {
+    -fx-text-fill: #dedede;
+}

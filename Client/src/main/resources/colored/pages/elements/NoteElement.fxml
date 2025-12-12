@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="noteElement" alignment="CENTER" styleClass="hoverable" stylesheets="@../../styles/NoteElement.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="140.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../styles/icons/file.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="noteLabel" alignment="CENTER" maxWidth="200.0" text="Note Name" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Cantarell Regular" size="40.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

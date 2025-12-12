@@ -13,7 +13,7 @@ public class NonPersistentUserDAO implements UserDAO{
     /**
      * This function should only add a new UserEntity to users because this DAO is used
      * for the demo version of the app.
-     * @param userEntity
+     * @param userEntity the user that has to be saved
      */
     @Override
     public void saveUser(UserEntity userEntity) {

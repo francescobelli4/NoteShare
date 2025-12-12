@@ -1,0 +1,33 @@
+.register_form_field {
+
+    -fx-background-color: rgb(36, 36, 36);
+}
+
+#register_accept_btn {
+    -fx-background-color: rgb(88, 124, 67);
+}
+
+.form {
+    -fx-background-color: white;
+
+    -fx-background-radius: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 5, 15);
+}
+
+.button {
+    -fx-background-radius: 60;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 5, 15);
+}
+
+#register_button {
+    -fx-background-color: linear-gradient(to bottom right, #805dff, #b6a2ff);
+}
+
+#register_button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #6e4bec, #9881e9);
+}
+
+#back_button {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0), 10, 0.5, 5, 15);
+}

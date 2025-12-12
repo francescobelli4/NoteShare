@@ -1,8 +1,9 @@
 package app;
 
-import appControllers.LoginController;
+import app_controllers.LoginController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import views.ViewNavigator;
 
 import java.util.logging.Logger;
 
@@ -18,10 +19,13 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) throws Exception {
         LOGGER.info("Starting application!");
 
+        ViewNavigator viewNavigator = ViewNavigator.getInstance();
+        viewNavigator.setupView(primaryStage);
+
         if (LoginController.loginUsingToken()) {
 
         } else {
-
+            viewNavigator.displayAccessView();
         }
     }
 }
