@@ -19,7 +19,7 @@ public class SocketMessageFactory {
     }
 
     public static SocketMessage createLoginSuccessResponse(UserDTO userDTO, String messageID) {
-        return new SocketMessage(SocketMessageType.LOGIN_SUCCESS, messageID, new LoginSuccessResponseDTO(userDTO.getUserType(), userDTO));
+        return new SocketMessage(SocketMessageType.LOGIN_SUCCESS, messageID, new LoginSuccessResponseDTO<>(userDTO.getUserType(), userDTO));
     }
 
     public static SocketMessage createLoginFailureResponse(LoginFailureReason loginFailureReason, String messageID) {

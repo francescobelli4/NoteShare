@@ -25,7 +25,7 @@ public class ImageViewWrapper extends ImageView {
             } else {
                 return null;
             }
-        } catch (Exception e) {
+        } catch (Exception _) {
             return null;
         }
     }

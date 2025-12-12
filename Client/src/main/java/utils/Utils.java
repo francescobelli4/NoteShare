@@ -1,6 +1,5 @@
 package utils;
 
-import java.awt.desktop.SystemEventListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

@@ -9,7 +9,7 @@ public class LabelWrapper extends Label {
 
     public LabelWrapper(String label, float size) {
         setText(label);
-        setFont(Font.font("Cantarell Regular", size));;
+        setFont(Font.font("Cantarell Regular", size));
     }
 
     public LabelWrapper(String label, float size, Insets insets) {

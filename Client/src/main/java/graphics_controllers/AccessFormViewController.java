@@ -17,8 +17,8 @@ public class AccessFormViewController extends GraphicsController<AccessFormView>
 
     @Override
     public void setup() {
-        getView().registerButton.setOnMouseClicked(_ -> registerButtonClicked());
-        getView().loginButton.setOnMouseClicked(_ -> loginButtonClicked());
+        getView().getRegisterButton().setOnMouseClicked(_ -> registerButtonClicked());
+        getView().getLoginButton().setOnMouseClicked(_ -> loginButtonClicked());
     }
 
     private void registerButtonClicked() {

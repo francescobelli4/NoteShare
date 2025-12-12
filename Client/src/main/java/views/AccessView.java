@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class AccessView implements View {
 
-    public VBox secondaryPageSlot;
+    private VBox secondaryPageSlot;
 
     private final GraphicsController<AccessView> graphicsController;
     private StackPane root;
@@ -38,7 +38,7 @@ public class AccessView implements View {
 
     @Override
     public void update() {
-
+        //Not needed...
     }
 
     private void setUpRoot() {

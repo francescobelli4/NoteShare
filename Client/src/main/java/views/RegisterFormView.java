@@ -17,12 +17,12 @@ import java.util.Objects;
 
 public class RegisterFormView implements View {
 
-    public Button registerButton;
-    public TextField usernameTextField;
-    public PasswordField passwordTextField;
-    public RadioButton studentRadioButton;
-    public RadioButton teacherRadioButton;
-    public Button backButton;
+    private Button registerButton;
+    private TextField usernameTextField;
+    private PasswordField passwordTextField;
+    private RadioButton studentRadioButton;
+    private RadioButton teacherRadioButton;
+    private Button backButton;
 
     private final GraphicsController<RegisterFormView> graphicsController;
     private VBox root;
@@ -103,5 +103,29 @@ public class RegisterFormView implements View {
 
     public VBox getRoot() {
         return root;
+    }
+
+    public Button getRegisterButton() {
+        return registerButton;
+    }
+
+    public PasswordField getPasswordTextField() {
+        return passwordTextField;
+    }
+
+    public RadioButton getStudentRadioButton() {
+        return studentRadioButton;
+    }
+
+    public RadioButton getTeacherRadioButton() {
+        return teacherRadioButton;
+    }
+
+    public TextField getUsernameTextField() {
+        return usernameTextField;
+    }
+
+    public Button getBackButton() {
+        return backButton;
     }
 }

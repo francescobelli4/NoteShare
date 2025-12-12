@@ -60,8 +60,11 @@ public class RegisterController {
                 throw new RegisterFailureException(RegisterFailureReason.USERNAME_ALREADY_TAKEN);
             }
 
-        } catch (IOException | InterruptedException | ExecutionException e) {
-            throw new SocketException("Failed communicating with server");
+        } catch (IOException | ExecutionException e) {
+            throw new SocketException("Failed communicating with server: " + e.getMessage());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new SocketException("Failed communicating with server" + e.getMessage());
         }
     }
 }

@@ -101,7 +101,7 @@ public class ServerCommunicationService {
 
             synchronized (writeLock) {
                 pendingRequests.put(request.getSocketMessageID(), future);
-                LOGGER.info("SENDING " + data);
+                LOGGER.info(String.format("SENDING %s", data));
                 dataOutputStream.writeUTF(data);
                 dataOutputStream.flush();
             }
@@ -174,9 +174,7 @@ public class ServerCommunicationService {
             LOGGER.info(String.format("RECEIVED %s", data));
         }
 
-        executorService.submit(() -> {
-            handleIncomingData(data);
-        });
+        executorService.submit(() -> handleIncomingData(data));
     }
 
     /**

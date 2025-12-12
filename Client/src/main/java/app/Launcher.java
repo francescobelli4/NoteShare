@@ -23,7 +23,7 @@ public class Launcher extends Application {
         viewNavigator.setupView(primaryStage);
 
         if (LoginController.loginUsingToken()) {
-
+            //TODO
         } else {
             viewNavigator.displayAccessView();
         }

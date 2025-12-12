@@ -11,6 +11,6 @@ public class NotificationController extends GraphicsController<NotificationView>
 
     @Override
     public void setup() {
-
+        // Not needed...
     }
 }

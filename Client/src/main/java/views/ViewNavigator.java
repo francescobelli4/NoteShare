@@ -15,16 +15,13 @@ public class ViewNavigator {
     }
     private ViewNavigator() {}
 
-    private Stage primaryStage;
-    private Scene primaryScene;
     private StackPane mainLayout;
 
     public void setupView(Stage primaryStage) {
-        this.primaryStage = primaryStage;
         this.mainLayout = new StackPane();
-        this.primaryScene = new Scene(mainLayout, 1920, 1080);
-        this.primaryStage.setScene(this.primaryScene);
-        this.primaryStage.show();
+        Scene primaryScene = new Scene(mainLayout, 1920, 1080);
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
     }
 
     public void displayAccessView() {

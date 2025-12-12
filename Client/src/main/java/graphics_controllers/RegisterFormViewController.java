@@ -28,10 +28,10 @@ public class RegisterFormViewController extends GraphicsController<RegisterFormV
     @Override
     public void setup() {
 
-        getView().studentRadioButton.setOnMouseClicked(_ -> studentButtonClicked());
-        getView().teacherRadioButton.setOnMouseClicked(_ -> teacherButtonClicked());
-        getView().backButton.setOnMouseClicked(_ -> backButtonClicked());
-        getView().registerButton.setOnMouseClicked(_ -> registerButtonClicked());
+        getView().getStudentRadioButton().setOnMouseClicked(_ -> studentButtonClicked());
+        getView().getTeacherRadioButton().setOnMouseClicked(_ -> teacherButtonClicked());
+        getView().getBackButton().setOnMouseClicked(_ -> backButtonClicked());
+        getView().getRegisterButton().setOnMouseClicked(_ -> registerButtonClicked());
     }
 
     private void backButtonClicked() {
@@ -39,21 +39,21 @@ public class RegisterFormViewController extends GraphicsController<RegisterFormV
     }
 
     private void studentButtonClicked() {
-        getView().teacherRadioButton.setSelected(false);
-        getView().studentRadioButton.setSelected(true);
+        getView().getTeacherRadioButton().setSelected(false);
+        getView().getStudentRadioButton().setSelected(true);
         userType = UserType.STUDENT;
     }
 
     private void teacherButtonClicked() {
-        getView().studentRadioButton.setSelected(false);
-        getView().teacherRadioButton.setSelected(true);
+        getView().getStudentRadioButton().setSelected(false);
+        getView().getTeacherRadioButton().setSelected(true);
         userType = UserType.TEACHER;
     }
 
     private void registerButtonClicked() {
 
         try {
-            RegisterController.register(getView().usernameTextField.getText(), getView().passwordTextField.getText(), userType);
+            RegisterController.register(getView().getUsernameTextField().getText(), getView().getPasswordTextField().getText(), userType);
         } catch (RegisterFailureException e) {
             String desc = switch (e.getRegisterFailureReason()) {
                 case USERNAME_ALREADY_TAKEN -> Locales.get("error_username_already_in_use");
@@ -69,7 +69,7 @@ public class RegisterFormViewController extends GraphicsController<RegisterFormV
              * "ERRORI" DERIVANTI DALLA LOGICA APPLICATIVA
              */
             ViewNavigator.getInstance().displayNotification(Locales.get("error"), desc, Icon.ERROR);
-        } catch (SocketException e) {
+        } catch (SocketException _) {
             ViewNavigator.getInstance().displayNotification(Locales.get("error"), Locales.get("communication_failed"), Icon.ERROR);
         }
     }

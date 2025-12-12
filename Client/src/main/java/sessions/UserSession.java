@@ -16,7 +16,7 @@ public class UserSession {
         return instance;
     }
 
-    private static UserModel currentUser;
+    private UserModel currentUser;
 
     public void setSessionUser(UserModel user) {
         currentUser = user;

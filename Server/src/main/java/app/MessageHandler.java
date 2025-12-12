@@ -122,7 +122,7 @@ public class MessageHandler {
      * @param networkUser the user connection manager instance
      */
     private void handleRegisterRequest(SocketMessage message, NetworkUser networkUser) {
-        LOGGER.info("RECEIVED " + message.toJson());
+        LOGGER.info(String.format("RECEIVED %s", message.toJson()));
 
         RegisterRequestDTO<?> payload = (RegisterRequestDTO<?>) message.getPayload();
 

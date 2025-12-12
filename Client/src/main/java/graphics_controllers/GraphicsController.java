@@ -6,7 +6,7 @@ public abstract class GraphicsController <V extends View> {
 
     View view;
 
-    public GraphicsController(View view) {
+    protected GraphicsController(View view) {
         this.view = view;
     }
 

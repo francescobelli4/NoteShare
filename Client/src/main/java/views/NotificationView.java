@@ -18,9 +18,9 @@ import java.util.Objects;
 
 public class NotificationView implements View {
 
-    private String title;
-    private String description;
-    private Icon icon;
+    private final String title;
+    private final String description;
+    private final Icon icon;
 
     private final GraphicsController<NotificationView> graphicsController;
     private HBox root;
@@ -78,7 +78,7 @@ public class NotificationView implements View {
 
     @Override
     public void update() {
-
+        //Nothing to do...
     }
 
     private void animate(double containerHeight) {

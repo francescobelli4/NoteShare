@@ -16,8 +16,8 @@ import views.components.LabelWrapper;
 
 public class AccessFormView implements View {
 
-    public Button registerButton;
-    public Button loginButton;
+    private Button registerButton;
+    private Button loginButton;
 
     private final GraphicsController<AccessFormView> graphicsController;
     private VBox root;
@@ -65,5 +65,13 @@ public class AccessFormView implements View {
 
     public VBox getRoot() {
         return root;
+    }
+
+    public Button getLoginButton() {
+        return loginButton;
+    }
+
+    public Button getRegisterButton() {
+        return registerButton;
     }
 }

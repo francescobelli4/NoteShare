@@ -2,7 +2,6 @@ package views.components;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
