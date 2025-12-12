@@ -23,6 +23,10 @@ public class ViewFactory {
         return new RegisterFormView();
     }
 
+    public LoginFormView createLoginFormView() {
+        return  new LoginFormView();
+    }
+
     public NotificationView createNotificationView(String title, String description, Icon icon) {
         return new NotificationView(title, description, icon);
     }

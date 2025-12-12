@@ -66,14 +66,15 @@ public class SocketMessageTypeAdapter extends TypeAdapter<SocketMessage> {
                 };
 
                 /*
-                    TypeToken is used to avoid the Type Erasure: it allows to correctly parse the RegisterRequestDTO
+                    TypeToken is used to avoid the Type Erasure: it allows to correctly parse the LoginRequestDTO
                     and the right generic parameter.
                  */
                 yield TypeToken.getParameterized(LoginSuccessResponseDTO.class, parsedDTO).getType();
             }
             case LOGIN_USING_TOKEN_REQUEST -> LoginUsingTokenRequestDTO.class;
             case LOGIN_FAILURE -> LoginFailureResponseDTO.class;
-            case REGISTER_REQUEST -> {
+            case REGISTER_REQUEST -> RegisterRequestDTO.class;
+            case REGISTER_SUCCESS -> {
 
                 /*
                     Parsing userType from the json string
@@ -93,12 +94,11 @@ public class SocketMessageTypeAdapter extends TypeAdapter<SocketMessage> {
                 };
 
                 /*
-                    TypeToken is used to avoid the Type Erasure: it allows to correctly parse the RegisterRequestDTO
+                    TypeToken is used to avoid the Type Erasure: it allows to correctly parse the LoginRequestDTO
                     and the right generic parameter.
                  */
-                yield TypeToken.getParameterized(RegisterRequestDTO.class, parsedDTO).getType();
+                yield TypeToken.getParameterized(RegisterSuccessResponseDTO.class, parsedDTO).getType();
             }
-            case REGISTER_SUCCESS -> RegisterSuccessResponseDTO.class;
             case REGISTER_FAILURE -> RegisterFailureResponseDTO.class;
             default -> throw new JsonParseException("SocketMessage Payload type not found");
         };

@@ -2,7 +2,7 @@ package graphics_controllers;
 
 import views.*;
 
-public class AccessViewController extends GraphicsController<AccessView> implements AccessFormViewController.Listener, RegisterFormViewController.Listener {
+public class AccessViewController extends GraphicsController<AccessView> implements AccessFormViewController.Listener, RegisterFormViewController.Listener, LoginFormViewController.Listener {
 
     public AccessViewController(View view) {
         super(view);
@@ -28,7 +28,10 @@ public class AccessViewController extends GraphicsController<AccessView> impleme
     }
 
     private void loadLoginContent() {
-        //TODO
+        LoginFormView loginFormView = ViewFactory.getInstance().createLoginFormView();
+        LoginFormViewController loginFormViewController = (LoginFormViewController) loginFormView.getGraphicsController();
+        loginFormViewController.setListener(this);
+        getView().setContent(loginFormView.getRoot());
     }
 
     @Override

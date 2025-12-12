@@ -5,6 +5,7 @@ import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
 import communication.dtos.requests.register.RegisterRequestDTO;
 import communication.dtos.responses.login.*;
 import communication.user.UserDTO;
+import communication.user.UserType;
 
 public class SocketMessageFactory {
 
@@ -18,16 +19,16 @@ public class SocketMessageFactory {
         return new SocketMessage(SocketMessageType.LOGIN_USING_TOKEN_REQUEST, new LoginUsingTokenRequestDTO(token));
     }
 
-    public static SocketMessage createLoginSuccessResponse(UserDTO userDTO, String messageID) {
-        return new SocketMessage(SocketMessageType.LOGIN_SUCCESS, messageID, new LoginSuccessResponseDTO<>(userDTO.getUserType(), userDTO));
+    public static SocketMessage createLoginSuccessResponse(UserDTO userDTO, String messageID, String accessToken) {
+        return new SocketMessage(SocketMessageType.LOGIN_SUCCESS, messageID, new LoginSuccessResponseDTO<>(userDTO.getUserType(), userDTO, accessToken));
     }
 
     public static SocketMessage createLoginFailureResponse(LoginFailureReason loginFailureReason, String messageID) {
         return new SocketMessage(SocketMessageType.LOGIN_FAILURE, messageID, new LoginFailureResponseDTO(loginFailureReason));
     }
 
-    public static <U extends UserDTO>SocketMessage createRegisterRequest(U userDTO, String password) {
-        return new SocketMessage(SocketMessageType.REGISTER_REQUEST, new RegisterRequestDTO<>(userDTO, password));
+    public static SocketMessage createRegisterRequest(String username, String password, UserType userType) {
+        return new SocketMessage(SocketMessageType.REGISTER_REQUEST, new RegisterRequestDTO(username, password, userType));
     }
 
     public static SocketMessage createRegisterSuccessRequest(UserDTO userDTO, String accessToken, String messageID) {

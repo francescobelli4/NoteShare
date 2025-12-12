@@ -9,9 +9,12 @@ public class LoginSuccessResponseDTO<U extends UserDTO> {
 
     private U userDTO;
 
-    public LoginSuccessResponseDTO(UserType userType, U userDTO) {
+    private String accessToken;
+
+    public LoginSuccessResponseDTO(UserType userType, U userDTO, String accessToken) {
         this.userType = userType;
         this.userDTO = userDTO;
+        this.accessToken = accessToken;
     }
 
     public U getUserDTO() {
@@ -28,5 +31,13 @@ public class LoginSuccessResponseDTO<U extends UserDTO> {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

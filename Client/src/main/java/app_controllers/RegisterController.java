@@ -5,11 +5,11 @@ import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.RegisterFailureReason;
 import communication.dtos.responses.login.RegisterSuccessResponseDTO;
-import communication.user.UserDTO;
-import communication.user.UserDTOFactory;
 import communication.user.UserType;
 import exceptions.RegisterFailureException;
+import mappers.UserMapper;
 import services.ServerCommunicationService;
+import sessions.UserSession;
 import utils.Hashing;
 import utils.Utils;
 
@@ -44,18 +44,15 @@ public class RegisterController {
 
         SocketMessage response;
 
-        UserDTO userDTO = switch (userType) {
-            case STUDENT -> UserDTOFactory.createUserStudentDTO(username, 0, userType);
-            case TEACHER, ADMINISTRATOR -> null;
-        };
-
         try {
-            response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createRegisterRequest(userDTO, Hashing.hashString(password)));
+            response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createRegisterRequest(username, Hashing.hashString(password), userType));
 
             if (response.getSocketMessageType() == SocketMessageType.REGISTER_SUCCESS) {
                 LOGGER.info("Register success! :D");
-                RegisterSuccessResponseDTO payload = (RegisterSuccessResponseDTO) response.getPayload();
+                RegisterSuccessResponseDTO<?> payload = (RegisterSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
+                UserSession.getInstance().setSessionUser(UserMapper.toModel(payload.getUserDTO()));
+                UserSession.getInstance().getCurrentUser().setLoggedIn(true);
             } else if (response.getSocketMessageType() == SocketMessageType.REGISTER_FAILURE) {
                 throw new RegisterFailureException(RegisterFailureReason.USERNAME_ALREADY_TAKEN);
             }
@@ -68,5 +65,3 @@ public class RegisterController {
         }
     }
 }
-
-
