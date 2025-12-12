@@ -6,6 +6,7 @@ import daos.user.UserDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Server {
@@ -53,7 +54,9 @@ public class Server {
             LOGGER.severe("Error in parsing args: " + illegalArgumentException.getMessage());
             System.exit(-1);
         }
-        LOGGER.info("Options set successfully");
+
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("Options set successfully");
 
         initializeDAOs();
 

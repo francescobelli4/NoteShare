@@ -101,7 +101,8 @@ public class ServerCommunicationService {
 
             synchronized (writeLock) {
                 pendingRequests.put(request.getSocketMessageID(), future);
-                LOGGER.info(String.format("SENDING %s", data));
+                if (LOGGER.isLoggable(Level.INFO))
+                    LOGGER.info(String.format("SENDING %s", data));
                 dataOutputStream.writeUTF(data);
                 dataOutputStream.flush();
             }

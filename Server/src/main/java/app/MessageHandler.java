@@ -122,7 +122,8 @@ public class MessageHandler {
      * @param networkUser the user connection manager instance
      */
     private void handleRegisterRequest(SocketMessage message, NetworkUser networkUser) {
-        LOGGER.info(String.format("RECEIVED %s", message.toJson()));
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(String.format("RECEIVED %s", message.toJson()));
 
         RegisterRequestDTO<?> payload = (RegisterRequestDTO<?>) message.getPayload();
 

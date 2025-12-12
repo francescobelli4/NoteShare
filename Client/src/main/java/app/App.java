@@ -8,6 +8,7 @@ import utils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class App {
@@ -62,12 +63,15 @@ public class App {
     static void initializeApp(String[] args) {
         try {
             parseArgs(args);
-            LOGGER.info("Options set successfully");
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info("Options set successfully");
             Locales.initializeLocales();
-            LOGGER.info("Locales initialized");
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info("Locales initialized");
             setupAppFolders();
             setupConnectionToServer();
-            LOGGER.info("Connection to server established");
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info("Connection to server established");
 
             Launcher.launchApp();
         } catch (ArgsException argsException) {

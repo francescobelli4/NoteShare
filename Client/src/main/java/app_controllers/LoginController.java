@@ -12,6 +12,7 @@ import utils.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoginController {
@@ -26,7 +27,8 @@ public class LoginController {
      */
     public static boolean loginUsingToken() {
 
-        LOGGER.info("Trying login using access token");
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("Trying login using access token");
         File accessTokenFile = Utils.findFile(Utils.getOSLocalPath() + "access_token.txt");
 
         if (accessTokenFile == null) {
