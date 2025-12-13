@@ -2,6 +2,9 @@ package views;
 
 import graphics_controllers.GraphicsController;
 import graphics_controllers.RegisterFormViewController;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -39,30 +42,31 @@ public class RegisterFormView implements View {
 
     @Override
     public void init() {
+
         root = new VBox();
         root.setAlignment(Pos.TOP_CENTER);
         root.getStyleClass().add("form");
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/colored/styles/RegisterForm.css")).toExternalForm());
         assert root != null;
-        root.setPadding(new Insets(30));
+        root.setPadding(new Insets(ViewNavigator.scaleValue(30)));
 
-        ImageView imageView = new ImageViewWrapper(Icon.APPICON.getPath(), 150, 200);
-        Label title = new LabelWrapper(Locales.get("register"), 75f, new Insets(0, 0, 70, 0));
+        ImageView imageView = new ImageViewWrapper(Icon.APPICON.getPath(), ViewNavigator.scaleValue(150), ViewNavigator.scaleValue(200));
+        Label title = new LabelWrapper(Locales.get("register"), ViewNavigator.scaleValue(60), new Insets(0, 0, ViewNavigator.scaleValue(50), 0));
 
-        registerButton = new ButtonWrapper(Locales.get("register"), 44, new Insets(30, 0, 0, 0));
+        registerButton = new ButtonWrapper(Locales.get("register"), ViewNavigator.scaleValue(40), new Insets(ViewNavigator.scaleValue(15), 0, 0, 0));
         registerButton.setId("register_button");
         registerButton.getStyleClass().add("form_button");
         VBox.setVgrow(registerButton, Priority.ALWAYS);
         registerButton.setMaxWidth(Float.MAX_VALUE);
 
-        usernameTextField = new TextFieldWrapper(Locales.get("username"), 45, new Insets(10, 0, 0, 0));
+        usernameTextField = new TextFieldWrapper(Locales.get("username"), ViewNavigator.scaleValue(40));
         usernameTextField.setAlignment(Pos.CENTER);
-        Label usernamePrompt = new LabelWrapper(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()), 31);
+        Label usernamePrompt = new LabelWrapper(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()), ViewNavigator.scaleValue(30));
         usernamePrompt.getStyleClass().add("prompt");
 
-        passwordTextField = new PasswordFieldWrapper(Locales.get("password"), 45, new Insets(30, 0, 0, 0));
+        passwordTextField = new PasswordFieldWrapper(Locales.get("password"), ViewNavigator.scaleValue(40), new Insets(ViewNavigator.scaleValue(10), 0, 0, 0));
         passwordTextField.setAlignment(Pos.CENTER);
-        Label passwordPrompt = new LabelWrapper(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()), 31);
+        Label passwordPrompt = new LabelWrapper(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()), ViewNavigator.scaleValue(30), new Insets(0, 0, ViewNavigator.scaleValue(30), 0));
         passwordPrompt.getStyleClass().add("prompt");
 
         HBox radioButtonsContainer = new HBox();
@@ -72,7 +76,7 @@ public class RegisterFormView implements View {
         HBox.setHgrow(studentVBox, Priority.ALWAYS);
         studentVBox.setAlignment(Pos.CENTER);
         studentRadioButton = new RadioButton();
-        Label studentLabel = new LabelWrapper(Locales.get("student"), 25);
+        Label studentLabel = new LabelWrapper(Locales.get("student"), ViewNavigator.scaleValue(25));
         studentVBox.getChildren().add(studentRadioButton);
         studentVBox.getChildren().add(studentLabel);
         studentRadioButton.setFocusTraversable(false);
@@ -82,14 +86,14 @@ public class RegisterFormView implements View {
         HBox.setHgrow(teacherVBox, Priority.ALWAYS);
         teacherVBox.setAlignment(Pos.CENTER);
         teacherRadioButton = new RadioButton();
-        Label teacherLabel = new LabelWrapper(Locales.get("teacher"), 25);
+        Label teacherLabel = new LabelWrapper(Locales.get("teacher"), ViewNavigator.scaleValue(25));
         teacherVBox.getChildren().add(teacherRadioButton);
         teacherVBox.getChildren().add(teacherLabel);
         teacherRadioButton.setFocusTraversable(false);
 
         radioButtonsContainer.getChildren().addAll(studentVBox, teacherVBox);
 
-        backButton = new ButtonWrapper(new ImageViewWrapper("/colored/styles/icons/back-button.png", 80, 150), new Insets(40, 0, 15, 0));
+        backButton = new ButtonWrapper(new ImageViewWrapper("/colored/styles/icons/back-button.png", ViewNavigator.scaleValue(80), ViewNavigator.scaleValue(150)), new Insets(ViewNavigator.scaleValue(20), 0, ViewNavigator.scaleValue(10), 0));
         backButton.setId("back_button");
 
         root.getChildren().addAll(imageView, title, usernameTextField, usernamePrompt, passwordTextField, passwordPrompt, radioButtonsContainer, registerButton, backButton);

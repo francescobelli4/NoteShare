@@ -37,18 +37,18 @@ public class AccessFormView implements View {
         root = new VBox();
         root.setAlignment(Pos.TOP_CENTER);
         root.getStyleClass().add("form");
-        root.setPadding(new Insets(30));
+        root.setPadding(new Insets(ViewNavigator.scaleValue(30)));
 
-        ImageView imageView = new ImageViewWrapper(Icon.APPICON.getPath(), 150, 200);
-        Label title = new LabelWrapper(Locales.get("note_share"), 75f, new Insets(0, 0, 100, 0));
+        ImageView imageView = new ImageViewWrapper(Icon.APPICON.getPath(),  ViewNavigator.scaleValue(150), ViewNavigator.scaleValue(200));
+        Label title = new LabelWrapper(Locales.get("note_share"), ViewNavigator.scaleValue(75), new Insets(0, 0, ViewNavigator.scaleValue(100), 0));
 
-        registerButton = new ButtonWrapper(Locales.get("register"), 44, new Insets(30, 0, 0, 0));
+        registerButton = new ButtonWrapper(Locales.get("register"), ViewNavigator.scaleValue(44));
         registerButton.setId("register_button");
         registerButton.getStyleClass().add("form_button");
         VBox.setVgrow(registerButton, Priority.ALWAYS);
         registerButton.setMaxWidth(Float.MAX_VALUE);
 
-        loginButton = new ButtonWrapper(Locales.get("login"), 44, new Insets(30, 0, 0, 0));
+        loginButton = new ButtonWrapper(Locales.get("login"), ViewNavigator.scaleValue(44), new Insets(ViewNavigator.scaleValue(30), 0, 0, 0));
         loginButton.setId("login_button");
         loginButton.getStyleClass().add("form_button");
         VBox.setVgrow(loginButton, Priority.ALWAYS);

@@ -1,7 +1,11 @@
 package views;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ViewNavigator {
@@ -17,11 +21,28 @@ public class ViewNavigator {
 
     private StackPane mainLayout;
 
+    private static double scaleFactor = 1.0f;
+
     public void setupView(Stage primaryStage) {
         this.mainLayout = new StackPane();
-        Scene primaryScene = new Scene(mainLayout, 1920, 1080);
+        Scene primaryScene = new Scene(mainLayout);
         primaryStage.setScene(primaryScene);
+
+        primaryStage.setTitle("NoteShare");
+        primaryStage.setResizable(false);
+        primaryStage.setMaximized(true);
+
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setMinHeight(screenBounds.getHeight());
+        primaryStage.setMinWidth(screenBounds.getWidth());
+
+        scaleFactor = screenBounds.getHeight()/1080.0f;
+
         primaryStage.show();
+    }
+
+    public static double scaleValue(double val) {
+        return val * scaleFactor;
     }
 
     public void displayAccessView() {

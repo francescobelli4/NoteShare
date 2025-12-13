@@ -7,12 +7,16 @@ import javafx.scene.text.Font;
 
 public class LabelWrapper extends Label {
 
-    public LabelWrapper(String label, float size) {
+    public LabelWrapper(String label) {
+        setText(label);
+    }
+
+    public LabelWrapper(String label, double size) {
         setText(label);
         setFont(Font.font("Cantarell Regular", size));
     }
 
-    public LabelWrapper(String label, float size, Insets insets) {
+    public LabelWrapper(String label, double size, Insets insets) {
         this(label, size);
         VBox.setMargin(this, insets);
     }

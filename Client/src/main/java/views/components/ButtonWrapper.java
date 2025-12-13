@@ -8,12 +8,12 @@ import javafx.scene.text.Font;
 
 public class ButtonWrapper extends Button {
 
-    public ButtonWrapper(String text, float textSize, Insets insets) {
+    public ButtonWrapper(String text, double textSize, Insets insets) {
         this(text, textSize);
         VBox.setMargin(this, insets);
     }
 
-    public ButtonWrapper(String text, float textSize) {
+    public ButtonWrapper(String text, double textSize) {
         setText(text);
         setFont(Font.font("Cantarell Regular", textSize));
     }

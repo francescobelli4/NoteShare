@@ -44,9 +44,9 @@ public class HomeView implements View {
 
         VBox leftSection = new VBox();
         leftSection.setAlignment(Pos.TOP_CENTER);
-        ImageView leftBarTopIcon = new ImageViewWrapper(Icon.APPICON.getPath(), 150, 200);
+        ImageView leftBarTopIcon = new ImageViewWrapper(Icon.APPICON.getPath(), ViewNavigator.scaleValue(150), ViewNavigator.scaleValue(200));
         leftBarSlot = new VBox();
-        leftBarSlot.prefHeight(200);
+        leftBarSlot.prefHeight(ViewNavigator.scaleValue(200));
         VBox.setVgrow(leftBarSlot, Priority.ALWAYS);
         leftBarSlot.setEffect(new DropShadow());
         leftSection.getChildren().addAll(leftBarTopIcon, leftBarSlot);

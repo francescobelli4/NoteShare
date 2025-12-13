@@ -41,28 +41,28 @@ public class LoginFormView implements View {
         root.getStyleClass().add("form");
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/colored/styles/RegisterForm.css")).toExternalForm());
         assert root != null;
-        root.setPadding(new Insets(30));
+        root.setPadding(new Insets(ViewNavigator.scaleValue(30)));
 
-        ImageView imageView = new ImageViewWrapper(Icon.APPICON.getPath(), 150, 200);
-        Label title = new LabelWrapper(Locales.get("login"), 75f, new Insets(0, 0, 70, 0));
+        ImageView imageView = new ImageViewWrapper(Icon.APPICON.getPath(), ViewNavigator.scaleValue(150), ViewNavigator.scaleValue(200));
+        Label title = new LabelWrapper(Locales.get("login"), ViewNavigator.scaleValue(60), new Insets(0, 0, ViewNavigator.scaleValue(50), 0));
 
-        loginButton = new ButtonWrapper(Locales.get("login"), 44, new Insets(30, 0, 0, 0));
+        loginButton = new ButtonWrapper(Locales.get("login"), ViewNavigator.scaleValue(40), new Insets(ViewNavigator.scaleValue(15), 0, 0, 0));
         loginButton.setId("register_button");
         loginButton.getStyleClass().add("form_button");
         VBox.setVgrow(loginButton, Priority.ALWAYS);
         loginButton.setMaxWidth(Float.MAX_VALUE);
 
-        usernameTextField = new TextFieldWrapper(Locales.get("username"), 45, new Insets(10, 0, 0, 0));
+        usernameTextField = new TextFieldWrapper(Locales.get("username"), ViewNavigator.scaleValue(40));
         usernameTextField.setAlignment(Pos.CENTER);
-        Label usernamePrompt = new LabelWrapper(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()), 31);
+        Label usernamePrompt = new LabelWrapper(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()), ViewNavigator.scaleValue(30));
         usernamePrompt.getStyleClass().add("prompt");
 
-        passwordTextField = new PasswordFieldWrapper(Locales.get("password"), 45, new Insets(30, 0, 0, 0));
+        passwordTextField = new PasswordFieldWrapper(Locales.get("password"), ViewNavigator.scaleValue(40), new Insets(ViewNavigator.scaleValue(10), 0, 0, 0));
         passwordTextField.setAlignment(Pos.CENTER);
-        Label passwordPrompt = new LabelWrapper(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()), 31);
+        Label passwordPrompt = new LabelWrapper(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()), ViewNavigator.scaleValue(30));
         passwordPrompt.getStyleClass().add("prompt");
 
-        backButton = new ButtonWrapper(new ImageViewWrapper("/colored/styles/icons/back-button.png", 80, 150), new Insets(40, 0, 15, 0));
+        backButton = new ButtonWrapper(new ImageViewWrapper("/colored/styles/icons/back-button.png", ViewNavigator.scaleValue(80), ViewNavigator.scaleValue(150)), new Insets(ViewNavigator.scaleValue(20), 0, ViewNavigator.scaleValue(10), 0));
         backButton.setId("back_button");
 
         root.getChildren().addAll(imageView, title, usernameTextField, usernamePrompt, passwordTextField, passwordPrompt, loginButton, backButton);

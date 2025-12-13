@@ -44,22 +44,22 @@ public class NotificationView implements View {
         assert root != null;
         root.setId("notification_container");
         root.setAlignment(Pos.TOP_CENTER);
-        root.setSpacing(10);
+        root.setSpacing(ViewNavigator.scaleValue(10));
         root.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         root.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         root.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
         StackPane.setAlignment(root, Pos.TOP_CENTER);
 
-        ImageView imageView = new ImageViewWrapper(icon.getPath(), 150, 200);
+        ImageView imageView = new ImageViewWrapper(icon.getPath(), ViewNavigator.scaleValue(150), ViewNavigator.scaleValue(200));
 
         VBox dataContainer = new VBox();
-        dataContainer.setPrefWidth(500);
-        dataContainer.setMaxWidth(500);
+        dataContainer.setPrefWidth(ViewNavigator.scaleValue(500));
+        dataContainer.setMaxWidth(ViewNavigator.scaleValue(500));
         HBox.setHgrow(dataContainer, Priority.ALWAYS);
 
-        Label titleLabel = new LabelWrapper(title, 41, new Insets(0, 0, 10, 0));
-        Label descriptionLabel = new LabelWrapper(description, 25);
+        Label titleLabel = new LabelWrapper(title, ViewNavigator.scaleValue(40), new Insets(0, 0, ViewNavigator.scaleValue(10), 0));
+        Label descriptionLabel = new LabelWrapper(description, ViewNavigator.scaleValue(25));
         descriptionLabel.setWrapText(true);
 
         dataContainer.getChildren().addAll(titleLabel, descriptionLabel);
