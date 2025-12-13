@@ -54,6 +54,7 @@ public class RegisterFormViewController extends GraphicsController<RegisterFormV
 
         try {
             RegisterController.register(getView().getUsernameTextField().getText(), getView().getPasswordTextField().getText(), userType);
+            ViewNavigator.getInstance().displayHomeView();
         } catch (RegisterFailureException e) {
             String desc = switch (e.getRegisterFailureReason()) {
                 case USERNAME_ALREADY_TAKEN -> Locales.get("error_username_already_in_use");

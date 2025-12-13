@@ -35,6 +35,12 @@ public class ViewNavigator {
         mainLayout.getChildren().add(notificationView.getRoot());
     }
 
+    public void displayHomeView() {
+        HomeView homeView = ViewFactory.getInstance().createHomeView();
+        mainLayout.getChildren().clear();
+        mainLayout.getChildren().add(homeView.getRoot());
+    }
+
     public StackPane getMainLayout() {
         return mainLayout;
     }

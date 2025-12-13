@@ -34,6 +34,7 @@ public class LoginFormViewController extends GraphicsController<LoginFormView> {
 
         try {
             LoginController.login(getView().getUsernameTextField().getText(), getView().getPasswordTextField().getText());
+            ViewNavigator.getInstance().displayHomeView();
         } catch (LoginFailureException e) {
             String desc = switch (e.getLoginFailureReason()) {
                 case WRONG_USERNAME -> Locales.get("error_user_does_not_exist");

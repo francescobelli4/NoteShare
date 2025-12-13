@@ -24,7 +24,11 @@ public class ViewFactory {
     }
 
     public LoginFormView createLoginFormView() {
-        return  new LoginFormView();
+        return new LoginFormView();
+    }
+
+    public HomeView createHomeView() {
+        return new HomeView();
     }
 
     public NotificationView createNotificationView(String title, String description, Icon icon) {
