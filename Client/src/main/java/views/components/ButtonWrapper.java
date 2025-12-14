@@ -22,6 +22,17 @@ public class ButtonWrapper extends Button {
         setGraphic(imageView);
     }
 
+    public ButtonWrapper(ImageView imageView, String text, double textSize, Insets insets) {
+        this(imageView, text, textSize);
+        VBox.setMargin(this, insets);
+    }
+
+    public ButtonWrapper(ImageView imageView, String text, double textSize) {
+        this(imageView);
+        setText(text);
+        setFont(Font.font("Cantarell Regular", textSize));
+    }
+
     public ButtonWrapper(ImageView imageView, Insets insets) {
         this(imageView);
         VBox.setMargin(this, insets);

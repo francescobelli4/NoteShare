@@ -62,7 +62,7 @@ public class LoginFormView implements View {
         Label passwordPrompt = new LabelWrapper(String.format(Locales.get("register_page_password_field_prompt"), Utils.getMinPasswordLength(), Utils.getMaxPasswordLength()), ViewNavigator.scaleValue(30));
         passwordPrompt.getStyleClass().add("prompt");
 
-        backButton = new ButtonWrapper(new ImageViewWrapper("/colored/styles/icons/back-button.png", ViewNavigator.scaleValue(80), ViewNavigator.scaleValue(150)), new Insets(ViewNavigator.scaleValue(20), 0, ViewNavigator.scaleValue(10), 0));
+        backButton = new ButtonWrapper(new ImageViewWrapper(Icon.BACK.getPath(), ViewNavigator.scaleValue(80), ViewNavigator.scaleValue(150)), new Insets(ViewNavigator.scaleValue(20), 0, ViewNavigator.scaleValue(10), 0));
         backButton.setId("back_button");
 
         root.getChildren().addAll(imageView, title, usernameTextField, usernamePrompt, passwordTextField, passwordPrompt, loginButton, backButton);

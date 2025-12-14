@@ -93,7 +93,7 @@ public class RegisterFormView implements View {
 
         radioButtonsContainer.getChildren().addAll(studentVBox, teacherVBox);
 
-        backButton = new ButtonWrapper(new ImageViewWrapper("/colored/styles/icons/back-button.png", ViewNavigator.scaleValue(80), ViewNavigator.scaleValue(150)), new Insets(ViewNavigator.scaleValue(20), 0, ViewNavigator.scaleValue(10), 0));
+        backButton = new ButtonWrapper(new ImageViewWrapper(Icon.BACK.getPath(), ViewNavigator.scaleValue(80), ViewNavigator.scaleValue(150)), new Insets(ViewNavigator.scaleValue(20), 0, ViewNavigator.scaleValue(10), 0));
         backButton.setId("back_button");
 
         root.getChildren().addAll(imageView, title, usernameTextField, usernamePrompt, passwordTextField, passwordPrompt, radioButtonsContainer, registerButton, backButton);

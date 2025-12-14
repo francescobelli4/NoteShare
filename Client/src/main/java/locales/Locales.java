@@ -50,6 +50,7 @@ public class Locales {
         localesLabels.put("name", "Name");
         localesLabels.put("info", "Info");
         localesLabels.put("register_welcome", "Welcome to NoteShare!");
+        localesLabels.put("access", "Access");
     }
 
     private static void initializeITLocales() {

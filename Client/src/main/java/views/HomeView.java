@@ -1,12 +1,11 @@
 package views;
 
-import graphics_controllers.AccessViewController;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.HomeViewController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -17,7 +16,7 @@ import java.util.Objects;
 
 public class HomeView implements View {
 
-    VBox leftBarSlot;
+    private VBox leftBarSlot;
 
     private final GraphicsController<HomeView> graphicsController;
     private StackPane root;
@@ -43,6 +42,7 @@ public class HomeView implements View {
         gridPane.add(rightSection, 1, 0);
 
         VBox leftSection = new VBox();
+        leftSection.setPadding(new Insets(ViewNavigator.scaleValue(30)));
         leftSection.setAlignment(Pos.TOP_CENTER);
         ImageView leftBarTopIcon = new ImageViewWrapper(Icon.APPICON.getPath(), ViewNavigator.scaleValue(150), ViewNavigator.scaleValue(200));
         leftBarSlot = new VBox();
@@ -73,6 +73,10 @@ public class HomeView implements View {
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/colored/styles/HomePage.css")).toExternalForm());
     }
 
+    public void setLeftBar(Parent node) {
+        leftBarSlot.getChildren().clear();
+        leftBarSlot.getChildren().add(node);
+    }
 
     public Parent getRoot() {
         return root;

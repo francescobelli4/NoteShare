@@ -10,6 +10,6 @@ public class HomeViewController extends GraphicsController<HomeView> {
 
     @Override
     public void setup() {
-
+        getView().setLeftBar(ViewFactory.getInstance().createLeftBarView().getRoot());
     }
 }

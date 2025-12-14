@@ -31,6 +31,10 @@ public class ViewFactory {
         return new HomeView();
     }
 
+    public LeftBarView createLeftBarView() {
+        return new LeftBarView();
+    }
+
     public NotificationView createNotificationView(String title, String description, Icon icon) {
         return new NotificationView(title, description, icon);
     }
