@@ -22,10 +22,7 @@ public class Launcher extends Application {
         ViewNavigator viewNavigator = ViewNavigator.getInstance();
         viewNavigator.setupView(primaryStage);
 
-        if (LoginController.loginUsingToken()) {
-            viewNavigator.displayHomeView();
-        } else {
-            viewNavigator.displayAccessView();
-        }
+        LoginController.loginUsingToken();
+        viewNavigator.displayHomeView();
     }
 }

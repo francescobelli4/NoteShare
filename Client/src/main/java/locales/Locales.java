@@ -51,6 +51,7 @@ public class Locales {
         localesLabels.put("info", "Info");
         localesLabels.put("register_welcome", "Welcome to NoteShare!");
         localesLabels.put("access", "Access");
+        localesLabels.put("search_for_a_note", "Search for a note...");
     }
 
     private static void initializeITLocales() {

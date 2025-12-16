@@ -25,4 +25,11 @@ public class UserSession {
     public UserModel getCurrentUser() {
         return currentUser;
     }
+
+    public <T extends UserModel> T getCurrentUserAs(Class<T> type) {
+        if (type.isInstance(currentUser)) {
+            return type.cast(currentUser);
+        }
+        return null; // O lancia un'eccezione se preferisci
+    }
 }

@@ -17,6 +17,7 @@ public enum Icon {
     PLUS("/colored/styles/icons/plus_button.png"),
     NOTE_PAD("/colored/styles/icons/spiral_note_pad.png"),
     USER("/colored/styles/icons/user_image.png"),
+    NOTIFICATION("/colored/styles/icons/message.png"),
     X("/colored/styles/icons/x-button.png");
 
     private String path;

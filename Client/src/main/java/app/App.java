@@ -15,6 +15,7 @@ public class App {
 
     private static final Logger LOGGER = Logger.getLogger("App");
 
+
     /**
      * This function should set the app's options.
      * @param args the array of args provided at the startup
@@ -22,7 +23,6 @@ public class App {
      * @throws IllegalArgumentException could not find value in enum
      */
     static void parseArgs(String[] args) throws ArgsException, IllegalArgumentException {
-
         if (args.length < 3 || args.length > 4) {
             throw new ArgsException("Illegal number of args: appMode, language, uiType, [rootFolderPath]");
         }

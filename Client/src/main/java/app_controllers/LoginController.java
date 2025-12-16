@@ -68,14 +68,14 @@ public class LoginController {
     /**
      * This function should try to log in using the access token (if the user has one)
      */
-    public static boolean loginUsingToken() {
+    public static void loginUsingToken() {
 
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info("Trying login using access token");
         File accessTokenFile = Utils.findFile(Utils.getOSLocalPath() + "access_token.txt");
 
         if (accessTokenFile == null) {
-            return false;
+            return;
         }
 
         try {
@@ -88,7 +88,6 @@ public class LoginController {
                 LoginSuccessResponseDTO<?> loginSuccessResponse = (LoginSuccessResponseDTO<?>) response.getPayload();
                 UserSession.getInstance().setSessionUser(UserMapper.toModel(loginSuccessResponse.getUserDTO()));
                 UserSession.getInstance().getCurrentUser().setLoggedIn(true);
-                return true;
             }
         } catch (IOException ioException) {
             LOGGER.warning(String.format("Failed reading access_token.txt file: %s", ioException.getMessage()));
@@ -98,7 +97,5 @@ public class LoginController {
         } catch (ExecutionException executionException) {
             LOGGER.warning(String.format("Failed attempting login using token (error in sending the request): %s", executionException.getMessage()));
         }
-
-        return false;
     }
 }
