@@ -2,6 +2,8 @@ package app;
 
 import app_controllers.LoginController;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import views.ViewNavigator;
 
@@ -19,10 +21,18 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) throws Exception {
         LOGGER.info("Starting application!");
 
-        ViewNavigator viewNavigator = ViewNavigator.getInstance();
-        viewNavigator.setupView(primaryStage);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setMinHeight(screenBounds.getHeight());
+        primaryStage.setMinWidth(screenBounds.getWidth());
+        primaryStage.setTitle("NoteShare");
+        /*primaryStage.setResizable(false);
+        primaryStage.setMaximized(true);*/
+
+        ViewNavigator.setStage(primaryStage);
 
         LoginController.loginUsingToken();
-        viewNavigator.displayHomeView();
+        ViewNavigator.displayHomeView();
+
+        primaryStage.show();
     }
 }

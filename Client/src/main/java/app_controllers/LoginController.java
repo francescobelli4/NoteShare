@@ -1,12 +1,14 @@
 package app_controllers;
 
+import app.App;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
-import communication.dtos.responses.login.*;
+import communication.dtos.responses.login.LoginFailureReason;
+import communication.dtos.responses.login.LoginFailureResponseDTO;
+import communication.dtos.responses.login.LoginSuccessResponseDTO;
 import exceptions.LoginFailureException;
 import mappers.UserMapper;
-import sessions.UserSession;
 import services.ServerCommunicationService;
 import utils.Utils;
 
@@ -50,8 +52,8 @@ public class LoginController {
                 LOGGER.info("Login success! :D");
                 LoginSuccessResponseDTO<?> payload = (LoginSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
-                UserSession.getInstance().setSessionUser(UserMapper.toModel(payload.getUserDTO()));
-                UserSession.getInstance().getCurrentUser().setLoggedIn(true);
+                App.setUser(UserMapper.populateModel(App.getUser(), payload.getUserDTO()));
+                App.getUser().setLoggedIn(true);
             } else if (response.getSocketMessageType() == SocketMessageType.LOGIN_FAILURE) {
                 LoginFailureResponseDTO payload = (LoginFailureResponseDTO) response.getPayload();
                 throw new LoginFailureException(payload.getLoginFailureReason());
@@ -86,8 +88,8 @@ public class LoginController {
 
             if (response.getSocketMessageType() == SocketMessageType.LOGIN_SUCCESS) {
                 LoginSuccessResponseDTO<?> loginSuccessResponse = (LoginSuccessResponseDTO<?>) response.getPayload();
-                UserSession.getInstance().setSessionUser(UserMapper.toModel(loginSuccessResponse.getUserDTO()));
-                UserSession.getInstance().getCurrentUser().setLoggedIn(true);
+                App.setUser(UserMapper.populateModel(App.getUser(), loginSuccessResponse.getUserDTO()));
+                App.getUser().setLoggedIn(true);
             }
         } catch (IOException ioException) {
             LOGGER.warning(String.format("Failed reading access_token.txt file: %s", ioException.getMessage()));
