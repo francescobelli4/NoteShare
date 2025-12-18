@@ -2,6 +2,7 @@ package app;
 
 import exceptions.ArgsException;
 import locales.Locales;
+import models.UserModel;
 import services.ServerCommunicationService;
 import utils.Utils;
 
@@ -15,6 +16,7 @@ public class App {
 
     private static final Logger LOGGER = Logger.getLogger("App");
 
+    private static UserModel user;
 
     /**
      * This function should set the app's options.
@@ -56,6 +58,10 @@ public class App {
         ServerCommunicationService.getInstance().initializeConnection();
     }
 
+    static void setupGenericUserModel() {
+        user = new UserModel();
+    }
+
     /**
      * This function should set up the app by reading the Options
      * @param args the array of arguments passed to the app at the startup
@@ -73,6 +79,8 @@ public class App {
             if (LOGGER.isLoggable(Level.INFO))
                 LOGGER.info("Connection to server established");
 
+            setupGenericUserModel();
+
             Launcher.launchApp();
         } catch (ArgsException argsException) {
             LOGGER.severe(argsException.getMessage());
@@ -85,6 +93,21 @@ public class App {
 
     public static void main(String[] args) {
         initializeApp(args);
+    }
+
+    public static UserModel getUser() {
+        return user;
+    }
+
+    public static void setUser(UserModel user) {
+        App.user = user;
+    }
+
+    public static <T extends UserModel> T getUserAs(Class<T> type) {
+        if (type.isInstance(user)) {
+            return type.cast(user);
+        }
+        return null;
     }
 
     public static class Options {

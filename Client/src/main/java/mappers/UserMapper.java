@@ -27,6 +27,22 @@ public class UserMapper {
         };
     }
 
+    /**
+     * This function should populate a UserModel using a UserDTO
+     * @param userModel the model that has to be populated
+     * @param userDTO the UserDTO that has to be converted
+     */
+    public static UserModel populateModel(UserModel userModel, UserDTO userDTO) {
+
+        UserModel newModel = toModel(userDTO);
+
+        for (UserModel.Listener l : userModel.getListeners()) {
+            newModel.addListener(l);
+        }
+
+        return newModel;
+    }
+
     private static StudentUserModel toStudentUserModel(UserStudentDTO studentDTO) {
 
         StudentUserModel studentUserModel = new StudentUserModel();
