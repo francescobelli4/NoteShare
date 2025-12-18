@@ -36,8 +36,7 @@ public class NotificationView implements View {
     private Label descriptionLabel;
 
 
-
-    private final Page page = Page.NOTIFICATION;
+    private static final Page page = Page.NOTIFICATION;
     private final GraphicsController<NotificationView> graphicsController;
 
     public NotificationView(String title, String description, Icon icon) {

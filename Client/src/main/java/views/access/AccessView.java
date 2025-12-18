@@ -20,7 +20,7 @@ public class AccessView implements View, UserModel.Listener {
     @FXML
     private VBox secondaryPageSlot;
 
-    private final Page page = Page.ACCESS;
+    private static final Page page = Page.ACCESS;
     private final GraphicsController<AccessView> graphicsController;
 
     public AccessView() {

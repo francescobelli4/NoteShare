@@ -18,14 +18,14 @@ public class LeftBarMenuOptionsViewController extends GraphicsController<LeftBar
     }
 
     private void yourNotesButtonClick() {
-
+        //...
     }
 
     private void browseNotesButtonClick() {
-
+        //...
     }
 
     private void sharedNotesButtonClick() {
-
+        //...
     }
 }

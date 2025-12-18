@@ -47,7 +47,7 @@ public class LoginFormViewController extends GraphicsController<LoginFormView> {
             };
 
             ViewNavigator.displayNotification(Locales.get("error"), description, Icon.ERROR);
-        } catch (SocketException e) {
+        } catch (SocketException _) {
             ViewNavigator.displayNotification(Locales.get("error"), Locales.get("communication_failed"), Icon.ERROR);
         }
     }

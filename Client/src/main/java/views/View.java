@@ -9,5 +9,5 @@ public interface View {
     void init();
     Parent getRoot();
     Page getPage();
-    GraphicsController<?> getGraphicsController();
+    GraphicsController<? extends View> getGraphicsController();
 }

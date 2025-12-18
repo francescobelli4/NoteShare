@@ -15,7 +15,6 @@ public class HomeViewController extends GraphicsController<HomeView> {
     public void loaded() {
 
         loadLeftBar();
-
         getView().getMessagesButton().setOnMouseClicked(_ -> messagesButtonClicked());
     }
 
@@ -26,6 +25,6 @@ public class HomeViewController extends GraphicsController<HomeView> {
     }
 
     private void messagesButtonClicked() {
-
+        // ...
     }
 }

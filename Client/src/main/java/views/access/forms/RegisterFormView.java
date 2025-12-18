@@ -39,7 +39,7 @@ public class RegisterFormView implements View {
     private Button backButton;
 
 
-    private final Page page = Page.REGISTER_FORM;
+    private static final Page page = Page.REGISTER_FORM;
     private final GraphicsController<RegisterFormView> graphicsController;
 
     public RegisterFormView() {

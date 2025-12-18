@@ -1,37 +1,36 @@
 package graphics_controllers;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import views.Page;
 import views.View;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public abstract class GraphicsController <V extends View> {
+
+    private static final Logger LOGGER = Logger.getLogger("GraphicsController");
 
     private final V view;
 
     protected GraphicsController(V view) {
         this.view = view;
 
-        Node root = loadFXML(view.getPage());
+        loadFXML(view.getPage());
 
         loaded();
     }
 
-    private Node loadFXML(Page page) {
+    private void loadFXML(Page page) {
 
        FXMLLoader loader = new FXMLLoader(GraphicsController.class.getResource(page.getPath()));
-
        loader.setController(view);
 
        try {
-           return loader.load();
-       } catch (IOException e) {
-           e.printStackTrace();
+           loader.load();
+       } catch (IOException _) {
+           LOGGER.severe(String.format("Failed loading page %s", page.getPath()));
        }
-
-       return null;
     }
 
     protected V getView() {

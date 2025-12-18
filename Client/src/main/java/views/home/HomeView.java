@@ -27,7 +27,7 @@ public class HomeView implements View {
     @FXML
     private VBox toolsSlot;
 
-    private final Page page = Page.HOME_PAGE;
+    private static final Page page = Page.HOME_PAGE;
     private final GraphicsController<HomeView> graphicsController;
 
     public HomeView() {
@@ -42,7 +42,12 @@ public class HomeView implements View {
 
     @Override
     public void init() {
+        // Not needed...
+    }
 
+    @Override
+    public void update() {
+        //Not needed...
     }
 
     @Override
@@ -58,11 +63,6 @@ public class HomeView implements View {
     @Override
     public GraphicsController<HomeView> getGraphicsController() {
         return graphicsController;
-    }
-
-    @Override
-    public void update() {
-        //Not needed...
     }
 
     public Button getMessagesButton() {

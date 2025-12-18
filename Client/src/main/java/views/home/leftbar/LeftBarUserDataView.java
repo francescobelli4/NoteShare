@@ -28,7 +28,7 @@ public class LeftBarUserDataView implements View {
     @FXML
     private Button accessButton;
 
-    private final Page page = Page.LEFT_BAR_USER_DATA;
+    private static final Page page = Page.LEFT_BAR_USER_DATA;
     private final GraphicsController<LeftBarUserDataView> graphicsController;
 
     public LeftBarUserDataView() {

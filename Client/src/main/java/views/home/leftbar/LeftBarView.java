@@ -19,8 +19,7 @@ public class LeftBarView implements View {
     @FXML
     private VBox bottomContainer;
 
-
-    private final Page page = Page.LEFT_BAR;
+    private static final Page page = Page.LEFT_BAR;
     private final GraphicsController<LeftBarView> graphicsController;
 
     public LeftBarView() {

@@ -25,8 +25,6 @@ public class Launcher extends Application {
         primaryStage.setMinHeight(screenBounds.getHeight());
         primaryStage.setMinWidth(screenBounds.getWidth());
         primaryStage.setTitle("NoteShare");
-        /*primaryStage.setResizable(false);
-        primaryStage.setMaximized(true);*/
 
         ViewNavigator.setStage(primaryStage);
 

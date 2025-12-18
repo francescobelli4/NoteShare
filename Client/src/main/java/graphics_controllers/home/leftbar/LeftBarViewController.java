@@ -11,7 +11,6 @@ public class LeftBarViewController extends GraphicsController<LeftBarView> {
 
     @Override
     public void loaded() {
-
         getView().appendMenuOptions();
         getView().appendUserData();
     }

@@ -31,7 +31,7 @@ public class LoginFormView implements View {
     private Button backButton;
 
 
-    private final Page page = Page.LOGIN_FORM;
+    private static final Page page = Page.LOGIN_FORM;
     private final GraphicsController<LoginFormView> graphicsController;
 
     public LoginFormView() {

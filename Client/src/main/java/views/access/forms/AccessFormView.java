@@ -19,7 +19,7 @@ public class AccessFormView implements View {
     @FXML
     private Button loginButton;
 
-    private final Page page = Page.ACCESS_FORM;
+    private static final Page page = Page.ACCESS_FORM;
     private final GraphicsController<AccessFormView> graphicsController;
 
     public AccessFormView() {

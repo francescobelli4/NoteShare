@@ -21,7 +21,7 @@ public class LeftBarMenuOptionsView implements View {
     @FXML
     private Button sharedNotesButton;
 
-    private final Page page = Page.LEFT_BAR_MENU_OPTIONS;
+    private static final Page page = Page.LEFT_BAR_MENU_OPTIONS;
     private final GraphicsController<LeftBarMenuOptionsView> graphicsController;
 
     public LeftBarMenuOptionsView() {

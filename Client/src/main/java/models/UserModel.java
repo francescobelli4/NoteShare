@@ -3,6 +3,7 @@ package models;
 import communication.user.UserType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class should represent a user in the system.
@@ -11,7 +12,9 @@ import java.util.ArrayList;
  */
 public class UserModel {
 
-    public UserModel() {}
+    public UserModel() {
+        // Nothing to do...
+    }
 
     private final ArrayList<Listener> listeners = new ArrayList<>();
 
@@ -20,7 +23,7 @@ public class UserModel {
 
     private boolean loggedIn = false;
 
-    public ArrayList<Listener> getListeners() {
+    public List<Listener> getListeners() {
         return listeners;
     }
 
