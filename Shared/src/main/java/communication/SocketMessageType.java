@@ -9,9 +9,8 @@ public enum SocketMessageType {
     REGISTER_REQUEST(SocketMessageCategory.REQUEST),
 
     // Server -> Client
-    LOGIN_SUCCESS(SocketMessageCategory.RESPONSE),
+    ACCESS_SUCCESS(SocketMessageCategory.RESPONSE),
     LOGIN_FAILURE(SocketMessageCategory.RESPONSE),
-    REGISTER_SUCCESS(SocketMessageCategory.RESPONSE),
     REGISTER_FAILURE(SocketMessageCategory.RESPONSE);
 
     private final SocketMessageCategory category;

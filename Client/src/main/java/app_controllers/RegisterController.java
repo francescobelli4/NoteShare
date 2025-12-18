@@ -5,7 +5,7 @@ import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.RegisterFailureReason;
-import communication.dtos.responses.login.RegisterSuccessResponseDTO;
+import communication.dtos.responses.login.AccessSuccessResponseDTO;
 import communication.user.UserType;
 import exceptions.RegisterFailureException;
 import mappers.UserMapper;
@@ -47,9 +47,9 @@ public class RegisterController {
         try {
             response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createRegisterRequest(username, Hashing.hashString(password), userType));
 
-            if (response.getSocketMessageType() == SocketMessageType.REGISTER_SUCCESS) {
+            if (response.getSocketMessageType() == SocketMessageType.ACCESS_SUCCESS) {
                 LOGGER.info("Register success! :D");
-                RegisterSuccessResponseDTO<?> payload = (RegisterSuccessResponseDTO<?>) response.getPayload();
+                AccessSuccessResponseDTO<?> payload = (AccessSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
                 App.setUser(UserMapper.populateModel(App.getUser(), payload.getUserDTO()));
                 App.getUser().setLoggedIn(true);

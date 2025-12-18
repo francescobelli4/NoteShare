@@ -7,10 +7,7 @@ import com.google.gson.stream.JsonWriter;
 import communication.dtos.requests.login.LoginRequestDTO;
 import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
 import communication.dtos.requests.register.RegisterRequestDTO;
-import communication.dtos.responses.login.LoginFailureResponseDTO;
-import communication.dtos.responses.login.LoginSuccessResponseDTO;
-import communication.dtos.responses.login.RegisterFailureResponseDTO;
-import communication.dtos.responses.login.RegisterSuccessResponseDTO;
+import communication.dtos.responses.login.*;
 import communication.user.*;
 
 import java.lang.reflect.Type;
@@ -46,7 +43,7 @@ public class SocketMessageTypeAdapter extends TypeAdapter<SocketMessage> {
         return switch (messageType) {
 
             case LOGIN_REQUEST -> LoginRequestDTO.class;
-            case LOGIN_SUCCESS -> {
+            case ACCESS_SUCCESS -> {
 
                 /*
                     Parsing userType from the json string
@@ -69,36 +66,11 @@ public class SocketMessageTypeAdapter extends TypeAdapter<SocketMessage> {
                     TypeToken is used to avoid the Type Erasure: it allows to correctly parse the LoginRequestDTO
                     and the right generic parameter.
                  */
-                yield TypeToken.getParameterized(LoginSuccessResponseDTO.class, parsedDTO).getType();
+                yield TypeToken.getParameterized(AccessSuccessResponseDTO.class, parsedDTO).getType();
             }
             case LOGIN_USING_TOKEN_REQUEST -> LoginUsingTokenRequestDTO.class;
             case LOGIN_FAILURE -> LoginFailureResponseDTO.class;
             case REGISTER_REQUEST -> RegisterRequestDTO.class;
-            case REGISTER_SUCCESS -> {
-
-                /*
-                    Parsing userType from the json string
-                 */
-                JsonObject payloadObj = payloadElement.getAsJsonObject();
-                JsonObject userDTOObj = payloadObj.get("userDTO").getAsJsonObject();
-                String type = userDTOObj.get("userType").getAsString();
-                UserType userType = UserType.valueOf(type);
-
-                /*
-                    Choosing the right UserDTO subclass
-                 */
-                Class<? extends UserDTO> parsedDTO = switch (userType) {
-                    case STUDENT -> UserStudentDTO.class;
-                    case TEACHER -> UserTeacherDTO.class;
-                    case ADMINISTRATOR -> UserAdminDTO.class;
-                };
-
-                /*
-                    TypeToken is used to avoid the Type Erasure: it allows to correctly parse the LoginRequestDTO
-                    and the right generic parameter.
-                 */
-                yield TypeToken.getParameterized(RegisterSuccessResponseDTO.class, parsedDTO).getType();
-            }
             case REGISTER_FAILURE -> RegisterFailureResponseDTO.class;
             default -> throw new JsonParseException("SocketMessage Payload type not found");
         };

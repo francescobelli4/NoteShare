@@ -101,7 +101,7 @@ public class MessageHandler {
         UserEntity userEntity = Server.getUserDAO().findUserByToken(payload.getToken());
 
         if (userEntity != null) {
-            networkUser.write(SocketMessageFactory.createLoginSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID(), userEntity.getToken()));
+            networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID(), userEntity.getToken()));
         } else {
             networkUser.write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_TOKEN, message.getSocketMessageID()));
         }
@@ -125,7 +125,7 @@ public class MessageHandler {
                 return;
             }
 
-            networkUser.write(SocketMessageFactory.createLoginSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID(), userEntity.getToken()));
+            networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID(), userEntity.getToken()));
         } else {
             networkUser.write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_USERNAME, message.getSocketMessageID()));
         }
@@ -148,7 +148,7 @@ public class MessageHandler {
         if (userEntity == null) {
             UserDTO userDTO = DomainDTOFactory.createUserDTO(payload.getUsername(), payload.getUserType());
             UserEntity user = UserMapper.toEntity(userDTO, payload.getPassword());
-            networkUser.write(SocketMessageFactory.createRegisterSuccessRequest(UserMapper.toDTO(user), user.getToken(), message.getSocketMessageID()));
+            networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(user), user.getToken(), message.getSocketMessageID()));
             Server.getUserDAO().saveUser(user);
         } else {
             networkUser.write(SocketMessageFactory.createRegisterFailureResponse(RegisterFailureReason.USERNAME_ALREADY_TAKEN, message.getSocketMessageID()));

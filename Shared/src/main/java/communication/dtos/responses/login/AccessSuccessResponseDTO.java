@@ -3,7 +3,7 @@ package communication.dtos.responses.login;
 import communication.user.UserDTO;
 import communication.user.UserType;
 
-public class LoginSuccessResponseDTO<U extends UserDTO> {
+public class AccessSuccessResponseDTO<U extends UserDTO> {
 
     private UserType userType;
 
@@ -11,7 +11,7 @@ public class LoginSuccessResponseDTO<U extends UserDTO> {
 
     private String accessToken;
 
-    public LoginSuccessResponseDTO(UserType userType, U userDTO, String accessToken) {
+    public AccessSuccessResponseDTO(UserType userType, U userDTO, String accessToken) {
         this.userType = userType;
         this.userDTO = userDTO;
         this.accessToken = accessToken;

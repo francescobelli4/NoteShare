@@ -6,7 +6,7 @@ import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.LoginFailureReason;
 import communication.dtos.responses.login.LoginFailureResponseDTO;
-import communication.dtos.responses.login.LoginSuccessResponseDTO;
+import communication.dtos.responses.login.AccessSuccessResponseDTO;
 import exceptions.LoginFailureException;
 import mappers.UserMapper;
 import services.ServerCommunicationService;
@@ -48,9 +48,9 @@ public class LoginController {
         try {
             response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createLoginRequest(username, password));
 
-            if (response.getSocketMessageType() == SocketMessageType.LOGIN_SUCCESS) {
+            if (response.getSocketMessageType() == SocketMessageType.ACCESS_SUCCESS) {
                 LOGGER.info("Login success! :D");
-                LoginSuccessResponseDTO<?> payload = (LoginSuccessResponseDTO<?>) response.getPayload();
+                AccessSuccessResponseDTO<?> payload = (AccessSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
                 App.setUser(UserMapper.populateModel(App.getUser(), payload.getUserDTO()));
                 App.getUser().setLoggedIn(true);
@@ -86,9 +86,9 @@ public class LoginController {
 
             SocketMessage response = ServerCommunicationService.getInstance().sendSync(SocketMessageFactory.createLoginUsingTokenRequest(accessToken));
 
-            if (response.getSocketMessageType() == SocketMessageType.LOGIN_SUCCESS) {
-                LoginSuccessResponseDTO<?> loginSuccessResponse = (LoginSuccessResponseDTO<?>) response.getPayload();
-                App.setUser(UserMapper.populateModel(App.getUser(), loginSuccessResponse.getUserDTO()));
+            if (response.getSocketMessageType() == SocketMessageType.ACCESS_SUCCESS) {
+                AccessSuccessResponseDTO<?> accessSuccessResponse = (AccessSuccessResponseDTO<?>) response.getPayload();
+                App.setUser(UserMapper.populateModel(App.getUser(), accessSuccessResponse.getUserDTO()));
                 App.getUser().setLoggedIn(true);
             }
         } catch (IOException ioException) {
