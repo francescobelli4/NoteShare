@@ -7,7 +7,9 @@ import com.google.gson.stream.JsonWriter;
 import communication.dtos.requests.login.LoginRequestDTO;
 import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
 import communication.dtos.requests.register.RegisterRequestDTO;
-import communication.dtos.responses.login.*;
+import communication.dtos.responses.login.AccessSuccessResponseDTO;
+import communication.dtos.responses.login.LoginFailureResponseDTO;
+import communication.dtos.responses.login.RegisterFailureResponseDTO;
 import communication.user.*;
 
 import java.lang.reflect.Type;
