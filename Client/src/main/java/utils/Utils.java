@@ -1,5 +1,11 @@
 package utils;
 
+import javafx.scene.Parent;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.text.Font;
+import views.ViewNavigator;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,6 +25,31 @@ public class Utils {
     private static final int MAX_PASSWORD_LENGTH = 20;
 
     private Utils() {}
+
+    public static void scaleFonts(Parent parent) {
+        for (var node : parent.getChildrenUnmodifiable()) {
+
+            // Caso A: È un contenitore (VBox, HBox, AnchorPane, ecc.) -> Scendi ricorsivamente
+            if (node instanceof Parent) {
+                scaleFonts((Parent) node);
+            }
+
+            // Caso B: È un elemento con testo (Label, Button, RadioButton, CheckBox)
+            if (node instanceof Labeled) {
+                Labeled labeled = (Labeled) node;
+                Font oldFont = labeled.getFont();
+                // Applica la tua logica di scaling
+                labeled.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
+            }
+
+            // Caso C: È un campo di input (TextField, PasswordField, TextArea)
+            else if (node instanceof TextInputControl) {
+                TextInputControl input = (TextInputControl) node;
+                Font oldFont = input.getFont();
+                input.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
+            }
+        }
+    }
 
     /**
      * This function should create a new directory

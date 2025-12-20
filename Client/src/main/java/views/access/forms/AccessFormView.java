@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import locales.Locales;
+import utils.Utils;
 import views.Page;
 import views.View;
 
@@ -29,6 +30,8 @@ public class AccessFormView implements View {
 
     @Override
     public void init() {
+        Utils.scaleFonts(root);
+
         registerButton.setText(Locales.get("register"));
         loginButton.setText(Locales.get("login"));
     }

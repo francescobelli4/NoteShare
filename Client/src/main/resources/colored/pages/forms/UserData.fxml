@@ -18,12 +18,12 @@
             </ImageView>
             <Label fx:id="usernameLabel" text="Username">
                <font>
-                  <Font name="Cantarell Regular" size="42.0" />
+                  <Font name="Cantarell Regular" size="60.0" />
                </font>
             </Label>
             <Label fx:id="coinsLabel" text="150">
                <font>
-                  <Font name="Cantarell Regular" size="40.0" />
+                  <Font name="Cantarell Regular" size="55.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -39,7 +39,7 @@
          <children>
             <Button fx:id="accessButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Access" textAlignment="CENTER">
                <font>
-                  <Font name="Cantarell Regular" size="32.0" />
+                  <Font name="Cantarell Regular" size="55.0" />
                </font>
                <styleClass>
                   <String fx:value="leftbar_button" />

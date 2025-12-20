@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import utils.Utils;
 import views.Page;
 import views.View;
 import views.ViewFactory;
@@ -41,6 +42,8 @@ public class LeftBarView implements View {
 
     @Override
     public void init() {
+        Utils.scaleFonts(barContainer);
+
         VBox.setVgrow(barContainer, Priority.ALWAYS);
     }
 

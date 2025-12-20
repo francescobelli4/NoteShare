@@ -1,7 +1,9 @@
 package views;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class ViewNavigator {
@@ -12,11 +14,9 @@ public class ViewNavigator {
     private static Scene scene;
     private static View activeView;
 
-    private static double scaleFactor = 1.0f;
-
     public static void setStage(Stage primaryStage) {
         stage = primaryStage;
-        scaleFactor = stage.getHeight()/1080.0f;
+
         scene = new Scene(new StackPane());
         stage.setScene(scene);
     }
@@ -44,6 +44,7 @@ public class ViewNavigator {
     }
 
     public static double scaleValue(double val) {
-        return val * scaleFactor;
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        return val * screenBounds.getHeight()/1080.0f;
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import locales.Locales;
+import utils.Utils;
 import views.Page;
 import views.View;
 
@@ -31,6 +32,8 @@ public class LeftBarMenuOptionsView implements View {
 
     @Override
     public void init() {
+        Utils.scaleFonts(barContainer);
+
         yourNotesButton.setText(Locales.get("your_notes"));
         browseNotesButton.setText(Locales.get("browse_notes"));
         sharedNotesButton.setText(Locales.get("shared_notes"));

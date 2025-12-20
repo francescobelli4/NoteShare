@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import locales.Locales;
+import utils.Utils;
 import views.Page;
 import views.View;
 
@@ -38,6 +39,8 @@ public class LeftBarUserDataView implements View {
 
     @Override
     public void init() {
+
+        Utils.scaleFonts(root);
         accessButton.setText(Locales.get("access"));
     }
 

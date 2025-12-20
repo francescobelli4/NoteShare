@@ -12,8 +12,8 @@ public class MessageMapper {
     public static MessageModel toModel(MessageDTO message) {
 
         Icon icon = switch (message.getType()) {
-            case INFO -> Icon.NOTIFICATION;
-            default -> Icon.APPICON;
+            case INFO -> Icon.APPICON;
+            default -> Icon.NOTIFICATION;
         };
 
         return new MessageModel(message.getTitle(), message.getDescription(), message.getDate(), icon);

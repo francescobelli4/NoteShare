@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
 <VBox fx:id="root" alignment="TOP_CENTER" styleClass="form" stylesheets="@../../styles/RegisterForm.css" GridPane.columnIndex="1" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
         <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" smooth="false">
@@ -15,15 +21,15 @@
             </ImageView>
             <Label fx:id="titleLabel" alignment="CENTER" text="Login">
                 <font>
-                    <Font name="Cantarell Regular" size="75.0" />
+                    <Font size="70.0" />
                 </font>
                 <VBox.margin>
-                    <Insets bottom="50.0" />
+                    <Insets bottom="10.0" />
                 </VBox.margin>
             </Label>
             <TextField fx:id="usernameTextField" alignment="CENTER" promptText="Username">
                 <font>
-                    <Font name="Cantarell Regular" size="45.0" />
+                    <Font size="35.0" />
                 </font>
                 <opaqueInsets>
                     <Insets bottom="20.0" />
@@ -32,28 +38,28 @@
                     <Insets top="30.0" />
                 </VBox.margin>
             </TextField>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                 <children>
                     <Label fx:id="usernamePrompt" text="Alea iacta est" textFill="#b5b5b5">
                         <font>
-                            <Font name="Cantarell Regular" size="31.0" />
+                            <Font size="25.0" />
                         </font>
                     </Label>
                 </children>
             </HBox>
             <PasswordField fx:id="passwordTextField" alignment="CENTER" promptText="Password">
                 <font>
-                    <Font name="Cantarell Regular" size="45.0" />
+                    <Font size="35.0" />
                 </font>
                 <VBox.margin>
                     <Insets top="30.0" />
                 </VBox.margin>
             </PasswordField>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                 <children>
                     <Label fx:id="passwordPrompt" text="Alea iacta est" textFill="#b5b5b5">
                         <font>
-                            <Font name="Cantarell Regular" size="31.0" />
+                            <Font size="25.0" />
                         </font>
                     </Label>
                 </children>
@@ -61,7 +67,7 @@
 
             <Button id="register_button" fx:id="loginButton" maxWidth="Infinity" text="Login" textFill="WHITE" VBox.vgrow="ALWAYS">
                 <font>
-                    <Font name="Cantarell Regular" size="44.0" />
+                    <Font size="40.0" />
                 </font>
                 <VBox.margin>
                     <Insets top="30.0" />

@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import locales.Locales;
+import utils.Utils;
 import views.Icon;
 import views.Page;
 import views.View;
@@ -49,9 +51,10 @@ public class MessageView implements View  {
 
     @Override
     public void init() {
+        Utils.scaleFonts(root);
 
-        title.setText(titleLabel);
-        description.setText(descriptionLabel);
+        title.setText(Locales.get(titleLabel));
+        description.setText(Locales.get(descriptionLabel));
         date.setText(dateLabel);
         iconImage.setImage(new Image(Objects.requireNonNull(getClass().getResource(icon.getPath())).toExternalForm()));
     }

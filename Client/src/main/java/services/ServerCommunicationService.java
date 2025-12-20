@@ -6,6 +6,7 @@ import communication.SocketMessage;
 import communication.SocketMessageType;
 import communication.dtos.message.MessageDTO;
 import communication.dtos.notification.message.MessageNotificationDTO;
+import communication.dtos.notification.message.MessagesNotificationDTO;
 import exceptions.UnrecognisedResponseException;
 import mappers.MessageMapper;
 
@@ -14,6 +15,7 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -237,12 +239,19 @@ public class ServerCommunicationService {
 
         switch (socketMessage.getSocketMessageType()) {
             case ADD_MESSAGE -> handleAddMessage((MessageNotificationDTO) socketMessage.getPayload());
+            case SET_MESSAGES -> handleSetMessages((MessagesNotificationDTO) socketMessage.getPayload());
+            default -> LOGGER.warning("Could not identify the received notification");
         }
     }
 
     private void handleAddMessage(MessageNotificationDTO messageNotificationDTO) {
         MessageDTO receivedMessage = messageNotificationDTO.getMessage();
         App.getUser().addMessage(MessageMapper.toModel(receivedMessage));
+    }
+
+    private void handleSetMessages(MessagesNotificationDTO messageNotificationDTO) {
+        List<MessageDTO> receivedMessages = messageNotificationDTO.getMessages();
+        App.getUser().setMessages(MessageMapper.toModelList(receivedMessages));
     }
 
     public ExecutorService getExecutorService() {

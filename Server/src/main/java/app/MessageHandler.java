@@ -20,6 +20,7 @@ import utils.Hashing;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -107,7 +108,11 @@ public class MessageHandler {
         UserEntity userEntity = Server.getUserDAO().findUserByToken(payload.getToken());
 
         if (userEntity != null) {
+
             networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID(), userEntity.getToken()));
+
+            List<MessageDTO> userMessages = MessageMapper.toDTOList(Server.getMessageDAO().get(userEntity.getUsername()));
+            networkUser.write(SocketMessageFactory.createMessagesSetNotification(userMessages));
         } else {
             networkUser.write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_TOKEN, message.getSocketMessageID()));
         }
@@ -132,6 +137,9 @@ public class MessageHandler {
             }
 
             networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(userEntity), message.getSocketMessageID(), userEntity.getToken()));
+
+            List<MessageDTO> userMessages = MessageMapper.toDTOList(Server.getMessageDAO().get(userEntity.getUsername()));
+            networkUser.write(SocketMessageFactory.createMessagesSetNotification(userMessages));
         } else {
             networkUser.write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_USERNAME, message.getSocketMessageID()));
         }

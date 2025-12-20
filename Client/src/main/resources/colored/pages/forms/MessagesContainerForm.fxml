@@ -12,76 +12,7 @@
       <ScrollPane id="message_container" fx:id="box" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" minHeight="600.0" minWidth="630.0" prefHeight="600.0" prefWidth="630.0" vbarPolicy="NEVER">
          <content>
             <FlowPane fx:id="messagesContainer" vgap="10.0">
-               <children>
-                  <HBox fx:id="notification" alignment="TOP_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-1" minWidth="-1" prefHeight="-1" prefWidth="-1" spacing="10" styleClass="message">
-                     <children>
-                        <ImageView fx:id="icon" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../styles/icons/app_icon.png" />
-                           </image>
-                        </ImageView>
-                        <VBox prefWidth="380.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="title" text="Title">
-                                 <font>
-                                    <Font name="Cantarell Regular" size="33.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="description" text="Description" wrapText="true">
-                                 <font>
-                                    <Font name="Cantarell Regular" size="25.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <Label alignment="CENTER" text="01/01/2025 00:00" textAlignment="CENTER" textFill="#808080" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font name="Cantarell Regular" size="13.0" />
-                           </font>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox fx:id="notification1" alignment="TOP_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-1" minWidth="-1" prefHeight="-1" prefWidth="-1" spacing="10" styleClass="message">
-                     <children>
-                        <ImageView fx:id="icon1" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../styles/icons/app_icon.png" />
-                           </image>
-                        </ImageView>
-                        <VBox prefWidth="380.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="title1" text="Title">
-                                 <font>
-                                    <Font name="Cantarell Regular" size="33.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="description1" text="Description" wrapText="true">
-                                 <font>
-                                    <Font name="Cantarell Regular" size="25.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <Label alignment="CENTER" text="01/01/2025 00:00" textAlignment="CENTER" textFill="#808080" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font name="Cantarell Regular" size="13.0" />
-                           </font>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
+
             </FlowPane>
          </content>
          <padding>

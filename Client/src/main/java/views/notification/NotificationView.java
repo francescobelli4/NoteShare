@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import utils.Utils;
 import views.Icon;
 import views.Page;
 import views.View;
@@ -51,6 +52,8 @@ public class NotificationView implements View {
 
     @Override
     public void init() {
+
+        Utils.scaleFonts(root);
 
         titleLabel.setText(title);
         descriptionLabel.setText(description);

@@ -6,10 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import locales.Locales;
 import utils.Utils;
 import views.Page;
 import views.View;
+import views.ViewNavigator;
 
 public class LoginFormView implements View {
 
@@ -41,6 +43,8 @@ public class LoginFormView implements View {
 
     @Override
     public void init() {
+        Utils.scaleFonts(root);
+
         titleLabel.setText(Locales.get("login"));
         usernameTextField.setPromptText(Locales.get("username"));
         usernamePrompt.setText(String.format(Locales.get("register_page_username_field_prompt"), Utils.getMinUsernameLength(), Utils.getMaxUsernameLength()));

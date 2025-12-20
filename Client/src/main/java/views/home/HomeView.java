@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import utils.Utils;
 import views.Page;
 import views.View;
 
@@ -52,7 +53,7 @@ public class HomeView implements View {
 
     @Override
     public void init() {
-        // Not needed...
+        Utils.scaleFonts(root);
     }
 
     @Override

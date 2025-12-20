@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import models.folder.FolderModel;
 import models.user.StudentUserModel;
+import utils.Utils;
 import views.Page;
 import views.View;
 
@@ -37,6 +38,8 @@ public class ToolsBarView implements View, StudentUserModel.Listener {
 
     @Override
     public void init() {
+
+        Utils.scaleFonts(root);
 
         if (App.getUser().getUserType() == UserType.STUDENT) {
             StudentUserModel studentUserModel = App.getUserAs(StudentUserModel.class);

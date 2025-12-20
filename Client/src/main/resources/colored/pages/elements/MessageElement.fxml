@@ -17,7 +17,7 @@
          <children>
             <Label fx:id="title" text="Title">
                <font>
-                  <Font name="Cantarell Regular" size="33.0" />
+                  <Font name="Cantarell Regular" size="40.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -25,14 +25,14 @@
             </Label>
             <Label fx:id="description" text="Description" wrapText="true">
                <font>
-                  <Font name="Cantarell Regular" size="25.0" />
+                  <Font name="Cantarell Regular" size="32.0" />
                </font>
             </Label>
          </children>
       </VBox>
       <Label fx:id="date" alignment="CENTER" text="01/01/2025 00:00" textAlignment="CENTER" textFill="#808080" HBox.hgrow="ALWAYS">
          <font>
-            <Font name="Cantarell Regular" size="13.0" />
+            <Font name="Cantarell Regular" size="18.0" />
          </font>
          <padding>
             <Insets top="10.0" />

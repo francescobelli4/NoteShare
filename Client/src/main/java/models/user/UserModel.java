@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class UserModel {
 
-    private final List<MessageModel> messages = new ArrayList<>();
+    private List<MessageModel> messages = new ArrayList<>();
 
     public UserModel() {
         // Nothing to do...
@@ -76,12 +76,14 @@ public class UserModel {
         }
     }
 
-    public void setMessages(List<MessageModel> messages) {
-        this.messages.clear();
-        this.messages.addAll(messages);
+    public void setMessages(List<MessageModel> settingMessages) {
+
+        for (MessageModel m : settingMessages) {
+            this.messages.add(m);
+        }
 
         for (MessageListener l : messageListeners) {
-            l.onMessagesSet(messages);
+            l.onMessagesSet(settingMessages);
         }
     }
 
