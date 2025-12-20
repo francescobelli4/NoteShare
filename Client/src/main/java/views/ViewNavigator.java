@@ -9,6 +9,7 @@ public class ViewNavigator {
     private ViewNavigator() {}
 
     private static Stage stage;
+    private static Scene scene;
     private static View activeView;
 
     private static double scaleFactor = 1.0f;
@@ -16,22 +17,18 @@ public class ViewNavigator {
     public static void setStage(Stage primaryStage) {
         stage = primaryStage;
         scaleFactor = stage.getHeight()/1080.0f;
+        scene = new Scene(new StackPane());
+        stage.setScene(scene);
     }
 
     public static void displayHomeView() {
-
         activeView = ViewFactory.getInstance().createHomeView();
-
-        Scene primaryScene = new Scene(activeView.getRoot());
-        stage.setScene(primaryScene);
+        scene.setRoot(activeView.getRoot());
     }
 
     public static void displayAccessView() {
-
         activeView = ViewFactory.getInstance().createAccessView();
-
-        Scene primaryScene = new Scene(activeView.getRoot());
-        stage.setScene(primaryScene);
+        scene.setRoot(activeView.getRoot());
     }
 
     public static void displayNotification(String title, String description, Icon icon) {

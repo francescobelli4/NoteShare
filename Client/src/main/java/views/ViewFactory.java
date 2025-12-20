@@ -8,6 +8,9 @@ import views.home.HomeView;
 import views.home.leftbar.LeftBarMenuOptionsView;
 import views.home.leftbar.LeftBarUserDataView;
 import views.home.leftbar.LeftBarView;
+import views.home.messages.MessageView;
+import views.home.messages.MessagesContainerView;
+import views.home.toolsbar.ToolsBarView;
 import views.notification.NotificationView;
 
 public class ViewFactory {
@@ -27,6 +30,14 @@ public class ViewFactory {
 
     public LeftBarView createLeftBarView() {
         return new LeftBarView();
+    }
+
+    public ToolsBarView createToolsBarView() {
+        return new ToolsBarView();
+    }
+
+    public MessagesContainerView createMessagesContainerView(double x, double y) {
+        return new MessagesContainerView(x, y);
     }
 
     public LeftBarMenuOptionsView createLeftBarMenuOptionsView() {
@@ -55,5 +66,9 @@ public class ViewFactory {
 
     public NotificationView createNotificationView(String title, String description, Icon icon) {
         return new NotificationView(title, description, icon);
+    }
+
+    public MessageView createMessageView(String title, String description, String date, Icon icon) {
+        return new MessageView(title, description, date, icon);
     }
 }

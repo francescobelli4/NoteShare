@@ -3,17 +3,23 @@ package app;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
+import communication.dtos.message.MessageDTO;
+import communication.dtos.message.MessageType;
 import communication.dtos.requests.login.LoginRequestDTO;
 import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
 import communication.dtos.requests.register.RegisterRequestDTO;
 import communication.dtos.responses.login.LoginFailureReason;
 import communication.dtos.responses.login.RegisterFailureReason;
-import communication.user.UserDTO;
+import communication.dtos.user.UserDTO;
 import dto_factory.DomainDTOFactory;
-import entities.UserEntity;
+import entities.message.MessageEntity;
+import entities.user.UserEntity;
+import mappers.MessageMapper;
 import mappers.UserMapper;
 import utils.Hashing;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -148,8 +154,18 @@ public class MessageHandler {
         if (userEntity == null) {
             UserDTO userDTO = DomainDTOFactory.createUserDTO(payload.getUsername(), payload.getUserType());
             UserEntity user = UserMapper.toEntity(userDTO, payload.getPassword());
-            networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(user), user.getToken(), message.getSocketMessageID()));
+            networkUser.write(SocketMessageFactory.createAccessSuccessResponse(UserMapper.toDTO(user), message.getSocketMessageID(), user.getToken()));
             Server.getUserDAO().saveUser(user);
+
+            MessageDTO messageDTO = DomainDTOFactory.createMessageDTO(
+                    "info",
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
+                    "register_welcome",
+                    MessageType.INFO
+            );
+
+            networkUser.write(SocketMessageFactory.createMessageAddNotification(messageDTO));
+            Server.getMessageDAO().save(MessageMapper.toEntity(messageDTO, user.getUsername()));
         } else {
             networkUser.write(SocketMessageFactory.createRegisterFailureResponse(RegisterFailureReason.USERNAME_ALREADY_TAKEN, message.getSocketMessageID()));
         }

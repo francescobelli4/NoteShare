@@ -1,11 +1,16 @@
 package communication;
 
+import communication.dtos.message.MessageDTO;
+import communication.dtos.notification.message.MessageNotificationDTO;
+import communication.dtos.notification.message.MessagesNotificationDTO;
 import communication.dtos.requests.login.LoginRequestDTO;
 import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
 import communication.dtos.requests.register.RegisterRequestDTO;
 import communication.dtos.responses.login.*;
-import communication.user.UserDTO;
-import communication.user.UserType;
+import communication.dtos.user.UserDTO;
+import communication.dtos.user.UserType;
+
+import java.util.List;
 
 public class SocketMessageFactory {
 
@@ -33,5 +38,13 @@ public class SocketMessageFactory {
 
     public static SocketMessage createAccessSuccessResponse(UserDTO userDTO, String messageID, String accessToken) {
         return new SocketMessage(SocketMessageType.ACCESS_SUCCESS, messageID, new AccessSuccessResponseDTO<>(userDTO.getUserType(), userDTO, accessToken));
+    }
+
+    public static SocketMessage createMessagesSetNotification(List<MessageDTO> messageDTOs) {
+        return new SocketMessage(SocketMessageType.SET_MESSAGES, new MessagesNotificationDTO(messageDTOs));
+    }
+
+    public static SocketMessage createMessageAddNotification(MessageDTO messageDTO) {
+        return new SocketMessage(SocketMessageType.ADD_MESSAGE, new MessageNotificationDTO(messageDTO));
     }
 }

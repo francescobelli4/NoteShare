@@ -1,13 +1,13 @@
 package mappers;
 
-import communication.user.UserAdminDTO;
-import communication.user.UserDTO;
-import communication.user.UserStudentDTO;
-import communication.user.UserTeacherDTO;
-import models.AdminUserModel;
-import models.StudentUserModel;
-import models.TeacherUserModel;
-import models.UserModel;
+import communication.dtos.user.UserAdminDTO;
+import communication.dtos.user.UserDTO;
+import communication.dtos.user.UserStudentDTO;
+import communication.dtos.user.UserTeacherDTO;
+import models.user.AdminUserModel;
+import models.user.StudentUserModel;
+import models.user.TeacherUserModel;
+import models.user.UserModel;
 
 public class UserMapper {
 
@@ -36,8 +36,8 @@ public class UserMapper {
 
         UserModel newModel = toModel(userDTO);
 
-        for (UserModel.Listener l : userModel.getListeners()) {
-            newModel.addListener(l);
+        for (UserModel.LoginListener l : userModel.getLoginListeners()) {
+            newModel.addUserLoginListener(l);
         }
 
         return newModel;

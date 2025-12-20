@@ -1,8 +1,11 @@
 package app;
 
+import daos.folder.FolderDAO;
+import daos.folder.NPFolderDAO;
+import daos.folder.PFolderDAO;
 import exceptions.ArgsException;
 import locales.Locales;
-import models.UserModel;
+import models.user.UserModel;
 import services.ServerCommunicationService;
 import utils.Utils;
 
@@ -17,6 +20,7 @@ public class App {
     private static final Logger LOGGER = Logger.getLogger("App");
 
     private static UserModel user;
+    private static FolderDAO folderDAO;
 
     /**
      * This function should set the app's options.
@@ -62,6 +66,14 @@ public class App {
         user = new UserModel();
     }
 
+    static void setupDAOs() {
+        if (Options.getAppMode() == Options.AppMode.DEMO) {
+            folderDAO = new NPFolderDAO();
+        } else {
+            folderDAO = new PFolderDAO();
+        }
+    }
+
     /**
      * This function should set up the app by reading the Options
      * @param args the array of arguments passed to the app at the startup
@@ -80,6 +92,8 @@ public class App {
                 LOGGER.info("Connection to server established");
 
             setupGenericUserModel();
+
+            setupDAOs();
 
             Launcher.launchApp();
         } catch (ArgsException argsException) {
@@ -101,6 +115,10 @@ public class App {
 
     public static void setUser(UserModel user) {
         App.user = user;
+    }
+
+    public static FolderDAO getFolderDAO() {
+        return folderDAO;
     }
 
     public static <T extends UserModel> T getUserAs(Class<T> type) {

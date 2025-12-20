@@ -4,13 +4,15 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import communication.dtos.notification.message.MessageNotificationDTO;
+import communication.dtos.notification.message.MessagesNotificationDTO;
 import communication.dtos.requests.login.LoginRequestDTO;
 import communication.dtos.requests.login.LoginUsingTokenRequestDTO;
 import communication.dtos.requests.register.RegisterRequestDTO;
 import communication.dtos.responses.login.AccessSuccessResponseDTO;
 import communication.dtos.responses.login.LoginFailureResponseDTO;
 import communication.dtos.responses.login.RegisterFailureResponseDTO;
-import communication.user.*;
+import communication.dtos.user.*;
 
 import java.lang.reflect.Type;
 
@@ -74,6 +76,8 @@ public class SocketMessageTypeAdapter extends TypeAdapter<SocketMessage> {
             case LOGIN_FAILURE -> LoginFailureResponseDTO.class;
             case REGISTER_REQUEST -> RegisterRequestDTO.class;
             case REGISTER_FAILURE -> RegisterFailureResponseDTO.class;
+            case ADD_MESSAGE -> MessageNotificationDTO.class;
+            case SET_MESSAGES -> MessagesNotificationDTO.class;
             default -> throw new JsonParseException("SocketMessage Payload type not found");
         };
     }

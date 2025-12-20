@@ -6,7 +6,7 @@ import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.AccessSuccessResponseDTO;
 import communication.dtos.responses.login.RegisterFailureReason;
-import communication.user.UserType;
+import communication.dtos.user.UserType;
 import exceptions.RegisterFailureException;
 import mappers.UserMapper;
 import services.ServerCommunicationService;

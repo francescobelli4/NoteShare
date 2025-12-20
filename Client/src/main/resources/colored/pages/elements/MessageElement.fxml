@@ -6,9 +6,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<HBox fx:id="notification" alignment="TOP_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-1" minWidth="-1" prefHeight="-1" prefWidth="-1" spacing="10" styleClass="message" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="root" alignment="TOP_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-1" minWidth="-1" prefHeight="-1" prefWidth="-1" spacing="10" styleClass="message" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="icon" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="iconImage" fitHeight="80.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../styles/icons/app_icon.png" />
          </image>

@@ -1,9 +1,13 @@
 package services;
 
+import app.App;
 import com.google.gson.JsonParseException;
 import communication.SocketMessage;
 import communication.SocketMessageType;
+import communication.dtos.message.MessageDTO;
+import communication.dtos.notification.message.MessageNotificationDTO;
 import exceptions.UnrecognisedResponseException;
+import mappers.MessageMapper;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -219,6 +223,7 @@ public class ServerCommunicationService {
      * @throws UnrecognisedResponseException there is no CompletableFuture waiting for that response
      */
     void handleResponse(SocketMessage socketMessage) throws UnrecognisedResponseException {
+
         CompletableFuture<SocketMessage> future = pendingRequests.remove(socketMessage.getSocketMessageID());
 
         if (future != null) {
@@ -229,7 +234,15 @@ public class ServerCommunicationService {
     }
 
     private void handleNotification(SocketMessage socketMessage) {
-        // TODO
+
+        switch (socketMessage.getSocketMessageType()) {
+            case ADD_MESSAGE -> handleAddMessage((MessageNotificationDTO) socketMessage.getPayload());
+        }
+    }
+
+    private void handleAddMessage(MessageNotificationDTO messageNotificationDTO) {
+        MessageDTO receivedMessage = messageNotificationDTO.getMessage();
+        App.getUser().addMessage(MessageMapper.toModel(receivedMessage));
     }
 
     public ExecutorService getExecutorService() {
@@ -238,29 +251,5 @@ public class ServerCommunicationService {
 
     public ConcurrentMap<String, CompletableFuture<SocketMessage>> getPendingRequests() {
         return pendingRequests;
-    }
-
-    /**
-     * TESTING
-     */
-    void setStreamsForTest(DataInputStream dis, DataOutputStream dos) {
-        this.dataInputStream = dis;
-        this.dataOutputStream = dos;
-    }
-
-    DataInputStream getDataInputStream() {
-        return dataInputStream;
-    }
-
-    DataOutputStream getDataOutputStream() {
-        return dataOutputStream;
-    }
-
-    Socket getSocket() {
-        return socket;
-    }
-
-    void setSocket(Socket socket) {
-        this.socket = socket;
     }
 }

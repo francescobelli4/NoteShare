@@ -1,5 +1,7 @@
 package app;
 
+import daos.message.MessageDAO;
+import daos.message.NPMessageDAO;
 import daos.user.NonPersistentUserDAO;
 import daos.user.UserDAO;
 
@@ -14,6 +16,7 @@ public class Server {
     private static final Logger LOGGER = Logger.getLogger("Server");
 
     private static UserDAO userDAO;
+    private static MessageDAO messageDAO;
 
     private Server() {}
 
@@ -39,6 +42,7 @@ public class Server {
 
         if (Options.getAppMode() == Options.AppMode.DEMO) {
             userDAO = new NonPersistentUserDAO();
+            messageDAO = new NPMessageDAO();
         }
     }
 
@@ -74,6 +78,10 @@ public class Server {
 
     public static UserDAO getUserDAO() {
         return userDAO;
+    }
+
+    public static MessageDAO getMessageDAO() {
+        return messageDAO;
     }
 
     public static class Options {

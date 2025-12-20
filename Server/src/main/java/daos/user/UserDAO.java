@@ -1,6 +1,6 @@
 package daos.user;
 
-import entities.UserEntity;
+import entities.user.UserEntity;
 
 public interface UserDAO {
 

@@ -1,4 +1,4 @@
-package communication.user;
+package communication.dtos.user;
 
 public class UserDTO {
 

@@ -1,4 +1,4 @@
-package communication.user;
+package communication.dtos.user;
 
 public enum UserType {
     STUDENT,

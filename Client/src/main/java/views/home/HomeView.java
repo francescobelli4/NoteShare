@@ -23,9 +23,10 @@ public class HomeView implements View {
     @FXML
     private VBox leftBarSlot;
     @FXML
-    private VBox foldersContainer;
-    @FXML
     private VBox toolsSlot;
+    @FXML
+    private VBox foldersContainer;
+
 
     private static final Page page = Page.HOME_PAGE;
     private final GraphicsController<HomeView> graphicsController;
@@ -38,6 +39,15 @@ public class HomeView implements View {
     public void appendLeftBar(Node leftBar) {
         leftBarSlot.getChildren().clear();
         leftBarSlot.getChildren().add(leftBar);
+    }
+
+    public void appendToolsBar(Node toolsBar) {
+        toolsSlot.getChildren().clear();
+        toolsSlot.getChildren().add(toolsBar);
+    }
+
+    public void appendMessagesContainer(Node messagesContainer) {
+        root.getChildren().add(messagesContainer);
     }
 
     @Override

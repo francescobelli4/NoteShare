@@ -1,7 +1,7 @@
 package communication.dtos.responses.login;
 
-import communication.user.UserDTO;
-import communication.user.UserType;
+import communication.dtos.user.UserDTO;
+import communication.dtos.user.UserType;
 
 public class AccessSuccessResponseDTO<U extends UserDTO> {
 

@@ -1,6 +1,6 @@
 package communication.dtos.requests.register;
 
-import communication.user.UserType;
+import communication.dtos.user.UserType;
 
 public class RegisterRequestDTO {
 

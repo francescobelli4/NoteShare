@@ -8,12 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import models.UserModel;
+import models.user.UserModel;
 import views.Page;
 import views.View;
 import views.ViewNavigator;
 
-public class AccessView implements View, UserModel.Listener {
+public class AccessView implements View, UserModel.LoginListener {
 
     @FXML
     private StackPane root;
@@ -30,7 +30,7 @@ public class AccessView implements View, UserModel.Listener {
 
     @Override
     public void init() {
-        App.getUser().addListener(this);
+        App.getUser().addUserLoginListener(this);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package graphics_controllers.access.forms;
 
 import app_controllers.RegisterController;
-import communication.user.UserType;
+import communication.dtos.user.UserType;
 import exceptions.RegisterFailureException;
 import graphics_controllers.GraphicsController;
 import locales.Locales;

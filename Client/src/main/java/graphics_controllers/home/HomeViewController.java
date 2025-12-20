@@ -1,9 +1,13 @@
 package graphics_controllers.home;
 
 import graphics_controllers.GraphicsController;
+import javafx.geometry.Bounds;
 import views.ViewFactory;
+import views.ViewNavigator;
 import views.home.HomeView;
 import views.home.leftbar.LeftBarView;
+import views.home.messages.MessagesContainerView;
+import views.home.toolsbar.ToolsBarView;
 
 public class HomeViewController extends GraphicsController<HomeView> {
 
@@ -15,6 +19,7 @@ public class HomeViewController extends GraphicsController<HomeView> {
     public void loaded() {
 
         loadLeftBar();
+        loadToolsBar();
         getView().getMessagesButton().setOnMouseClicked(_ -> messagesButtonClicked());
     }
 
@@ -24,7 +29,15 @@ public class HomeViewController extends GraphicsController<HomeView> {
         getView().appendLeftBar(leftBar.getRoot());
     }
 
+    private void loadToolsBar() {
+        ToolsBarView toolsBar = ViewFactory.getInstance().createToolsBarView();
+        getView().appendToolsBar(toolsBar.getRoot());
+    }
+
     private void messagesButtonClicked() {
-        // ...
+        Bounds boundsInScene = getView().getMessagesButton().localToScene(getView().getMessagesButton().getBoundsInLocal());
+
+        MessagesContainerView messagesContainerView = ViewFactory.getInstance().createMessagesContainerView(ViewNavigator.getStage().getWidth() - boundsInScene.getMinX(), boundsInScene.getMinY() + getView().getMessagesButton().getHeight());
+        getView().appendMessagesContainer(messagesContainerView.getRoot());
     }
 }

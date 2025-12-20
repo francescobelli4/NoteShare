@@ -1,6 +1,12 @@
 package dto_factory;
 
-import communication.user.*;
+import communication.dtos.message.MessageDTO;
+import communication.dtos.message.MessageType;
+import communication.dtos.user.*;
+import mappers.MessageMapper;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DomainDTOFactory {
 
@@ -19,5 +25,16 @@ public class DomainDTOFactory {
             case TEACHER -> new UserTeacherDTO();
             case ADMINISTRATOR -> new UserAdminDTO();
         };
+    }
+
+    public static MessageDTO createMessageDTO(String title, String date, String description, MessageType type) {
+
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setTitle(title);
+        messageDTO.setDate(date);
+        messageDTO.setDescription(description);
+        messageDTO.setType(type);
+
+        return messageDTO;
     }
 }

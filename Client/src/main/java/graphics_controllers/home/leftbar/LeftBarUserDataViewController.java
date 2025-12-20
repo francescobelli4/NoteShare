@@ -1,9 +1,9 @@
 package graphics_controllers.home.leftbar;
 
 import app.App;
-import communication.user.UserType;
+import communication.dtos.user.UserType;
 import graphics_controllers.GraphicsController;
-import models.StudentUserModel;
+import models.user.StudentUserModel;
 import views.ViewNavigator;
 import views.home.leftbar.LeftBarUserDataView;
 

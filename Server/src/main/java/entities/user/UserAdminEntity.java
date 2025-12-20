@@ -1,6 +1,6 @@
-package entities;
+package entities.user;
 
-import communication.user.UserType;
+import communication.dtos.user.UserType;
 
 public class UserAdminEntity extends UserEntity {
 

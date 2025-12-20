@@ -1,6 +1,6 @@
-package models;
+package models.user;
 
-import communication.user.UserType;
+import communication.dtos.user.UserType;
 
 public class TeacherUserModel extends UserModel {
 

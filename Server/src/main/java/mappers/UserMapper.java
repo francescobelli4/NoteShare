@@ -1,13 +1,13 @@
 package mappers;
 
-import communication.user.UserAdminDTO;
-import communication.user.UserDTO;
-import communication.user.UserStudentDTO;
-import communication.user.UserTeacherDTO;
-import entities.UserAdminEntity;
-import entities.UserEntity;
-import entities.UserStudentEntity;
-import entities.UserTeacherEntity;
+import communication.dtos.user.UserAdminDTO;
+import communication.dtos.user.UserDTO;
+import communication.dtos.user.UserStudentDTO;
+import communication.dtos.user.UserTeacherDTO;
+import entities.user.UserAdminEntity;
+import entities.user.UserEntity;
+import entities.user.UserStudentEntity;
+import entities.user.UserTeacherEntity;
 import utils.Utils;
 
 public class UserMapper {

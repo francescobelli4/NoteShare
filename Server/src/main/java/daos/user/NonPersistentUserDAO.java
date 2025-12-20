@@ -1,12 +1,12 @@
 package daos.user;
 
-import entities.UserEntity;
+import entities.user.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NonPersistentUserDAO implements UserDAO{
+public class NonPersistentUserDAO implements UserDAO {
 
     List<UserEntity> users = new ArrayList<>();
 

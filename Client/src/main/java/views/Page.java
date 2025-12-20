@@ -11,7 +11,7 @@ public enum Page {
     LEFT_BAR("/colored/pages/forms/LeftBar.fxml"),
     LEFT_BAR_MENU_OPTIONS("/colored/pages/forms/MenuOptions.fxml"),
     LEFT_BAR_USER_DATA("/colored/pages/forms/UserData.fxml"),
-    STUDENT_HOME_PAGE_TOOLS_BAR("/colored/pages/forms/ToolsBar.fxml"),
+    TOOLS_BAR("/colored/pages/forms/ToolsBar.fxml"),
     MESSAGES_CONTAINER("/colored/pages/forms/MessagesContainerForm.fxml"),
     FOLDER_CREATION_DIALOGUE("/colored/pages/dialogues/FolderCreationDialogue.fxml"),
     NOTE_CREATION_DIALOGUE("/colored/pages/dialogues/NoteCreationDialogue.fxml"),
