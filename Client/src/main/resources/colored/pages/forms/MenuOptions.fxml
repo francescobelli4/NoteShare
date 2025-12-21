@@ -18,7 +18,7 @@
                     </ImageView>
                 </graphic>
                 <font>
-                    <Font size="40.0" />
+                    <Font size="25.0" />
                 </font>
                 <styleClass>
                     <String fx:value="leftbar_button" />
@@ -34,7 +34,7 @@
                     </ImageView>
                 </graphic>
                 <font>
-                    <Font size="40.0" />
+                    <Font size="25.0" />
                 </font>
             </Button>
             <Button fx:id="sharedNotesButton" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="leftbar_button" text="Shared Notes">
@@ -46,7 +46,7 @@
                     </ImageView>
                 </graphic>
                 <font>
-                    <Font size="40.0" />
+                    <Font size="25.0" />
                 </font>
             </Button>
         </children>

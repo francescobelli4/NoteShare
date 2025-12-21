@@ -18,12 +18,12 @@
             </ImageView>
             <Label fx:id="usernameLabel" text="Username">
                <font>
-                  <Font name="Cantarell Regular" size="60.0" />
+                  <Font name="Cantarell Regular" size="50.0" />
                </font>
             </Label>
             <Label fx:id="coinsLabel" text="150">
                <font>
-                  <Font name="Cantarell Regular" size="55.0" />
+                  <Font name="Cantarell Regular" size="45.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
