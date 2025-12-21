@@ -22,10 +22,15 @@ public class Launcher extends Application {
         LOGGER.info("Starting application!");
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setMinHeight(screenBounds.getHeight()/2);
+        primaryStage.setMinHeight(screenBounds.getHeight());
         primaryStage.setMinWidth(screenBounds.getWidth()/2);
+
         primaryStage.setMaxHeight(screenBounds.getHeight());
         primaryStage.setMaxWidth(screenBounds.getWidth());
+
+        primaryStage.setHeight(screenBounds.getHeight());
+        primaryStage.setWidth(screenBounds.getWidth());
+
         primaryStage.setTitle("NoteShare");
 
         ViewNavigator.setStage(primaryStage);
