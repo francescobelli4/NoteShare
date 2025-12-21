@@ -44,7 +44,14 @@ public class ViewNavigator {
     }
 
     public static double scaleValue(double val) {
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        return val * screenBounds.getHeight()/1200.0f;
+
+        Screen screen = Screen.getPrimary();
+
+        // Windows usually has 1.25 scale
+        double scale = screen.getOutputScaleY();
+        // Converting screen bounds height to real pixel height
+        double phys = screen.getBounds().getHeight() * scale;
+        // I built the UI using a 1920x1200 res
+        return val * (phys/1200);
     }
 }
