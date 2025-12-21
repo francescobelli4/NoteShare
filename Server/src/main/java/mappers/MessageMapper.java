@@ -33,7 +33,7 @@ public class MessageMapper {
 
     public static MessageEntity toEntity(MessageDTO messageDTO, String username) {
         MessageEntity messageEntity = new MessageEntity();
-        messageEntity.setTitle(messageEntity.getTitle());
+        messageEntity.setTitle(messageDTO.getTitle());
         messageEntity.setDate(messageDTO.getDate());
         messageEntity.setDescription(messageDTO.getDescription());
         messageEntity.setType(messageDTO.getType());

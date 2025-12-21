@@ -1,5 +1,6 @@
 package graphics_controllers.home;
 
+import app.App;
 import graphics_controllers.GraphicsController;
 import javafx.geometry.Bounds;
 import views.ViewFactory;
@@ -36,7 +37,6 @@ public class HomeViewController extends GraphicsController<HomeView> {
 
     private void messagesButtonClicked() {
         Bounds boundsInScene = getView().getMessagesButton().localToScene(getView().getMessagesButton().getBoundsInLocal());
-
         MessagesContainerView messagesContainerView = ViewFactory.getInstance().createMessagesContainerView(ViewNavigator.getStage().getWidth() - boundsInScene.getMinX(), boundsInScene.getMinY() + getView().getMessagesButton().getHeight());
         getView().appendMessagesContainer(messagesContainerView.getRoot());
     }

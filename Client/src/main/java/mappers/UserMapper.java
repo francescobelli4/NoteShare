@@ -35,9 +35,14 @@ public class UserMapper {
     public static UserModel populateModel(UserModel userModel, UserDTO userDTO) {
 
         UserModel newModel = toModel(userDTO);
+        newModel.setMessages(userModel.getMessages());
 
         for (UserModel.LoginListener l : userModel.getLoginListeners()) {
             newModel.addUserLoginListener(l);
+        }
+
+        for (UserModel.MessageListener l : userModel.getMessageListeners()) {
+            newModel.addUserMessageListener(l);
         }
 
         return newModel;

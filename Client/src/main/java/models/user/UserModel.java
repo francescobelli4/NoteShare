@@ -1,5 +1,6 @@
 package models.user;
 
+import app.App;
 import communication.dtos.user.UserType;
 import models.messages.MessageModel;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class UserModel {
 
-    private List<MessageModel> messages = new ArrayList<>();
+    private final List<MessageModel> messages = new ArrayList<>();
 
     public UserModel() {
         // Nothing to do...
@@ -78,9 +79,7 @@ public class UserModel {
 
     public void setMessages(List<MessageModel> settingMessages) {
 
-        for (MessageModel m : settingMessages) {
-            this.messages.add(m);
-        }
+        this.messages.addAll(settingMessages);
 
         for (MessageListener l : messageListeners) {
             l.onMessagesSet(settingMessages);

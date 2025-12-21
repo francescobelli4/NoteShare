@@ -50,7 +50,6 @@ public class MessagesContainerView implements View, UserModel.MessageListener {
         AnchorPane.setTopAnchor(box, y);
         AnchorPane.setRightAnchor(box, x);
 
-        System.out.println("MESSSS " + App.getUser().getMessages().size());
         for (MessageModel message : App.getUser().getMessages()) {
             appendMessage(ViewFactory.getInstance().createMessageView(message.getTitle(), message.getDescription(), message.getDate(), message.getIcon()).getRoot());
         }
