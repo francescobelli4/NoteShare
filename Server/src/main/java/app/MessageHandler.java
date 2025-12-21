@@ -12,7 +12,6 @@ import communication.dtos.responses.login.LoginFailureReason;
 import communication.dtos.responses.login.RegisterFailureReason;
 import communication.dtos.user.UserDTO;
 import dto_factory.DomainDTOFactory;
-import entities.message.MessageEntity;
 import entities.user.UserEntity;
 import mappers.MessageMapper;
 import mappers.UserMapper;
