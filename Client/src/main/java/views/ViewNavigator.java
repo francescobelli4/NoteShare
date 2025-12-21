@@ -45,6 +45,6 @@ public class ViewNavigator {
 
     public static double scaleValue(double val) {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        return val * screenBounds.getHeight()/1080.0f;
+        return val * screenBounds.getHeight()/1200.0f;
     }
 }
