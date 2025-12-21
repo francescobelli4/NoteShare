@@ -85,7 +85,7 @@ public class NetworkUser implements Runnable {
             return;
         }
 
-        while (user.isConnected()) {
+        while (!user.isClosed()) {
             read();
         }
 
