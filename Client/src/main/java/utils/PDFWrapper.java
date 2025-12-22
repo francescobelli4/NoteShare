@@ -21,9 +21,9 @@ import java.io.IOException;
 public class PDFWrapper {
 
     /** Needed to convert from pdf's measures to pixels */
-    private final float PDF_POINTS_PER_INCH = 72f;
+    private static final float PDF_POINTS_PER_INCH = 72f;
     /** Used to specify the image quality and calculate the image dimensions in pixel*/
-    private final float IMAGE_DPI = 150f;
+    private static final float IMAGE_DPI = 150f;
 
     /** The config associated with this pdf */
     private final PDFConfig pdfConfig;

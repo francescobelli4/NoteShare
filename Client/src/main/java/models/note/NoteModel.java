@@ -1,7 +1,5 @@
 package models.note;
 
-/*import org.apache.pdfbox.Loader;
-import org.apache.pdfbox.pdmodel.PDDocument;*/
 import models.folder.FolderModel;
 import utils.PDFWrapper;
 
@@ -61,6 +59,7 @@ public class NoteModel {
      * When a note's parent folder is set, also the note's path should be updated
      * @param parentFolder the folder that will contain this note
      */
+    @SuppressWarnings("java:S1075")
     public void setParentFolder(FolderModel parentFolder) {
         this.parentFolder = parentFolder;
         this.path = parentFolder.getPath() + "/" + name;

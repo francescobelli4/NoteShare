@@ -75,7 +75,7 @@ public class PDFToImage {
         int port;
         try (ServerSocket tempSocket = new ServerSocket(0)) {
             port = tempSocket.getLocalPort();
-        } catch (IOException e) {
+        } catch (IOException _) {
             return -1;
         }
 
@@ -99,7 +99,7 @@ public class PDFToImage {
                     s.setSoTimeout(10000);
                     converter = s;
                     break;
-                } catch (IOException e) {
+                } catch (IOException _) {
                     s.close();
                 }
             }

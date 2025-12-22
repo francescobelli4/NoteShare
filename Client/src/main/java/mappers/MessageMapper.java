@@ -9,6 +9,8 @@ import java.util.List;
 
 public class MessageMapper {
 
+    private MessageMapper() {}
+
     public static MessageModel toModel(MessageDTO message) {
 
         Icon icon = switch (message.getType()) {
