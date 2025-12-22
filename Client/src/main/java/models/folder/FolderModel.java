@@ -122,6 +122,7 @@ public class FolderModel {
         return parentFolder;
     }
 
+    @SuppressWarnings("java:S1075")
     public void setParentFolder(FolderModel parentFolder) {
         this.parentFolder = parentFolder;
         this.path = parentFolder.getPath() + "/" + name;
