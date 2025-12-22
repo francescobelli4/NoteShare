@@ -30,23 +30,21 @@ public class Utils {
         for (var node : parent.getChildrenUnmodifiable()) {
 
             // Caso A: È un contenitore (VBox, HBox, AnchorPane, ecc.) -> Scendi ricorsivamente
-            if (node instanceof Parent) {
-                scaleFonts((Parent) node);
+            if (node instanceof Parent p) {
+                scaleFonts(p);
             }
 
             // Caso B: È un elemento con testo (Label, Button, RadioButton, CheckBox)
-            if (node instanceof Labeled) {
-                Labeled labeled = (Labeled) node;
-                Font oldFont = labeled.getFont();
+            if (node instanceof Labeled l) {
+                Font oldFont = l.getFont();
                 // Applica la tua logica di scaling
-                labeled.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
+                l.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
             }
 
             // Caso C: È un campo di input (TextField, PasswordField, TextArea)
-            else if (node instanceof TextInputControl) {
-                TextInputControl input = (TextInputControl) node;
-                Font oldFont = input.getFont();
-                input.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
+            else if (node instanceof TextInputControl tic) {
+                Font oldFont = tic.getFont();
+                tic.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
             }
         }
     }
