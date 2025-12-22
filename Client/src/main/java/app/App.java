@@ -5,6 +5,7 @@ import daos.folder.NPFolderDAO;
 import daos.folder.PFolderDAO;
 import exceptions.ArgsException;
 import locales.Locales;
+import models.user.StudentUserModel;
 import models.user.UserModel;
 import services.ServerCommunicationService;
 import utils.Utils;
@@ -63,7 +64,8 @@ public class App {
     }
 
     static void setupGenericUserModel() {
-        user = new UserModel();
+        // When a user is not logged in, it's classified as a student
+        user = new StudentUserModel();
     }
 
     static void setupDAOs() {
@@ -91,9 +93,8 @@ public class App {
             if (LOGGER.isLoggable(Level.INFO))
                 LOGGER.info("Connection to server established");
 
-            setupGenericUserModel();
-
             setupDAOs();
+            setupGenericUserModel();
 
             Launcher.launchApp();
         } catch (ArgsException argsException) {

@@ -17,14 +17,14 @@ public class ToolsBarViewController extends GraphicsController<ToolsBarView> {
     }
 
     private void backButtonClicked() {
-
+        //...
     }
 
     private void folderAddButtonClicked() {
-
+        //...
     }
 
     private void noteAddButtonClicked() {
-
+        //...
     }
 }

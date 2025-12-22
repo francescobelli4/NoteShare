@@ -1,9 +1,6 @@
 package mappers;
 
-import communication.dtos.user.UserAdminDTO;
-import communication.dtos.user.UserDTO;
-import communication.dtos.user.UserStudentDTO;
-import communication.dtos.user.UserTeacherDTO;
+import communication.dtos.user.*;
 import models.user.AdminUserModel;
 import models.user.StudentUserModel;
 import models.user.TeacherUserModel;
@@ -35,12 +32,11 @@ public class UserMapper {
     public static UserModel populateModel(UserModel userModel, UserDTO userDTO) {
 
         UserModel newModel = toModel(userDTO);
-        newModel.setMessages(userModel.getMessages());
 
+        newModel.setMessages(userModel.getMessages());
         for (UserModel.LoginListener l : userModel.getLoginListeners()) {
             newModel.addUserLoginListener(l);
         }
-
         for (UserModel.MessageListener l : userModel.getMessageListeners()) {
             newModel.addUserMessageListener(l);
         }
@@ -50,8 +46,7 @@ public class UserMapper {
 
     private static StudentUserModel toStudentUserModel(UserStudentDTO studentDTO) {
 
-        StudentUserModel studentUserModel = new StudentUserModel();
-        studentUserModel.setUsername(studentDTO.getUsername());
+        StudentUserModel studentUserModel = new StudentUserModel(studentDTO.getUsername(), UserType.STUDENT);
         studentUserModel.setCoins(studentDTO.getCoins());
 
         return studentUserModel;

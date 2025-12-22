@@ -2,11 +2,17 @@ package daos.folder;
 
 
 import models.folder.FolderModel;
+import models.user.UserModel;
 
 public class PFolderDAO implements FolderDAO {
 
     @Override
     public FolderModel getRootFolder() {
+        return null;
+    }
+
+    @Override
+    public FolderModel getUserFolder(UserModel user) {
         return null;
     }
 

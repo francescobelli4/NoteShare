@@ -4,21 +4,18 @@ import app.App;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.messages.MessagesContainerViewController;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import models.messages.MessageModel;
 import models.user.UserModel;
 import views.Page;
 import views.View;
 import views.ViewFactory;
+import views.ViewNavigator;
 
 import java.util.List;
 
@@ -56,8 +53,9 @@ public class MessagesContainerView implements View, UserModel.MessageListener {
     }
 
     @Override
-    public void update() {
-        //Not needed...
+    public void close() {
+        App.getUser().removeUserMessageListener(this);
+        ((StackPane)ViewNavigator.getActiveView().getRoot()).getChildren().remove(root);
     }
 
     public void appendMessage(Node message) {
@@ -66,7 +64,9 @@ public class MessagesContainerView implements View, UserModel.MessageListener {
 
     @Override
     public void onMessagesSet(List<MessageModel> messages) {
-
+        for (MessageModel message : messages) {
+            appendMessage(ViewFactory.getInstance().createMessageView(message.getTitle(), message.getDescription(), message.getDate(), message.getIcon()).getRoot());
+        }
     }
 
     @Override

@@ -40,7 +40,7 @@ public class LeftBarMenuOptionsView implements View {
     }
 
     @Override
-    public void update() {
+    public void close() {
         //Nothing to do...
     }
 

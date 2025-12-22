@@ -1,28 +1,19 @@
 package daos.folder;
 
 
-import app.App;
-import communication.dtos.user.UserType;
 import models.folder.FolderModel;
-import models.user.StudentUserModel;
+import models.user.UserModel;
 
 public class NPFolderDAO implements FolderDAO {
 
     @Override
     public FolderModel getRootFolder() {
+        return new FolderModel("NoteShare");
+    }
 
-        if (App.getUser().getUserType() == UserType.STUDENT) {
-
-            StudentUserModel studentUserModel = App.getUserAs(StudentUserModel.class);
-
-            if (studentUserModel.getRootFolder() == null) {
-                studentUserModel.setRootFolder(new FolderModel("NoteShare"));
-            }
-
-            return studentUserModel.getRootFolder();
-        }
-
-        return null;
+    @Override
+    public FolderModel getUserFolder(UserModel user) {
+        return new FolderModel(user.getUsername());
     }
 
     @Override

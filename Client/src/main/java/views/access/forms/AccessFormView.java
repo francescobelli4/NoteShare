@@ -37,6 +37,11 @@ public class AccessFormView implements View {
     }
 
     @Override
+    public void close() {
+        //Nothing to do...
+    }
+
+    @Override
     public Parent getRoot() {
         return root;
     }
@@ -49,11 +54,6 @@ public class AccessFormView implements View {
     @Override
     public GraphicsController<AccessFormView> getGraphicsController() {
         return graphicsController;
-    }
-
-    @Override
-    public void update() {
-        //Not needed...
     }
 
     public Button getRegisterButton() {

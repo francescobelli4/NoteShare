@@ -1,7 +1,6 @@
 package views.home.toolsbar;
 
 import app.App;
-import communication.dtos.user.UserType;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.toolsbar.ToolsBarViewController;
 import javafx.fxml.FXML;
@@ -10,12 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import models.folder.FolderModel;
-import models.user.StudentUserModel;
+import models.user.UserModel;
 import utils.Utils;
 import views.Page;
 import views.View;
 
-public class ToolsBarView implements View, StudentUserModel.Listener {
+public class ToolsBarView implements View, UserModel.ActiveFolderListener {
 
     @FXML
     private VBox root;
@@ -41,15 +40,12 @@ public class ToolsBarView implements View, StudentUserModel.Listener {
 
         Utils.scaleFonts(root);
 
-        if (App.getUser().getUserType() == UserType.STUDENT) {
-            StudentUserModel studentUserModel = App.getUserAs(StudentUserModel.class);
-            setPathLabelText(studentUserModel.getActiveFolder().getPath());
-            studentUserModel.addStudentListener(this);
-        }
+        setPathLabelText(App.getUser().getActiveFolder().getPath());
+        App.getUser().addUserActiveFolderListener(this);
     }
 
     @Override
-    public void update() {
+    public void close() {
         //Nothing to do...
     }
 

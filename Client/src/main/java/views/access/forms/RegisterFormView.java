@@ -6,13 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.transform.Scale;
 import locales.Locales;
 import utils.Utils;
 import views.Page;
 import views.View;
-import views.ViewNavigator;
 
 public class RegisterFormView implements View {
 
@@ -68,6 +65,11 @@ public class RegisterFormView implements View {
         passwordTextField.setTextFormatter(getTextFormatter(Utils.getMaxPasswordLength(), true));
     }
 
+    @Override
+    public void close() {
+        //Nothing to do...
+    }
+
     private TextFormatter<?> getTextFormatter(int maxLength, boolean onlyAlphanumeric) {
         return new TextFormatter<>(change -> {
             int len = change.getControlNewText().length();
@@ -93,11 +95,6 @@ public class RegisterFormView implements View {
     @Override
     public GraphicsController<RegisterFormView> getGraphicsController() {
         return graphicsController;
-    }
-
-    @Override
-    public void update() {
-        //Not needed...
     }
 
     public Label getTitleLabel() {

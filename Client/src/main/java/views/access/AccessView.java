@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Scale;
 import models.user.UserModel;
 import views.Page;
 import views.View;
@@ -35,6 +34,11 @@ public class AccessView implements View, UserModel.LoginListener {
     }
 
     @Override
+    public void close() {
+        //Nothing to do...
+    }
+
+    @Override
     public Parent getRoot() {
         return root;
     }
@@ -42,11 +46,6 @@ public class AccessView implements View, UserModel.LoginListener {
     @Override
     public Page getPage() {
         return page;
-    }
-
-    @Override
-    public void update() {
-        //Not needed...
     }
 
     public GraphicsController<AccessView> getGraphicsController() {

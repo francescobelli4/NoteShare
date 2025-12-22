@@ -48,6 +48,11 @@ public class LeftBarView implements View {
     }
 
     @Override
+    public void close() {
+        //Nothing to do...
+    }
+
+    @Override
     public Parent getRoot() {
         return barContainer;
     }
@@ -61,10 +66,4 @@ public class LeftBarView implements View {
     public GraphicsController<LeftBarView> getGraphicsController() {
         return graphicsController;
     }
-
-    @Override
-    public void update() {
-        //Not needed...
-    }
-
 }

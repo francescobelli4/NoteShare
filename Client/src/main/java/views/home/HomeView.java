@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import utils.Utils;
 import views.Page;
 import views.View;
@@ -58,8 +57,8 @@ public class HomeView implements View {
     }
 
     @Override
-    public void update() {
-        //Not needed...
+    public void close() {
+        //Nothing to do...
     }
 
     @Override

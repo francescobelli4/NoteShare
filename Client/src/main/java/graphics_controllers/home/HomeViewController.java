@@ -1,6 +1,5 @@
 package graphics_controllers.home;
 
-import app.App;
 import graphics_controllers.GraphicsController;
 import javafx.geometry.Bounds;
 import views.ViewFactory;

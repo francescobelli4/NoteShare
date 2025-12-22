@@ -5,8 +5,8 @@ import javafx.scene.Parent;
 
 public interface View {
 
-    void update();
     void init();
+    void close();
     Parent getRoot();
     Page getPage();
     // SonarCloud finds a smell here for the generic type, but actually this is needed

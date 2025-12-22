@@ -68,6 +68,11 @@ public class NotificationView implements View {
         animate();
     }
 
+    @Override
+    public void close() {
+        //Nothing to do...
+    }
+
     private void animate() {
         StackPane parent = (StackPane) ViewNavigator.getActiveView().getRoot();
         StackPane.setAlignment(root, Pos.TOP_CENTER);
@@ -108,10 +113,5 @@ public class NotificationView implements View {
     @Override
     public GraphicsController<NotificationView> getGraphicsController() {
         return graphicsController;
-    }
-
-    @Override
-    public void update() {
-        //Not needed...
     }
 }

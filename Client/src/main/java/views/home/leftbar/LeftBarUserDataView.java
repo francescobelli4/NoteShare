@@ -45,8 +45,8 @@ public class LeftBarUserDataView implements View {
     }
 
     @Override
-    public void update() {
-        //Not needed...
+    public void close() {
+        //Nothing to do...
     }
 
     @Override

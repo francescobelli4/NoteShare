@@ -2,7 +2,6 @@ package views.home.messages;
 
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.messages.MessageViewController;
-import graphics_controllers.home.messages.MessagesContainerViewController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -60,8 +59,8 @@ public class MessageView implements View  {
     }
 
     @Override
-    public void update() {
-        //Not needed...
+    public void close() {
+        //Nothing to do...
     }
 
     @Override
