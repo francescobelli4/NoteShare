@@ -36,9 +36,7 @@ public class Utils {
             if (node instanceof Labeled l) {
                 Font oldFont = l.getFont();
                 l.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
-            }
-
-            else if (node instanceof TextInputControl tic) {
+            } else if (node instanceof TextInputControl tic) {
                 Font oldFont = tic.getFont();
                 tic.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
             }
