@@ -1,6 +1,7 @@
 package views.home.folders_container;
 
 import app.App;
+import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.folders_container.FoldersContainerViewController;
 import javafx.fxml.FXML;
@@ -33,8 +34,8 @@ public class FoldersContainerView implements View, FolderModel.Listener, UserMod
     @Override
     public void init() {
         Utils.scaleFonts(root);
-        App.getUser().getActiveFolder().addListener(this);
-        App.getUser().addUserActiveFolderListener(this);
+        AppContext.getInstance().getCurrentUser().getActiveFolder().addListener(this);
+        AppContext.getInstance().getCurrentUser().addUserActiveFolderListener(this);
 
         displayActiveFolder();
     }
@@ -46,11 +47,11 @@ public class FoldersContainerView implements View, FolderModel.Listener, UserMod
 
     private void displayActiveFolder() {
         foldersContainer.getChildren().clear();
-        for (FolderModel f : App.getUser().getActiveFolder().getSubFolders()) {
+        for (FolderModel f : AppContext.getInstance().getCurrentUser().getActiveFolder().getSubFolders()) {
             appendFolder(f);
         }
 
-        for (NoteModel n : App.getUser().getActiveFolder().getNotes()) {
+        for (NoteModel n : AppContext.getInstance().getCurrentUser().getActiveFolder().getNotes()) {
             appendNote(n);
         }
     }

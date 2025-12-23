@@ -1,7 +1,5 @@
 package locales;
 
-import app.App;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +9,7 @@ public class Locales {
 
     private static final Map<String, String> localesLabels = new HashMap<>();
 
-    private static void initializeENLocales() {
+    public static void initializeENLocales() {
         localesLabels.put("note_share", "Note Share");
         localesLabels.put("register", "Register");
         localesLabels.put("login", "Login");
@@ -58,7 +56,7 @@ public class Locales {
         localesLabels.put("search_for_a_note", "Search for a note...");
     }
 
-    private static void initializeITLocales() {
+    public static void initializeITLocales() {
         localesLabels.put("note_share", "Note Share");
         localesLabels.put("register", "Registrati");
         localesLabels.put("login", "Accedi");
@@ -96,16 +94,6 @@ public class Locales {
         localesLabels.put("name", "Nome");
         localesLabels.put("info", "Info");
         localesLabels.put("register_welcome", "Benvenuto su NoteShare!");
-    }
-
-    public static void initializeLocales() {
-
-        if (App.Options.getLanguage() == App.Options.Lang.EN) {
-
-            initializeENLocales();
-        } else {
-            initializeITLocales();
-        }
     }
 
     public static String get(String key) {

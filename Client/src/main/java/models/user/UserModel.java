@@ -1,6 +1,7 @@
 package models.user;
 
 import app.App;
+import app.AppContext;
 import communication.dtos.user.UserType;
 import models.folder.FolderModel;
 import models.messages.MessageModel;
@@ -68,9 +69,9 @@ public class UserModel {
         this.username = username;
         this.userType = userType;
 
-        setRootFolder(App.getFolderDAO().getRootFolder());
-        setActiveFolder(App.getFolderDAO().getUserFolder(this));
-        App.getFolderDAO().save(getActiveFolder(), getRootFolder());
+        setRootFolder(AppContext.getInstance().getFolderDAO().getRootFolder());
+        setActiveFolder(AppContext.getInstance().getFolderDAO().getUserFolder(this));
+        AppContext.getInstance().getFolderDAO().save(getActiveFolder(), getRootFolder());
     }
 
     public UserType getUserType() {

@@ -1,6 +1,7 @@
 package views.access;
 
 import app.App;
+import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.access.AccessViewController;
 import javafx.fxml.FXML;
@@ -30,12 +31,12 @@ public class AccessView implements View, UserModel.LoginListener {
 
     @Override
     public void init() {
-        App.getUser().addUserLoginListener(this);
+        AppContext.getInstance().getCurrentUser().addUserLoginListener(this);
     }
 
     @Override
     public void close() {
-        App.getUser().removeUserLoginListener(this);
+        AppContext.getInstance().getCurrentUser().removeUserLoginListener(this);
     }
 
     @Override

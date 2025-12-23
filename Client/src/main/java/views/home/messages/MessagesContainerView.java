@@ -1,6 +1,7 @@
 package views.home.messages;
 
 import app.App;
+import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.messages.MessagesContainerViewController;
 import javafx.fxml.FXML;
@@ -47,16 +48,16 @@ public class MessagesContainerView implements View, UserModel.MessageListener {
         AnchorPane.setTopAnchor(box, y);
         AnchorPane.setRightAnchor(box, x);
 
-        App.getUser().addUserMessageListener(this);
+        AppContext.getInstance().getCurrentUser().addUserMessageListener(this);
 
-        for (MessageModel message : App.getUser().getMessages()) {
+        for (MessageModel message : AppContext.getInstance().getCurrentUser().getMessages()) {
             appendMessage(ViewFactory.getInstance().createMessageView(message.getTitle(), message.getDescription(), message.getDate(), message.getIcon()).getRoot());
         }
     }
 
     @Override
     public void close() {
-        App.getUser().removeUserMessageListener(this);
+        AppContext.getInstance().getCurrentUser().removeUserMessageListener(this);
         ((StackPane)ViewNavigator.getActiveView().getRoot()).getChildren().remove(root);
     }
 

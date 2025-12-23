@@ -1,6 +1,7 @@
 package graphics_controllers.home.leftbar;
 
 import app.App;
+import app.AppContext;
 import communication.dtos.user.UserType;
 import graphics_controllers.GraphicsController;
 import models.user.StudentUserModel;
@@ -16,7 +17,7 @@ public class LeftBarUserDataViewController extends GraphicsController<LeftBarUse
     @Override
     public void loaded() {
 
-        boolean isLoggedIn = App.getUser().isLoggedIn();
+        boolean isLoggedIn = AppContext.getInstance().getCurrentUser().isLoggedIn();
 
         getView().getAccessForm().setManaged(!isLoggedIn);
         getView().getAccessForm().setVisible(!isLoggedIn);
@@ -24,10 +25,10 @@ public class LeftBarUserDataViewController extends GraphicsController<LeftBarUse
         getView().getUserData().setVisible(isLoggedIn);
 
         if (isLoggedIn) {
-            getView().getUsernameLabel().setText(App.getUser().getUsername());
+            getView().getUsernameLabel().setText(AppContext.getInstance().getCurrentUser().getUsername());
 
-            if (App.getUser().getUserType() == UserType.STUDENT)
-                getView().getCoinsLabel().setText(App.getUserAs(StudentUserModel.class).getCoins()+"");
+            if (AppContext.getInstance().getCurrentUser().getUserType() == UserType.STUDENT)
+                getView().getCoinsLabel().setText(AppContext.getInstance().getCurrentUserAs(StudentUserModel.class).getCoins()+"");
         }
 
         getView().getAccessButton().setOnMouseClicked(_ -> accessButtonClicked());

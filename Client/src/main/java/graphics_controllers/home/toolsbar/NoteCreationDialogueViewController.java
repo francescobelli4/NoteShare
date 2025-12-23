@@ -1,6 +1,7 @@
 package graphics_controllers.home.toolsbar;
 
 import app.App;
+import app.AppContext;
 import app_controllers.NotesController;
 import graphics_controllers.GraphicsController;
 import locales.Locales;
@@ -50,7 +51,7 @@ public class NoteCreationDialogueViewController extends GraphicsController<NoteC
             return;
         }
 
-        if (App.getUser().getActiveFolder().searchNote(getView().getNoteNameTextField().getText()) != null) {
+        if (AppContext.getInstance().getCurrentUser().getActiveFolder().searchNote(getView().getNoteNameTextField().getText()) != null) {
             ViewNavigator.displayNotification(title, Locales.get("note_already_exists"), icon);
             return;
         }

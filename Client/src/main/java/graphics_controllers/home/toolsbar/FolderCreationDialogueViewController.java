@@ -1,6 +1,7 @@
 package graphics_controllers.home.toolsbar;
 
 import app.App;
+import app.AppContext;
 import app_controllers.FoldersController;
 import graphics_controllers.GraphicsController;
 import locales.Locales;
@@ -35,12 +36,12 @@ public class FolderCreationDialogueViewController extends GraphicsController<Fol
             return;
         }
 
-        if (App.getUser().getActiveFolder().searchSubFolder(getView().getFolderNameTextField().getText()) != null) {
+        if (AppContext.getInstance().getCurrentUser().getActiveFolder().searchSubFolder(getView().getFolderNameTextField().getText()) != null) {
             ViewNavigator.displayNotification(title, Locales.get("folder_already_exists"), icon);
             return;
         }
 
-        FoldersController.addSubFolder(getView().getFolderNameTextField().getText(), App.getUser().getActiveFolder());
+        FoldersController.addSubFolder(getView().getFolderNameTextField().getText(), AppContext.getInstance().getCurrentUser().getActiveFolder());
         getView().close();
     }
 }

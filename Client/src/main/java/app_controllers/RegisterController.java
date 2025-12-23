@@ -1,6 +1,7 @@
 package app_controllers;
 
 import app.App;
+import app.AppContext;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
@@ -51,8 +52,8 @@ public class RegisterController {
                 LOGGER.info("Register success! :D");
                 AccessSuccessResponseDTO<?> payload = (AccessSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
-                App.setUser(UserMapper.populateModel(App.getUser(), payload.getUserDTO()));
-                App.getUser().setLoggedIn(true);
+                AppContext.getInstance().setCurrentUser(UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), payload.getUserDTO()));
+                AppContext.getInstance().getCurrentUser().setLoggedIn(true);
             } else if (response.getSocketMessageType() == SocketMessageType.REGISTER_FAILURE) {
                 throw new RegisterFailureException(RegisterFailureReason.USERNAME_ALREADY_TAKEN);
             }

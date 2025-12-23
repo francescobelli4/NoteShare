@@ -1,6 +1,7 @@
 package views.home.toolsbar;
 
 import app.App;
+import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.toolsbar.ToolsBarViewController;
 import javafx.fxml.FXML;
@@ -40,8 +41,8 @@ public class ToolsBarView implements View, UserModel.ActiveFolderListener {
 
         Utils.scaleFonts(root);
 
-        setPathLabelText(App.getUser().getActiveFolder().getPath());
-        App.getUser().addUserActiveFolderListener(this);
+        setPathLabelText(AppContext.getInstance().getCurrentUser().getActiveFolder().getPath());
+        AppContext.getInstance().getCurrentUser().addUserActiveFolderListener(this);
     }
 
     @Override

@@ -28,8 +28,6 @@
         <sonar.projectKey>francescobelli4_NoteShareApp</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-
-
         <sonar.coverage.jacoco.xmlReportPaths>
             ${project.build.directory}/site/jacoco-aggregate/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
@@ -109,16 +107,18 @@
     </build>
 
     <dependencies>
+
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>6.0.1</version>
+            <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.12.0</version>
+            <version>5.21.0</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

@@ -1,6 +1,7 @@
 package services;
 
 import app.App;
+import app.AppContext;
 import com.google.gson.JsonParseException;
 import communication.SocketMessage;
 import communication.SocketMessageType;
@@ -246,12 +247,12 @@ public class ServerCommunicationService {
 
     private void handleAddMessage(MessageNotificationDTO messageNotificationDTO) {
         MessageDTO receivedMessage = messageNotificationDTO.getMessage();
-        App.getUser().addMessage(MessageMapper.toModel(receivedMessage));
+        AppContext.getInstance().getCurrentUser().addMessage(MessageMapper.toModel(receivedMessage));
     }
 
     private void handleSetMessages(MessagesNotificationDTO messageNotificationDTO) {
         List<MessageDTO> receivedMessages = messageNotificationDTO.getMessages();
-        App.getUser().setMessages(MessageMapper.toModelList(receivedMessages));
+        AppContext.getInstance().getCurrentUser().setMessages(MessageMapper.toModelList(receivedMessages));
     }
 
     public ExecutorService getExecutorService() {

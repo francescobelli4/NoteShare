@@ -1,6 +1,7 @@
 package app_controllers;
 
 import app.App;
+import app.AppContext;
 import models.folder.FolderModel;
 
 public class FoldersController {
@@ -12,11 +13,11 @@ public class FoldersController {
     }
 
     public static void goToFolder(FolderModel folder) {
-        App.getUser().setActiveFolder(folder);
+        AppContext.getInstance().getCurrentUser().setActiveFolder(folder);
     }
 
     public static void goToParentFolder() {
-        if (App.getUser().getActiveFolder().getParentFolder() != App.getUser().getRootFolder())
-            goToFolder(App.getUser().getActiveFolder().getParentFolder());
+        if (AppContext.getInstance().getCurrentUser().getActiveFolder().getParentFolder() != AppContext.getInstance().getCurrentUser().getRootFolder())
+            goToFolder(AppContext.getInstance().getCurrentUser().getActiveFolder().getParentFolder());
     }
 }

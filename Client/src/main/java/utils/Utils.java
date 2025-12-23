@@ -92,6 +92,19 @@ public class Utils {
     }
 
     /**
+     * This function should find a folder from its path
+     * @param path the folder's path
+     * @return the folder or null if it's not found
+     */
+    public static File findFolder(String path) {
+        File file = new File(path);
+        if (file.exists() && file.isDirectory()) {
+            return file;
+        }
+        return null;
+    }
+
+    /**
      * This function should save the access token in a file
      * @param token the received access token
      */
