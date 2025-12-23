@@ -15,6 +15,6 @@ public class NoteElementViewController extends GraphicsController<NoteElementVie
     }
 
     private void noteClicked() {
-
+        // Open note :D
     }
 }

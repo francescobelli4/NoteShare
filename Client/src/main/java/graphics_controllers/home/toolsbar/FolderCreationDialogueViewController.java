@@ -22,18 +22,21 @@ public class FolderCreationDialogueViewController extends GraphicsController<Fol
 
     private void createFolderButtonClicked() {
 
+        String title = Locales.get("error");
+        Icon icon = Icon.ERROR;
+
         if (getView().getFolderNameTextField().getText().isEmpty()) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("folder_name_too_short"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("folder_name_too_short"), icon);
             return;
         }
 
         if (getView().getFolderNameTextField().getText().length() > 15) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("folder_name_too_long"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("folder_name_too_long"), icon);
             return;
         }
 
         if (App.getUser().getActiveFolder().searchSubFolder(getView().getFolderNameTextField().getText()) != null) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("folder_already_exists"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("folder_already_exists"), icon);
             return;
         }
 

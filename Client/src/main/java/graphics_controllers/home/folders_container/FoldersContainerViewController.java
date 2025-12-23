@@ -11,6 +11,6 @@ public class FoldersContainerViewController extends GraphicsController<FoldersCo
 
     @Override
     public void loaded() {
-
+        //Nothing to do...
     }
 }

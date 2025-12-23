@@ -37,23 +37,26 @@ public class NoteCreationDialogueViewController extends GraphicsController<NoteC
 
     private void createNoteButtonClicked() {
 
+        String title = Locales.get("error");
+        Icon icon = Icon.ERROR;
+
         if (getView().getNoteNameTextField().getText().isEmpty()) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("note_name_too_short"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("note_name_too_short"), icon);
             return;
         }
 
         if (getView().getNoteNameTextField().getText().length() > 15) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("note_name_too_long"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("note_name_too_long"), icon);
             return;
         }
 
         if (App.getUser().getActiveFolder().searchNote(getView().getNoteNameTextField().getText()) != null) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("note_already_exists"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("note_already_exists"), icon);
             return;
         }
 
         if (selectedPDF == null) {
-            ViewNavigator.displayNotification(Locales.get("error"), Locales.get("note_pdf_not_set"), Icon.ERROR);
+            ViewNavigator.displayNotification(title, Locales.get("note_pdf_not_set"), icon);
             return;
         }
 
