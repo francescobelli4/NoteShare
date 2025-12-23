@@ -2,6 +2,8 @@ package models.user;
 
 import communication.dtos.user.UserType;
 
+import java.util.ArrayList;
+
 public class StudentUserModel extends UserModel {
 
     private int coins;
@@ -20,7 +22,7 @@ public class StudentUserModel extends UserModel {
         this.loggedIn = loggedIn;
 
         if (loggedIn) {
-            for (LoginListener l : super.getLoginListeners()) {
+            for (LoginListener l : new ArrayList<>(super.getLoginListeners())) {
                 l.onLoggedIn();
             }
         }

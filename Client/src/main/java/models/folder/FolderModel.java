@@ -20,6 +20,17 @@ import java.util.Objects;
  */
 public class FolderModel {
 
+    private final List<Listener> listeners = new ArrayList<>();
+    public void addListener(Listener listener) {
+        this.listeners.add(listener);
+    }
+    public void removeListener(Listener listener) {
+        this.listeners.remove(listener);
+    }
+    public void clearListeners() {
+        this.listeners.clear();
+    }
+
     protected String name;
 
     /**
@@ -95,11 +106,31 @@ public class FolderModel {
     public void addNote(NoteModel note) {
         this.notes.add(note);
         note.setParentFolder(this);
+
+        for (Listener l : listeners) {
+            l.folderUpdated();
+        }
+    }
+
+    public NoteModel searchNote(String name) {
+        if (this.getNotes().isEmpty()) return null;
+
+        for (NoteModel noteModel : this.getNotes()) {
+            if (Objects.equals(noteModel.getName(), name)) {
+                return noteModel;
+            }
+        }
+
+        return null;
     }
 
     public void addSubFolder(FolderModel folder) {
         this.subFolders.add(folder);
         folder.setParentFolder(this);
+
+        for (Listener l : listeners) {
+            l.folderUpdated();
+        }
     }
 
     public String getName() {
@@ -126,5 +157,9 @@ public class FolderModel {
     public void setParentFolder(FolderModel parentFolder) {
         this.parentFolder = parentFolder;
         this.path = parentFolder.getPath() + "/" + name;
+    }
+
+    public interface Listener {
+        void folderUpdated();
     }
 }

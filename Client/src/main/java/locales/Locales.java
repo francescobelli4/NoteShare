@@ -39,12 +39,16 @@ public class Locales {
         localesLabels.put("reported_notes", "Reported Notes");
         localesLabels.put("folder_created", "Folder was created");
         localesLabels.put("folder_name_too_short", "Folder name is too short");
+        localesLabels.put("folder_name_too_long", "Folder name is too long");
         localesLabels.put("folder_already_exists", "This folder already exists");
         localesLabels.put("create_folder", "Create Folder");
+        localesLabels.put("folder_name", "Folder Name");
         localesLabels.put("note_created", "Note was created");
         localesLabels.put("note_name_too_short", "Note name is too short");
+        localesLabels.put("note_name_too_long", "Note name is too long");
         localesLabels.put("note_already_exists", "This note already exists");
         localesLabels.put("create_note", "Create Note");
+        localesLabels.put("note_name", "Note Name");
         localesLabels.put("choose_pdf", "Choose PDF");
         localesLabels.put("note_pdf_not_set", "You did not choose a PDF file");
         localesLabels.put("name", "Name");

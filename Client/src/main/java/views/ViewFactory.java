@@ -1,15 +1,22 @@
 package views;
 
+import models.folder.FolderModel;
+import models.note.NoteModel;
 import views.access.AccessView;
 import views.access.forms.AccessFormView;
 import views.access.forms.LoginFormView;
 import views.access.forms.RegisterFormView;
 import views.home.HomeView;
+import views.home.folders_container.FolderElementView;
+import views.home.folders_container.FoldersContainerView;
+import views.home.folders_container.NoteElementView;
 import views.home.leftbar.LeftBarMenuOptionsView;
 import views.home.leftbar.LeftBarUserDataView;
 import views.home.leftbar.LeftBarView;
 import views.home.messages.MessageView;
 import views.home.messages.MessagesContainerView;
+import views.home.toolsbar.FolderCreationDialogueView;
+import views.home.toolsbar.NoteCreationDialogueView;
 import views.home.toolsbar.ToolsBarView;
 import views.notification.NotificationView;
 
@@ -46,6 +53,26 @@ public class ViewFactory {
 
     public LeftBarUserDataView createLeftBarUserDataView() {
         return new LeftBarUserDataView();
+    }
+
+    public FoldersContainerView createFoldersContainerView() {
+        return new FoldersContainerView();
+    }
+
+    public FolderElementView createFolderElementView(FolderModel folder) {
+        return new FolderElementView(folder);
+    }
+
+    public NoteElementView createNoteElementView(NoteModel note) {
+        return new NoteElementView(note);
+    }
+
+    public FolderCreationDialogueView createFolderCreationDialogueView() {
+        return new FolderCreationDialogueView();
+    }
+
+    public NoteCreationDialogueView createNoteCreationDialogueView() {
+        return new NoteCreationDialogueView();
     }
 
     public AccessView createAccessView() {

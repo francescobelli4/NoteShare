@@ -30,6 +30,14 @@ public class ViewNavigator {
         scene.setRoot(activeView.getRoot());
     }
 
+    public static void displayFolderCreationDialogueView() {
+        ((StackPane)activeView.getRoot()).getChildren().add(ViewFactory.getInstance().createFolderCreationDialogueView().getRoot());
+    }
+
+    public static void displayNoteCreationDialogueView() {
+        ((StackPane)activeView.getRoot()).getChildren().add(ViewFactory.getInstance().createNoteCreationDialogueView().getRoot());
+    }
+
     public static void displayNotification(String title, String description, Icon icon) {
         ((StackPane)activeView.getRoot()).getChildren().add(ViewFactory.getInstance().createNotificationView(title, description, icon).getRoot());
     }

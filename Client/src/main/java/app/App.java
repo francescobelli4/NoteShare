@@ -3,6 +3,9 @@ package app;
 import daos.folder.FolderDAO;
 import daos.folder.NPFolderDAO;
 import daos.folder.PFolderDAO;
+import daos.note.NPNoteDAO;
+import daos.note.NoteDAO;
+import daos.note.PNoteDAO;
 import exceptions.ArgsException;
 import locales.Locales;
 import models.user.StudentUserModel;
@@ -22,6 +25,7 @@ public class App {
 
     private static UserModel user;
     private static FolderDAO folderDAO;
+    private static NoteDAO noteDAO;
 
     /**
      * This function should set the app's options.
@@ -71,8 +75,10 @@ public class App {
     static void setupDAOs() {
         if (Options.getAppMode() == Options.AppMode.DEMO) {
             folderDAO = new NPFolderDAO();
+            noteDAO = new NPNoteDAO();
         } else {
             folderDAO = new PFolderDAO();
+            noteDAO = new PNoteDAO();
         }
     }
 
@@ -120,6 +126,10 @@ public class App {
 
     public static FolderDAO getFolderDAO() {
         return folderDAO;
+    }
+
+    public static NoteDAO getNoteDAO() {
+        return noteDAO;
     }
 
     public static <T extends UserModel> T getUserAs(Class<T> type) {

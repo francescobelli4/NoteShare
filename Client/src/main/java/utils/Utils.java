@@ -4,6 +4,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import views.ViewNavigator;
 
 import java.io.File;
@@ -41,6 +43,13 @@ public class Utils {
                 tic.setFont(Font.font(oldFont.getFamily(), ViewNavigator.scaleValue(oldFont.getSize())));
             }
         }
+    }
+
+    public static File openFileChooser(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Apri file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf"));
+        return fileChooser.showOpenDialog(stage);
     }
 
     /**

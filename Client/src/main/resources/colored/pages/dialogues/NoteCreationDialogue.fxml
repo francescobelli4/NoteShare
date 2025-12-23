@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
-<StackPane id="background" fx:id="base" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../styles/NoteCreationForm.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane id="background" fx:id="root" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../styles/NoteCreationForm.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0">
         <columnConstraints>

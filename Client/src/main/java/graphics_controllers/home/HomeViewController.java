@@ -5,6 +5,7 @@ import javafx.geometry.Bounds;
 import views.ViewFactory;
 import views.ViewNavigator;
 import views.home.HomeView;
+import views.home.folders_container.FoldersContainerView;
 import views.home.leftbar.LeftBarView;
 import views.home.messages.MessagesContainerView;
 import views.home.toolsbar.ToolsBarView;
@@ -20,6 +21,7 @@ public class HomeViewController extends GraphicsController<HomeView> {
 
         loadLeftBar();
         loadToolsBar();
+        loadFoldersContainer();
         getView().getMessagesButton().setOnMouseClicked(_ -> messagesButtonClicked());
     }
 
@@ -32,6 +34,11 @@ public class HomeViewController extends GraphicsController<HomeView> {
     private void loadToolsBar() {
         ToolsBarView toolsBar = ViewFactory.getInstance().createToolsBarView();
         getView().appendToolsBar(toolsBar.getRoot());
+    }
+
+    private void loadFoldersContainer() {
+        FoldersContainerView foldersContainer = ViewFactory.getInstance().createFoldersContainerView();
+        getView().appendFoldersContainer(foldersContainer.getRoot());
     }
 
     private void messagesButtonClicked() {

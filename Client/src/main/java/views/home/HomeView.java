@@ -51,6 +51,11 @@ public class HomeView implements View {
         root.getChildren().add(messagesContainer);
     }
 
+    public void appendFoldersContainer(Node foldersContainer) {
+        this.foldersContainer.getChildren().clear();
+        this.foldersContainer.getChildren().add(foldersContainer);
+    }
+
     @Override
     public void init() {
         Utils.scaleFonts(root);

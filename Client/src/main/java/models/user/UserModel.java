@@ -137,6 +137,9 @@ public class UserModel {
     }
 
     public void setActiveFolder(FolderModel activeFolder) {
+        if (this.activeFolder != null)
+            this.activeFolder.clearListeners();
+
         this.activeFolder = activeFolder;
 
         for (ActiveFolderListener l : activeFolderListeners) {
@@ -151,7 +154,6 @@ public class UserModel {
     public void setRootFolder(FolderModel rootFolder) {
         this.rootFolder = rootFolder;
     }
-
 
     public interface LoginListener {
         void onLoggedIn();

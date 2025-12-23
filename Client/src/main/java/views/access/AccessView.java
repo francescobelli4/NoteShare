@@ -35,7 +35,7 @@ public class AccessView implements View, UserModel.LoginListener {
 
     @Override
     public void close() {
-        //Nothing to do...
+        App.getUser().removeUserLoginListener(this);
     }
 
     @Override
@@ -59,6 +59,7 @@ public class AccessView implements View, UserModel.LoginListener {
 
     @Override
     public void onLoggedIn() {
+        close();
         ViewNavigator.displayHomeView();
     }
 }

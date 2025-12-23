@@ -1,6 +1,8 @@
 package graphics_controllers.home.toolsbar;
 
+import app_controllers.FoldersController;
 import graphics_controllers.GraphicsController;
+import views.ViewNavigator;
 import views.home.toolsbar.ToolsBarView;
 
 public class ToolsBarViewController extends GraphicsController<ToolsBarView> {
@@ -17,14 +19,14 @@ public class ToolsBarViewController extends GraphicsController<ToolsBarView> {
     }
 
     private void backButtonClicked() {
-        //...
+        FoldersController.goToParentFolder();
     }
 
     private void folderAddButtonClicked() {
-        //...
+        ViewNavigator.displayFolderCreationDialogueView();
     }
 
     private void noteAddButtonClicked() {
-        //...
+        ViewNavigator.displayNoteCreationDialogueView();
     }
 }
