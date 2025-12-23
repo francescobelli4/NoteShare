@@ -48,8 +48,4 @@ class TestApp {
 
 
     }
-
-    @Test
-    void main() {
-    }
 }
