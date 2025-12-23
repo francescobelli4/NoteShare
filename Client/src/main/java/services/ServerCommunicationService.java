@@ -1,6 +1,5 @@
 package services;
 
-import app.App;
 import app.AppContext;
 import com.google.gson.JsonParseException;
 import communication.SocketMessage;

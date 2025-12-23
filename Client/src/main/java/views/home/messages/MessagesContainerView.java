@@ -1,6 +1,5 @@
 package views.home.messages;
 
-import app.App;
 import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.messages.MessagesContainerViewController;

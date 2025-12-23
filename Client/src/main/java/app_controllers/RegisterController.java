@@ -1,6 +1,5 @@
 package app_controllers;
 
-import app.App;
 import app.AppContext;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;

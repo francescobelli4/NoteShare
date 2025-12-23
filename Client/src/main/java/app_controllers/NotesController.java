@@ -1,6 +1,5 @@
 package app_controllers;
 
-import app.App;
 import app.AppContext;
 import models.note.NoteModel;
 import utils.PDFWrapper;

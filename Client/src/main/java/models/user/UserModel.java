@@ -1,6 +1,5 @@
 package models.user;
 
-import app.App;
 import app.AppContext;
 import communication.dtos.user.UserType;
 import models.folder.FolderModel;

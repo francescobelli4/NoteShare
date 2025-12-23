@@ -1,6 +1,5 @@
 package views.access;
 
-import app.App;
 import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.access.AccessViewController;

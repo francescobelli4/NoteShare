@@ -6,7 +6,8 @@ import org.mockito.MockedStatic;
 import services.ServerCommunicationService;
 import utils.Utils;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 class TestApp {

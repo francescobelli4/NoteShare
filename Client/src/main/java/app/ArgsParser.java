@@ -6,10 +6,10 @@ public class ArgsParser {
 
     private ArgsParser() {}
 
-    public static Options parseArgs(String[] args) throws ArgsException, IllegalArgumentException {
+    public static Options parseArgs(String[] args) throws ArgsException {
 
         Options options = new Options();
-        if (args.length < 3) {
+        if (args.length != 3) {
             throw new ArgsException("Illegal number of args: appMode, language, uiType");
         }
 

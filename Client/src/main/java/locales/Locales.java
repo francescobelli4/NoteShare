@@ -10,6 +10,8 @@ public class Locales {
     private static final Map<String, String> localesLabels = new HashMap<>();
 
     public static void initializeENLocales() {
+        localesLabels.clear();
+
         localesLabels.put("note_share", "Note Share");
         localesLabels.put("register", "Register");
         localesLabels.put("login", "Login");
@@ -57,6 +59,8 @@ public class Locales {
     }
 
     public static void initializeITLocales() {
+        localesLabels.clear();
+
         localesLabels.put("note_share", "Note Share");
         localesLabels.put("register", "Registrati");
         localesLabels.put("login", "Accedi");
@@ -66,6 +70,7 @@ public class Locales {
         localesLabels.put("register_page_password_field_prompt", "Minimo %d Massimo %d caratteri");
         localesLabels.put("student", "Studente");
         localesLabels.put("teacher", "Insegnante");
+        localesLabels.put("communication_failed", "Errore di comunicazione con il server");
         localesLabels.put("error", "Errore");
         localesLabels.put("error_username_too_short", "Questo nome utente è troppo corto");
         localesLabels.put("error_username_too_long", "Questo nome utente è troppo lungo.");
@@ -83,20 +88,37 @@ public class Locales {
         localesLabels.put("reported_notes", "Note Segnalate");
         localesLabels.put("folder_created", "Cartella creata");
         localesLabels.put("folder_name_too_short", "Il nome della cartella è troppo corto");
+        localesLabels.put("folder_name_too_long", "Il nome della cartella è troppo lungo");
         localesLabels.put("folder_already_exists", "Questa cartella esiste già");
         localesLabels.put("create_folder", "Crea Cartella");
+        localesLabels.put("folder_name", "Nome Cartella");
         localesLabels.put("note_created", "Nota creata");
         localesLabels.put("note_name_too_short", "Il nome della nota è troppo corto");
+        localesLabels.put("note_name_too_long", "Il nome della nota è troppo lungo");
         localesLabels.put("note_already_exists", "Questa nota esiste già");
         localesLabels.put("create_note", "Crea Nota");
+        localesLabels.put("note_name", "Nome Nota");
         localesLabels.put("choose_pdf", "Scegli PDF");
         localesLabels.put("note_pdf_not_set", "Non hai scelto un file PDF");
         localesLabels.put("name", "Nome");
         localesLabels.put("info", "Info");
         localesLabels.put("register_welcome", "Benvenuto su NoteShare!");
+        localesLabels.put("access", "Accedi");
+        localesLabels.put("search_for_a_note", "Cerca una nota...");
     }
 
     public static String get(String key) {
         return localesLabels.get(key);
+    }
+
+    public static void reset() {
+        localesLabels.clear();
+    }
+
+    /**
+     * TEST
+     */
+    static Map<String, String> getLocalesLabels() {
+        return localesLabels;
     }
 }

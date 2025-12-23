@@ -1,6 +1,5 @@
 package graphics_controllers.home.leftbar;
 
-import app.App;
 import app.AppContext;
 import communication.dtos.user.UserType;
 import graphics_controllers.GraphicsController;

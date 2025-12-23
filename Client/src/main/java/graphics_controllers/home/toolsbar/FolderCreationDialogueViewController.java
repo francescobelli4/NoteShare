@@ -1,6 +1,5 @@
 package graphics_controllers.home.toolsbar;
 
-import app.App;
 import app.AppContext;
 import app_controllers.FoldersController;
 import graphics_controllers.GraphicsController;
