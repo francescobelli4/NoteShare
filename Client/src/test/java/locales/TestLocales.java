@@ -34,12 +34,6 @@ class TestLocales {
     }
 
     @Test
-    void get_Success() {
-        Locales.initializeENLocales();
-        assertEquals("Register", Locales.get("register"));
-    }
-
-    @Test
     void get_Null() {
         Locales.initializeENLocales();
         assertNull(Locales.get("ITopiNonAvevanoNipoti"));

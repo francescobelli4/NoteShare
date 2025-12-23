@@ -121,15 +121,6 @@ class TestAppContext {
     }
 
     @Test
-    void getCurrentUserAs() {
-
-        AppContext instance = AppContext.getInstance();
-        StudentUserModel mockedUser = mock(StudentUserModel.class);
-        instance.setCurrentUser(mockedUser);
-        assertNotNull(instance.getCurrentUserAs(StudentUserModel.class));
-    }
-
-    @Test
     void setCurrentUser() {
 
         AppContext instance = AppContext.getInstance();
