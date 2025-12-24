@@ -128,6 +128,10 @@ public class UserModel {
         return messageListeners;
     }
 
+    public List<ActiveFolderListener> getActiveFolderListeners() {
+        return activeFolderListeners;
+    }
+
     public List<MessageModel> getMessages() {
         return messages;
     }
