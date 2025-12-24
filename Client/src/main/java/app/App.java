@@ -25,7 +25,7 @@ public class App {
                 LOGGER.info("Options set successfully");
 
             Utils.createDir(AppContext.getInstance().getOptions().getRootFolderPath());
-            ServerCommunicationService.getInstance().initializeConnection();
+            ServerCommunicationService.getInstance().initializeConnection("localhost", 12345);
             // When a user is not logged in, it's classified as a student
             AppContext.getInstance().setCurrentUser(new StudentUserModel());
 

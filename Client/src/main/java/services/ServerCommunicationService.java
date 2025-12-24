@@ -48,8 +48,8 @@ public class ServerCommunicationService {
      * This function should initialize the connection with the server
      * @throws IOException could not connect to the server
      */
-    public void initializeConnection() throws IOException {
-        this.socket = new Socket("localhost", 12345);
+    public void initializeConnection(String host, int port) throws IOException {
+        this.socket = new Socket(host, port);
 
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -124,7 +124,7 @@ public class ServerCommunicationService {
     /**
      * This function should close the communication socket with the server.
      */
-    void closeCommunication() {
+    public void closeCommunication() {
         try {
             this.pendingRequests.clear();
 
@@ -173,7 +173,7 @@ public class ServerCommunicationService {
     /**
      * This function should actually read from the socket.
      */
-    void read() throws IOException{
+    private void read() throws IOException{
 
         String data = this.dataInputStream.readUTF();
 
@@ -198,7 +198,7 @@ public class ServerCommunicationService {
      * @param data the received JSON string
      * @throws UnrecognisedResponseException there is no CompletableFuture waiting for that response
      */
-    void handleIncomingData(String data) throws UnrecognisedResponseException {
+    private void handleIncomingData(String data) throws UnrecognisedResponseException {
         SocketMessage receivedMessage;
 
         try {
@@ -224,7 +224,7 @@ public class ServerCommunicationService {
      * @param socketMessage the received SocketMessage
      * @throws UnrecognisedResponseException there is no CompletableFuture waiting for that response
      */
-    void handleResponse(SocketMessage socketMessage) throws UnrecognisedResponseException {
+    private void handleResponse(SocketMessage socketMessage) throws UnrecognisedResponseException {
 
         CompletableFuture<SocketMessage> future = pendingRequests.remove(socketMessage.getSocketMessageID());
 
@@ -254,11 +254,26 @@ public class ServerCommunicationService {
         AppContext.getInstance().getCurrentUser().setMessages(MessageMapper.toModelList(receivedMessages));
     }
 
-    public ExecutorService getExecutorService() {
-        return executorService;
+    /**
+     * Testing
+     */
+    static void reset() {
+        instance = null;
     }
 
-    public ConcurrentMap<String, CompletableFuture<SocketMessage>> getPendingRequests() {
+    Socket getSocket() {
+        return socket;
+    }
+
+    DataInputStream getDataInputStream() {
+        return dataInputStream;
+    }
+
+    DataOutputStream getDataOutputStream() {
+        return dataOutputStream;
+    }
+
+    ConcurrentHashMap<String, CompletableFuture<SocketMessage>> getPendingRequests() {
         return pendingRequests;
     }
 }
