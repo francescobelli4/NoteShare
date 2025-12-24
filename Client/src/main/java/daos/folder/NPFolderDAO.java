@@ -25,9 +25,4 @@ public class NPFolderDAO implements FolderDAO {
     public FolderModel searchByPath(String path, FolderModel parentFolder) {
         return parentFolder.searchSubFolder(path);
     }
-
-    @Override
-    public FolderModel searchByPath(String path) {
-        return getRootFolder().searchSubFolder(path);
-    }
 }

@@ -25,9 +25,4 @@ public class PFolderDAO implements FolderDAO {
     public FolderModel searchByPath(String path, FolderModel parentFolder) {
         return null;
     }
-
-    @Override
-    public FolderModel searchByPath(String path) {
-        return null;
-    }
 }

@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ServerCommunicationServiceTest {
+class TestServerCommunicationService {
 
     /**
      * Mocking a server

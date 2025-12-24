@@ -10,12 +10,7 @@ public class NPNoteDAO implements NoteDAO {
     }
 
     @Override
-    public NoteModel searchByPath(String path) {
-        return null;
-    }
-
-    @Override
     public NoteModel searchByPath(String path, FolderModel folder) {
-        return null;
+        return folder.searchNote(path);
     }
 }

@@ -9,5 +9,4 @@ public interface FolderDAO {
     FolderModel getUserFolder(UserModel user);
     void save(FolderModel folder, FolderModel parentFolder);
     FolderModel searchByPath(String path, FolderModel parentFolder);
-    FolderModel searchByPath(String path);
 }
