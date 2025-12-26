@@ -18,9 +18,7 @@ public class SocketMessage {
      * @param payload the payload of the message
      */
     public SocketMessage(SocketMessageType socketMessageType, Object payload) {
-        this.socketMessageType = socketMessageType;
-        this.socketMessageID = UUID.randomUUID().toString();
-        this.payload = payload;
+        this(socketMessageType, UUID.randomUUID().toString(), payload);
     }
 
     /**
