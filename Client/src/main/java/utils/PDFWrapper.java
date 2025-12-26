@@ -20,12 +20,12 @@ import java.io.IOException;
  */
 public class PDFWrapper {
 
-    /** Needed to convert from pdf's measures to pixels */
+    /** Needed to convert from PDF's measures to pixels */
     private static final float PDF_POINTS_PER_INCH = 72f;
     /** Used to specify the image quality and calculate the image dimensions in pixel*/
     private static final float IMAGE_DPI = 150f;
 
-    /** The config associated with this pdf */
+    /** The config associated with this PDF */
     private final PDFConfig pdfConfig;
 
     /**
@@ -33,7 +33,7 @@ public class PDFWrapper {
      *
      * This constructor should create a new PDFWrapper and set up its config class.
      *
-     * @param pdfFile the pdf file
+     * @param pdfFile the PDF file
      */
     public PDFWrapper(File pdfFile) {
         pdfConfig = new PDFConfig();
