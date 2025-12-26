@@ -2,17 +2,13 @@ package app_controllers;
 
 import app.AppContext;
 import app.ArgsParser;
-import app.Options;
 import communication.dtos.user.UserType;
-import daos.folder.NPFolderDAO;
 import models.folder.FolderModel;
 import models.user.StudentUserModel;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
 
 class TestFoldersController {
 

@@ -3,16 +3,12 @@ package app_controllers;
 import app.AppContext;
 import app.ArgsParser;
 import communication.dtos.user.UserType;
-import models.folder.FolderModel;
-import models.note.NoteModel;
 import models.user.StudentUserModel;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TestNotesController {
 

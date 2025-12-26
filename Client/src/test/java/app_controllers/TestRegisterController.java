@@ -11,7 +11,6 @@ import exceptions.RegisterFailureException;
 import mappers.UserMapper;
 import models.user.StudentUserModel;
 import models.user.UserModel;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import services.ServerCommunicationService;
@@ -19,7 +18,6 @@ import utils.Hashing;
 import utils.Utils;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
