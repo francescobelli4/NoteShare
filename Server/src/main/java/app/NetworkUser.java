@@ -78,7 +78,8 @@ public class NetworkUser implements Runnable {
             logger.info(String.format("Thread for client (%s) started!", address));
 
         try {
-            setUpCommunication();
+            dataInputStream = new DataInputStream(user.getInputStream());
+            dataOutputStream = new DataOutputStream(user.getOutputStream());
         } catch (IOException ioException) {
             logger.severe(String.format("Could not get client (%s) input/output stream: %s. Closing connection.", address, ioException.getMessage()));
             destroy();
@@ -92,14 +93,6 @@ public class NetworkUser implements Runnable {
         destroy();
     }
 
-    /**
-     * This function should set up the input and output streams
-     * @throws IOException input or output stream can't be initialized
-     */
-    private void setUpCommunication() throws IOException {
-        dataInputStream = new DataInputStream(user.getInputStream());
-        dataOutputStream = new DataOutputStream(user.getOutputStream());
-    }
 
     /**
      * This function should actually read the data from the input stream and call MessageHandler
@@ -138,5 +131,17 @@ public class NetworkUser implements Runnable {
 
     public String getAddress() {
         return address;
+    }
+
+    /**
+     * Testing
+     */
+
+    DataInputStream getDataInputStream() {
+        return dataInputStream;
+    }
+
+    DataOutputStream getDataOutputStream() {
+        return dataOutputStream;
     }
 }
