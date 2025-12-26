@@ -27,6 +27,9 @@ public class FolderModel {
     public void removeListener(Listener listener) {
         this.listeners.remove(listener);
     }
+    public List<Listener> getListeners() {
+        return listeners;
+    }
     public void clearListeners() {
         this.listeners.clear();
     }

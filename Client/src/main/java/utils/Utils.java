@@ -28,6 +28,7 @@ public class Utils {
 
     private Utils() {}
 
+
     public static void scaleFonts(Parent parent) {
         for (var node : parent.getChildrenUnmodifiable()) {
 
