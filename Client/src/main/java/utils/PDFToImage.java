@@ -105,16 +105,6 @@ public class PDFToImage {
         return port;
     }
 
-    private static void connectToPythonServer(Socket s, int freePort) throws IOException {
-        try {
-            s.connect(new InetSocketAddress("localhost", freePort), 500);
-            s.setSoTimeout(10000);
-            converter = s;
-        } catch (IOException _) {
-            s.close();
-        }
-    }
-
     /**
      * This function should actually start the python script and the communication socket.
      */
@@ -122,27 +112,31 @@ public class PDFToImage {
 
         try {
             int freePort = findFreePort();
-
             startPythonServer(freePort);
 
-            Socket s = new Socket();
-
-            while (!s.isConnected()) {
-                connectToPythonServer(s, freePort);
-
-                if (s.isClosed()) {
-                    s = new Socket();
+            while (true) {
+                Socket s = new Socket();
+                try {
+                    s.connect(new InetSocketAddress("localhost", freePort), 500);
+                    s.setSoTimeout(10000);
+                    converter = s;
+                    break;
+                } catch (IOException e) {
+                    try {
+                        s.close();
+                    } catch (IOException closeException) {
+                        // Nothing to do...
+                    }
                 }
             }
 
             outputStream = new DataOutputStream(converter.getOutputStream());
             inputStream = new DataInputStream(converter.getInputStream());
-        } catch (IOException _) {
-            logger.severe("Fatal error initializing python communication socket");
+        } catch (IOException e) {
+            logger.severe("Failed initializing python server");
             System.exit(-1);
         }
     }
-
     /**
      * This function should send a conversion request to the python script.
      * This function is thread safe: the output stream is protected by a mutex that avoids multiple writeUTF at
@@ -160,8 +154,9 @@ public class PDFToImage {
      */
     public static PageToImageResponse requestPageToImage(String pdfPath, int pageId, int dpi) {
 
-        if (converter == null)
+        if (converter == null) {
             initialize();
+        }
 
         PageToImageRequest pageToImageRequest = new PageToImageRequest(pdfPath, pageId, dpi);
 
