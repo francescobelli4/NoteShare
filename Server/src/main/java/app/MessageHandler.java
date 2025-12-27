@@ -187,4 +187,11 @@ public class MessageHandler {
     private void handleNotification(SocketMessage message, NetworkUser networkUser) {
         //TODO
     }
+
+    /**
+     * Testing
+     */
+    static void reset() {
+        instance = null;
+    }
 }
