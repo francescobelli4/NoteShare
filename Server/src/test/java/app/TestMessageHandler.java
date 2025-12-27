@@ -5,11 +5,14 @@ import communication.SocketMessageFactory;
 import communication.SocketMessageType;
 import communication.dtos.responses.login.LoginFailureReason;
 import communication.dtos.responses.login.LoginFailureResponseDTO;
+import communication.dtos.responses.login.RegisterFailureReason;
+import communication.dtos.responses.login.RegisterFailureResponseDTO;
 import communication.dtos.user.UserType;
 import daos.message.MessageDAO;
 import daos.message.NPMessageDAO;
 import daos.user.NonPersistentUserDAO;
 import daos.user.UserDAO;
+import entities.message.MessageEntity;
 import entities.user.UserStudentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -205,9 +208,74 @@ class TestMessageHandler {
 
         MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
 
+        verify(mockedNetworkUser, timeout(2000)).write(msgCaptor.capture());
+
+        assertEquals(SocketMessageType.ACCESS_SUCCESS, msgCaptor.getAllValues().get(0).getSocketMessageType());
+    }
+
+    @Test
+    void handleMessage_RegisterUSERALREADYEXISTS() throws NoSuchFieldException, IllegalAccessException {
+
+        SocketMessage arrivingMessage = SocketMessageFactory.createRegisterRequest("TMOOOO", "TMOOOO", UserType.STUDENT);
+
+        AppContext mockedCTX = mock(AppContext.class);
+        UserDAO npUserDAO = new NonPersistentUserDAO();
+        MessageDAO npMessageDAO = mock(NPMessageDAO.class);
+        when(npMessageDAO.get(anyString())).thenReturn(new ArrayList<>());
+        when(mockedCTX.getUserDAO()).thenReturn(npUserDAO);
+        when(mockedCTX.getMessageDAO()).thenReturn(npMessageDAO);
+
+        // I should inject the mockedCTX in this case instead of using MockedStatic because
+        // AppContext will be accessed by various threads, but MockedStatic's "thenReturn" only
+        // works in the thread that is running the test!
+        Field instanceField = AppContext.class.getDeclaredField("instance");
+        instanceField.setAccessible(true);
+        instanceField.set(null, mockedCTX);
+
+        UserStudentEntity u = new UserStudentEntity();
+        u.setToken("123");
+        u.setUserType(UserType.STUDENT);
+        u.setUsername("TMOOOO");
+        u.setPassword(Hashing.hashString("ABC"));
+        u.setCoins(100);
+        npUserDAO.saveUser(u);
+
+        MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
+        ArgumentCaptor<SocketMessage> msgCaptor = ArgumentCaptor.forClass(SocketMessage.class);
+
+        verify(mockedNetworkUser, timeout(1000)).write(msgCaptor.capture());
+        assertEquals(SocketMessageType.REGISTER_FAILURE, msgCaptor.getValue().getSocketMessageType());
+        assertEquals(RegisterFailureReason.USERNAME_ALREADY_TAKEN, ((RegisterFailureResponseDTO)msgCaptor.getValue().getPayload()).getRegisterFailureReason());
+    }
+
+    @Test
+    void handleMessage_RegisterSUCCESS() throws NoSuchFieldException, IllegalAccessException {
+
+        SocketMessage arrivingMessage = SocketMessageFactory.createRegisterRequest("TMOOOO", "TMOOOO", UserType.STUDENT);
+
+        AppContext mockedCTX = mock(AppContext.class);
+        UserDAO npUserDAO = new NonPersistentUserDAO();
+        MessageDAO npMessageDAO = mock(NPMessageDAO.class);
+        when(npMessageDAO.get(anyString())).thenReturn(new ArrayList<>());
+        when(mockedCTX.getUserDAO()).thenReturn(npUserDAO);
+        when(mockedCTX.getMessageDAO()).thenReturn(npMessageDAO);
+
+        // I should inject the mockedCTX in this case instead of using MockedStatic because
+        // AppContext will be accessed by various threads, but MockedStatic's "thenReturn" only
+        // works in the thread that is running the test!
+        Field instanceField = AppContext.class.getDeclaredField("instance");
+        instanceField.setAccessible(true);
+        instanceField.set(null, mockedCTX);
+
+        ArgumentCaptor<SocketMessage> msgCaptor = ArgumentCaptor.forClass(SocketMessage.class);
+
+        MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
+
         verify(mockedNetworkUser, timeout(2000).times(2)).write(msgCaptor.capture());
 
         assertEquals(SocketMessageType.ACCESS_SUCCESS, msgCaptor.getAllValues().get(0).getSocketMessageType());
-        assertEquals(SocketMessageType.SET_MESSAGES, msgCaptor.getAllValues().get(1).getSocketMessageType());
+        assertNotNull(npUserDAO.findUserByUsername("TMOOOO"));
+        assertEquals(SocketMessageType.ADD_MESSAGE, msgCaptor.getAllValues().get(1).getSocketMessageType());
+        verify(npMessageDAO).save(any(MessageEntity.class));
     }
 }
