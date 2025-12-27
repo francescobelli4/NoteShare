@@ -121,10 +121,10 @@ public class PDFToImage {
                     s.setSoTimeout(10000);
                     converter = s;
                     break;
-                } catch (IOException e) {
+                } catch (IOException _) {
                     try {
                         s.close();
-                    } catch (IOException closeException) {
+                    } catch (IOException _) {
                         // Nothing to do...
                     }
                 }
@@ -132,7 +132,7 @@ public class PDFToImage {
 
             outputStream = new DataOutputStream(converter.getOutputStream());
             inputStream = new DataInputStream(converter.getInputStream());
-        } catch (IOException e) {
+        } catch (IOException _) {
             logger.severe("Failed initializing python server");
             System.exit(-1);
         }

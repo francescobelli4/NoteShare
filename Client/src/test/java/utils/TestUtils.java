@@ -67,7 +67,7 @@ class TestUtils {
             File accessToken = Utils.findFile(Utils.getOSLocalPath()+"access_token.txt");
             assertNotNull(accessToken);
             assertEquals(":D", Utils.readFile(accessToken));
-        } catch (IOException e) {
+        } catch (IOException _) {
             //...
         }
     }
