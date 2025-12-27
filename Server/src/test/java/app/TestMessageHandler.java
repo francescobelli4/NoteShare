@@ -2,9 +2,12 @@ package app;
 
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
+import communication.SocketMessageType;
 import communication.dtos.responses.login.LoginFailureReason;
 import communication.dtos.user.UserDTO;
 import communication.dtos.user.UserType;
+import daos.message.MessageDAO;
+import daos.message.NPMessageDAO;
 import daos.user.NonPersistentUserDAO;
 import daos.user.UserDAO;
 import entities.user.UserEntity;
@@ -46,13 +49,15 @@ class TestMessageHandler {
     }
 
     @Test
-    void handleMessage_LoginUsingToken() throws NoSuchFieldException, IllegalAccessException {
+    void handleMessage_LoginUsingTokenFAIL() throws NoSuchFieldException, IllegalAccessException {
 
         SocketMessage arrivingMessage = SocketMessageFactory.createLoginUsingTokenRequest("123");
 
         AppContext mockedCTX = mock(AppContext.class);
         UserDAO npUserDAO = new NonPersistentUserDAO();
+        MessageDAO npMessageDAO = new NPMessageDAO();
         when(mockedCTX.getUserDAO()).thenReturn(npUserDAO);
+        when(mockedCTX.getMessageDAO()).thenReturn(npMessageDAO);
 
         // I should inject the mockedCTX in this case instead of using MockedStatic because
         // AppContext will be accessed by various threads, but MockedStatic's "thenReturn" only
@@ -63,7 +68,31 @@ class TestMessageHandler {
 
         // User with token not found //
         MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
-        verify(mockedNetworkUser, timeout(2000)).write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_TOKEN, any()));
+
+        ArgumentCaptor<SocketMessage> msgCaptor = ArgumentCaptor.forClass(SocketMessage.class);
+        verify(mockedNetworkUser, timeout(1000)).write(msgCaptor.capture());
+        assertEquals(SocketMessageType.LOGIN_FAILURE, msgCaptor.getValue().getSocketMessageType());
+    }
+
+    @Test
+    void handleMessage_LoginUsingTokenSUCCESS() throws NoSuchFieldException, IllegalAccessException {
+
+        SocketMessage arrivingMessage = SocketMessageFactory.createLoginUsingTokenRequest("123");
+
+        AppContext mockedCTX = mock(AppContext.class);
+        UserDAO npUserDAO = new NonPersistentUserDAO();
+        MessageDAO npMessageDAO = new NPMessageDAO();
+        when(mockedCTX.getUserDAO()).thenReturn(npUserDAO);
+        when(mockedCTX.getMessageDAO()).thenReturn(npMessageDAO);
+
+        // I should inject the mockedCTX in this case instead of using MockedStatic because
+        // AppContext will be accessed by various threads, but MockedStatic's "thenReturn" only
+        // works in the thread that is running the test!
+        Field instanceField = AppContext.class.getDeclaredField("instance");
+        instanceField.setAccessible(true);
+        instanceField.set(null, mockedCTX);
+
+        ArgumentCaptor<SocketMessage> msgCaptor = ArgumentCaptor.forClass(SocketMessage.class);
 
         // User with token found //
         UserStudentEntity u = new UserStudentEntity();
@@ -74,7 +103,11 @@ class TestMessageHandler {
         npUserDAO.saveUser(u);
 
         MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
-        verify(mockedNetworkUser, timeout(2000)).write(any(SocketMessage.class));
-        verify(mockedNetworkUser, timeout(2000)).write(any(SocketMessage.class));
+
+        verify(mockedNetworkUser, timeout(2000).atLeast(1)).write(msgCaptor.capture());
+        assertEquals(SocketMessageType.ACCESS_SUCCESS, msgCaptor.getValue().getSocketMessageType());
+
+        verify(mockedNetworkUser, timeout(2000).atLeast(1)).write(msgCaptor.capture());
+        assertEquals(SocketMessageType.SET_MESSAGES, msgCaptor.getValue().getSocketMessageType());
     }
 }
