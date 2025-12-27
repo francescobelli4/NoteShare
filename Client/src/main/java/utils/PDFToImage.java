@@ -10,7 +10,11 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class PDFToImage {
@@ -56,8 +60,18 @@ public class PDFToImage {
                 "Missing pdfToImageConverter script!"
         );
 
-        Path tempExePath = Files.createTempFile("pdfToImageConverter", os.contains("win") ? ".exe" : "");
-        File tempExe = tempExePath.toFile();
+        File tempExe;
+
+        if (os.contains("win")) {
+            tempExe = Files.createTempFile("pdfToImageConverter", ".exe").toFile();
+            tempExe.setReadable(true, true);
+            tempExe.setWritable(true, true);
+            tempExe.setExecutable(true, true);
+        } else {
+            FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwx------"));
+            tempExe = Files.createTempFile("pdfToImageConverter", "", attr).toFile();
+        }
+
         tempExe.deleteOnExit();
 
         Files.copy(input, tempExe.toPath(), StandardCopyOption.REPLACE_EXISTING);
