@@ -3,7 +3,13 @@ package app;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.dtos.responses.login.LoginFailureReason;
+import communication.dtos.user.UserDTO;
+import communication.dtos.user.UserType;
 import daos.user.NonPersistentUserDAO;
+import daos.user.UserDAO;
+import entities.user.UserEntity;
+import entities.user.UserStudentEntity;
+import mappers.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -44,10 +50,9 @@ class TestMessageHandler {
 
         SocketMessage arrivingMessage = SocketMessageFactory.createLoginUsingTokenRequest("123");
 
-        // User with token not found //
-
         AppContext mockedCTX = mock(AppContext.class);
-        when(mockedCTX.getUserDAO()).thenReturn(new NonPersistentUserDAO());
+        UserDAO npUserDAO = new NonPersistentUserDAO();
+        when(mockedCTX.getUserDAO()).thenReturn(npUserDAO);
 
         // I should inject the mockedCTX in this case instead of using MockedStatic because
         // AppContext will be accessed by various threads, but MockedStatic's "thenReturn" only
@@ -55,8 +60,21 @@ class TestMessageHandler {
         Field instanceField = AppContext.class.getDeclaredField("instance");
         instanceField.setAccessible(true);
         instanceField.set(null, mockedCTX);
-        MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
 
+        // User with token not found //
+        MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
         verify(mockedNetworkUser, timeout(2000)).write(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_TOKEN, any()));
+
+        // User with token found //
+        UserStudentEntity u = new UserStudentEntity();
+        u.setToken("123");
+        u.setUserType(UserType.STUDENT);
+        u.setUsername("TMO");
+        u.setCoins(100);
+        npUserDAO.saveUser(u);
+
+        MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
+        verify(mockedNetworkUser, timeout(2000)).write(any(SocketMessage.class));
+        verify(mockedNetworkUser, timeout(2000)).write(any(SocketMessage.class));
     }
 }
