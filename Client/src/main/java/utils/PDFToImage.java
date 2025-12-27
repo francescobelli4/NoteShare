@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.FileAttribute;
 import java.nio.file.attribute.PosixFilePermission;
@@ -62,10 +63,17 @@ public class PDFToImage {
         File tempExe;
 
         if (os.contains("win")) {
-            tempExe = Files.createTempFile("pdfToImageConverter", ".exe").toFile();
-            tempExe.setReadable(true, true);
-            tempExe.setWritable(true, true);
-            tempExe.setExecutable(true, true);
+            Path secureDir = Files.createTempDirectory("pdf_converter_dir");
+            secureDir.toFile().deleteOnExit();
+
+            tempExe = Files.createTempFile(secureDir, "pdfToImageConverter", ".exe").toFile();
+            if (
+                    !tempExe.setReadable(true, true) ||
+                    !tempExe.setWritable(true, true) ||
+                    !tempExe.setExecutable(true, true)
+            ) {
+                return;
+            }
         } else {
             FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwx------"));
             tempExe = Files.createTempFile("pdfToImageConverter", "", attr).toFile();
