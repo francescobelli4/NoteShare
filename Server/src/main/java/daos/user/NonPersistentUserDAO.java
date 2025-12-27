@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class NonPersistentUserDAO implements UserDAO {
 
-    List<UserEntity> users = new ArrayList<>();
+    private final List<UserEntity> users = new ArrayList<>();
 
     /**
      * This function should only add a new UserEntity to users because this DAO is used

@@ -51,7 +51,7 @@ public class CommunicationLayer {
         System.exit(-1);
     }
 
-    public ServerSocket getServerSocket() {
-        return server;
+    static void reset() {
+        instance = null;
     }
 }

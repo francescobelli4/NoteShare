@@ -41,11 +41,19 @@ public class UserMapper {
     }
 
     private static UserTeacherDTO toUserTeacherDTO(UserTeacherEntity teacherEntity) {
-        return new UserTeacherDTO();
+        UserTeacherDTO userTeacherDTO = new UserTeacherDTO();
+        userTeacherDTO.setUsername(teacherEntity.getUsername());
+        userTeacherDTO.setUserType(teacherEntity.getUserType());
+
+        return userTeacherDTO;
     }
 
     private static UserAdminDTO toUserAdminDTO(UserAdminEntity adminEntity) {
-        return new UserAdminDTO();
+        UserAdminDTO userAdminDTO = new UserAdminDTO();
+        userAdminDTO.setUsername(adminEntity.getUsername());
+        userAdminDTO.setUserType(adminEntity.getUserType());
+
+        return userAdminDTO;
     }
 
     public static UserEntity toEntity(UserDTO userDTO, String password) {
@@ -68,10 +76,22 @@ public class UserMapper {
     }
 
     private static UserTeacherEntity toUserTeacherEntity(UserDTO userDTO, String password) {
-        return new UserTeacherEntity();
+        UserTeacherEntity userTeacherEntity = new UserTeacherEntity();
+        userTeacherEntity.setUsername(userDTO.getUsername());
+        userTeacherEntity.setPassword(password);
+        userTeacherEntity.setUserType(userDTO.getUserType());
+        userTeacherEntity.setToken(Utils.generateAccessToken());
+
+        return userTeacherEntity;
     }
 
     private static UserAdminEntity toUserAdminEntity(UserDTO userDTO, String password) {
-        return new UserAdminEntity();
+        UserAdminEntity userAdminEntity = new UserAdminEntity();
+        userAdminEntity.setUsername(userDTO.getUsername());
+        userAdminEntity.setPassword(password);
+        userAdminEntity.setUserType(userDTO.getUserType());
+        userAdminEntity.setToken(Utils.generateAccessToken());
+
+        return userAdminEntity;
     }
 }
