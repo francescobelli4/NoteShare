@@ -58,4 +58,18 @@ class TestPDFWrapper {
     void getPdfConfig() {
         assertNotNull(pdfWrapper.getPdfConfig());
     }
+
+    @Test
+    void testPdfConfig() {
+
+        pdfWrapper.getPdfConfig().setPdfFile("TMOOO");
+        pdfWrapper.getPdfConfig().setMaxWidth(1024.5f);
+        pdfWrapper.getPdfConfig().setMaxHeight(768.0f);
+        pdfWrapper.getPdfConfig().setNumberOfPages(10);
+
+        assertEquals("TMOOO", pdfWrapper.getPdfConfig().getPdfFilePath());
+        assertEquals(1024.5f, pdfWrapper.getPdfConfig().getMaxWidth());
+        assertEquals(768.0f, pdfWrapper.getPdfConfig().getMaxHeight());
+        assertEquals(10, pdfWrapper.getPdfConfig().getNumberOfPages());
+    }
 }

@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -55,7 +56,8 @@ public class PDFToImage {
                 "Missing pdfToImageConverter script!"
         );
 
-        File tempExe = File.createTempFile("pdfToImageConverter", os.contains("win") ? ".exe" : "");
+        Path tempExePath = Files.createTempFile("pdfToImageConverter", os.contains("win") ? ".exe" : "");
+        File tempExe = tempExePath.toFile();
         tempExe.deleteOnExit();
 
         Files.copy(input, tempExe.toPath(), StandardCopyOption.REPLACE_EXISTING);
