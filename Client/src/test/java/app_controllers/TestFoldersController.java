@@ -9,8 +9,6 @@ import models.user.UserModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-import java.lang.reflect.Field;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
