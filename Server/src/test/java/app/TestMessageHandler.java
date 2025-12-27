@@ -3,20 +3,15 @@ package app;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.SocketMessageType;
-import communication.dtos.responses.login.LoginFailureReason;
-import communication.dtos.user.UserDTO;
 import communication.dtos.user.UserType;
 import daos.message.MessageDAO;
 import daos.message.NPMessageDAO;
 import daos.user.NonPersistentUserDAO;
 import daos.user.UserDAO;
-import entities.user.UserEntity;
 import entities.user.UserStudentEntity;
-import mappers.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.MockedStatic;
 
 import java.lang.reflect.Field;
 
@@ -81,7 +76,8 @@ class TestMessageHandler {
 
         AppContext mockedCTX = mock(AppContext.class);
         UserDAO npUserDAO = new NonPersistentUserDAO();
-        MessageDAO npMessageDAO = new NPMessageDAO();
+        MessageDAO npMessageDAO = mock(NPMessageDAO.class);
+        when(npMessageDAO.get(anyString())).thenReturn(new java.util.ArrayList<>());
         when(mockedCTX.getUserDAO()).thenReturn(npUserDAO);
         when(mockedCTX.getMessageDAO()).thenReturn(npMessageDAO);
 
@@ -104,10 +100,9 @@ class TestMessageHandler {
 
         MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
 
-        verify(mockedNetworkUser, timeout(2000).atLeast(1)).write(msgCaptor.capture());
-        assertEquals(SocketMessageType.ACCESS_SUCCESS, msgCaptor.getValue().getSocketMessageType());
+        verify(mockedNetworkUser, timeout(2000).times(2)).write(msgCaptor.capture());
 
-        verify(mockedNetworkUser, timeout(2000).atLeast(1)).write(msgCaptor.capture());
-        assertEquals(SocketMessageType.SET_MESSAGES, msgCaptor.getValue().getSocketMessageType());
+        assertEquals(SocketMessageType.ACCESS_SUCCESS, msgCaptor.getAllValues().get(0).getSocketMessageType());
+        assertEquals(SocketMessageType.SET_MESSAGES, msgCaptor.getAllValues().get(1).getSocketMessageType());
     }
 }
