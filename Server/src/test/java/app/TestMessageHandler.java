@@ -208,9 +208,10 @@ class TestMessageHandler {
 
         MessageHandler.getInstance().handleMessage(arrivingMessage.toJson(), mockedNetworkUser);
 
-        verify(mockedNetworkUser, timeout(2000)).write(msgCaptor.capture());
+        verify(mockedNetworkUser, timeout(2000).times(2)).write(msgCaptor.capture());
 
         assertEquals(SocketMessageType.ACCESS_SUCCESS, msgCaptor.getAllValues().get(0).getSocketMessageType());
+        assertEquals(SocketMessageType.SET_MESSAGES, msgCaptor.getAllValues().get(1).getSocketMessageType());
     }
 
     @Test
