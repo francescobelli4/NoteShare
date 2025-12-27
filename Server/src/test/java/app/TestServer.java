@@ -34,7 +34,7 @@ class TestServer {
 
             verify(mockedCtx).setOptions(any());
             verify(mockedCommunicationLayer).initializeServerSocket();
-        } catch (IOException e) {
+        } catch (IOException _) {
             //...
         }
     }

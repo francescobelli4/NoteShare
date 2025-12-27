@@ -55,15 +55,14 @@ class TestAppContext {
     @Test
     void setOptions_WrongNumberOfArgs() {
         String[] args = {"demo", "en"};
-        AppContext instance = AppContext.getInstance();
-        assertThrows(IllegalArgumentException.class, () -> instance.setOptions(ArgsParser.parseArgs(args)));
+
+        assertThrows(IllegalArgumentException.class, () -> ArgsParser.parseArgs(args));
     }
 
     @Test
     void setOptions_WrongArg() {
         String[] args = {"foooooooo :D"};
-        AppContext instance = AppContext.getInstance();
-        assertThrows(IllegalArgumentException.class, () -> instance.setOptions(ArgsParser.parseArgs(args)));
+        assertThrows(IllegalArgumentException.class, () -> ArgsParser.parseArgs(args));
     }
 
     @Test

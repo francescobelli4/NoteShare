@@ -105,6 +105,16 @@ public class PDFToImage {
         return port;
     }
 
+    private static void connectToPythonServer(Socket s, int freePort) throws IOException {
+        try {
+            s.connect(new InetSocketAddress("localhost", freePort), 500);
+            s.setSoTimeout(10000);
+            converter = s;
+        } catch (IOException _) {
+            s.close();
+        }
+    }
+
     /**
      * This function should actually start the python script and the communication socket.
      */
@@ -115,15 +125,13 @@ public class PDFToImage {
 
             startPythonServer(freePort);
 
-            while (true) {
-                Socket s = new Socket();
-                try {
-                    s.connect(new InetSocketAddress("localhost", freePort), 500);
-                    s.setSoTimeout(10000);
-                    converter = s;
-                    break;
-                } catch (IOException _) {
-                    s.close();
+            Socket s = new Socket();
+
+            while (!s.isConnected()) {
+                connectToPythonServer(s, freePort);
+
+                if (s.isClosed()) {
+                    s = new Socket();
                 }
             }
 

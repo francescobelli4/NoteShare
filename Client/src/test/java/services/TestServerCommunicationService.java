@@ -47,13 +47,13 @@ class TestServerCommunicationService {
                             SocketMessage receivedMessage = SocketMessage.fromJson(data);
 
                             dataOutputStream.writeUTF(SocketMessageFactory.createLoginFailureResponse(LoginFailureReason.WRONG_USERNAME, receivedMessage.getSocketMessageID()).toJson());
-                        } catch (IOException e) {
+                        } catch (IOException _) {
                             break;
                         }
                     }
                 });
                 readerThread.start();
-            } catch (IOException e) {
+            } catch (IOException _) {
                 Thread.currentThread().interrupt();
             }
 

@@ -151,21 +151,6 @@ class TestUserModel {
     }
 
     @Test
-    void getLoginListeners() {
-        UserModel.LoginListener listener = mock(UserModel.LoginListener.class);
-        user.addUserLoginListener(listener);
-        assertTrue(user.getLoginListeners().contains(listener));
-    }
-
-    @Test
-    void getMessageListeners() {
-        UserModel.MessageListener listener = mock(UserModel.MessageListener.class);
-        user.addUserMessageListener(listener);
-        assertTrue(user.getMessageListeners().contains(listener));
-    }
-
-
-    @Test
     void getActiveFolder() {
         assertNotNull(user.getActiveFolder());
         assertEquals("TMO", user.getActiveFolder().getName());

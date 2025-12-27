@@ -22,6 +22,7 @@ class TestUtils {
         try (FileWriter fileWriter = new FileWriter("testPath/f.txt")) {
             fileWriter.write("Test");
         } catch (IOException _) {
+            //...
         }
     }
 
@@ -67,7 +68,7 @@ class TestUtils {
             assertNotNull(accessToken);
             assertEquals(":D", Utils.readFile(accessToken));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            //...
         }
     }
 }

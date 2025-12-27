@@ -43,7 +43,7 @@ class TestFoldersController {
      * Non succede nulla.
      */
     @Test
-    void goToParentFolder_NOTHING() throws NoSuchFieldException, IllegalAccessException {
+    void goToParentFolder_NOTHING() {
 
         AppContext mockAppContext = mock(AppContext.class);
         UserModel mockUser = mock(UserModel.class);

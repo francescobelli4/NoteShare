@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 public class CommunicationLayer {
 
     private static final Logger LOGGER = Logger.getLogger("Communication Layer");
-    private ServerSocket server;
 
     private static CommunicationLayer instance;
     private CommunicationLayer() {}
@@ -25,7 +24,7 @@ public class CommunicationLayer {
      * @throws IOException client accept fails
      */
     public void initializeServerSocket() throws IOException {
-        this.server = new ServerSocket(12345);
+        ServerSocket server = new ServerSocket(12345);
 
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info(String.format("Server socket initialized and listening on port %d!", server.getLocalPort()));
@@ -35,7 +34,7 @@ public class CommunicationLayer {
             Socket client;
 
             try {
-                client = this.server.accept();
+                client = server.accept();
             } catch (IOException ioException) {
                 LOGGER.warning(String.format("A client could not connect to the server: %s. Skipping...", ioException.getMessage()));
                 continue;

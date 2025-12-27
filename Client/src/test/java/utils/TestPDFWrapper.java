@@ -50,11 +50,6 @@ class TestPDFWrapper {
     }
 
     @Test
-    void pageToImage() {
-
-    }
-
-    @Test
     void getPdfConfig() {
         assertNotNull(pdfWrapper.getPdfConfig());
     }
