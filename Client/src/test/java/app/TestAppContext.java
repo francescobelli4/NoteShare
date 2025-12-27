@@ -1,9 +1,7 @@
 package app;
 
 import daos.folder.NPFolderDAO;
-import daos.folder.PFolderDAO;
 import daos.note.NPNoteDAO;
-import daos.note.PNoteDAO;
 import locales.Locales;
 import models.user.StudentUserModel;
 import org.junit.jupiter.api.AfterEach;
@@ -99,9 +97,6 @@ class TestAppContext {
 
         instance.setOptions(ArgsParser.parseArgs(args));
         assertNotNull(instance.getOptions());
-
-        assertInstanceOf(PFolderDAO.class, instance.getFolderDAO());
-        assertInstanceOf(PNoteDAO.class, instance.getNoteDAO());
 
         assertEquals("Registrati", Locales.get("register"));
     }

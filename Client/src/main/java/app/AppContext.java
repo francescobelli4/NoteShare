@@ -2,10 +2,8 @@ package app;
 
 import daos.folder.FolderDAO;
 import daos.folder.NPFolderDAO;
-import daos.folder.PFolderDAO;
 import daos.note.NPNoteDAO;
 import daos.note.NoteDAO;
-import daos.note.PNoteDAO;
 import exceptions.ArgsException;
 import locales.Locales;
 import models.user.UserModel;
@@ -42,9 +40,6 @@ public class AppContext {
         if (options.getAppMode() == Options.AppMode.DEMO) {
             folderDAO = new NPFolderDAO();
             noteDAO = new NPNoteDAO();
-        } else {
-            folderDAO = new PFolderDAO();
-            noteDAO = new PNoteDAO();
         }
 
         if (options.getLanguage() == Options.Lang.EN) {
