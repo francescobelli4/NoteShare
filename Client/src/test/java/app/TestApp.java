@@ -4,6 +4,7 @@ import models.user.StudentUserModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import services.ServerCommunicationService;
+import utils.PDFToImage;
 import utils.Utils;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -29,11 +30,13 @@ class TestApp {
         try (
                 MockedStatic<ServerCommunicationService> serverStatic = mockStatic(ServerCommunicationService.class);
                 MockedStatic<Launcher> launcherStatic = mockStatic(Launcher.class);
-                MockedStatic<Utils> utilsStatic = mockStatic(Utils.class)
+                MockedStatic<Utils> utilsStatic = mockStatic(Utils.class);
+                MockedStatic<PDFToImage> pdfToImageStatic = mockStatic(PDFToImage.class);
         ) {
 
-
             serverStatic.when(ServerCommunicationService::getInstance).thenReturn(mockedServer);
+            pdfToImageStatic.when(PDFToImage::initialize).thenAnswer(_ -> null);
+
             utilsStatic.when(Utils::getOSLocalPath).thenReturn("/tmp/test");
 
             App.initializeApp(args);
@@ -43,10 +46,9 @@ class TestApp {
             // I don't want folders to be created because of tests: this is a mocked folder creation!
             // I just want to see if the right function is called
             utilsStatic.verify(() -> Utils.createDir(anyString()));
+            pdfToImageStatic.verify(PDFToImage::initialize);
             assertNotNull(AppContext.getInstance().getCurrentUser());
             assertInstanceOf(StudentUserModel.class, AppContext.getInstance().getCurrentUser());
         }
-
-
     }
 }
