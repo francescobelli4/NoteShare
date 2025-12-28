@@ -18,13 +18,13 @@ import java.util.concurrent.TimeUnit;
 public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
 
     /** Max number of cached images */
-    private final static int MAX_CACHED_IMAGES = 10;
+    private static final int MAX_CACHED_IMAGES = 10;
 
     /** Max number of images in loading process */
-    private final static int MAX_LOADING_IMAGES = 7;
+    private static final int MAX_LOADING_IMAGES = 7;
 
     /** Loaded pages with distance > UNUSED_PAGE_THRESHOLD from visiblePage will be unloaded */
-    private final static int UNUSED_PAGE_THRESHOLD = 5;
+    private static final int UNUSED_PAGE_THRESHOLD = 5;
 
     /** The page that is actually visible in the scroll pane. It's used to decide which pages should be actually
      *  loaded.
