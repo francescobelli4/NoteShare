@@ -18,31 +18,23 @@ public class FolderElementView implements View {
     @FXML
     private Label folderLabel;
 
-    private final FolderModel folder;
     private static final Page page = Page.FOLDER_ELEMENT;
     private final GraphicsController<FolderElementView> graphicsController;
 
     public FolderElementView(FolderModel folder) {
-        this.folder = folder;
 
-        graphicsController = new FolderElementViewController(this);
+        graphicsController = new FolderElementViewController(this, folder);
         init();
     }
 
     @Override
     public void init() {
         Utils.scaleFonts(root);
-
-        folderLabel.setText(folder.getName());
     }
 
     @Override
     public void close() {
         //Nothing to do...
-    }
-
-    public FolderModel getFolder() {
-        return folder;
     }
 
     @Override
@@ -53,6 +45,10 @@ public class FolderElementView implements View {
     @Override
     public Page getPage() {
         return page;
+    }
+
+    public Label getFolderLabel() {
+        return folderLabel;
     }
 
     @Override

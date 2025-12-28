@@ -119,6 +119,7 @@ public class PDFToImage {
                 try {
                     s.connect(new InetSocketAddress("localhost", freePort), 500);
                     s.setSoTimeout(10000);
+                    s.setTcpNoDelay(true);
                     converter = s;
                     break;
                 } catch (IOException _) {
@@ -164,6 +165,7 @@ public class PDFToImage {
 
             synchronized (writeLock) {
                 outputStream.writeUTF(pageToImageRequest.toJson());
+                outputStream.flush();
             }
 
             int rPageId;

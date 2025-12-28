@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import models.note.NoteModel;
 
 public class ViewNavigator {
 
@@ -40,6 +41,11 @@ public class ViewNavigator {
 
     public static void displayNotification(String title, String description, Icon icon) {
         ((StackPane)activeView.getRoot()).getChildren().add(ViewFactory.getInstance().createNotificationView(title, description, icon).getRoot());
+    }
+
+    public static void displayViewNoteView(NoteModel note) {
+        activeView = ViewFactory.getInstance().createViewNoteView(note);
+        scene.setRoot(activeView.getRoot());
     }
 
     public static Stage getStage() {

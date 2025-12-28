@@ -19,6 +19,7 @@ import views.home.toolsbar.FolderCreationDialogueView;
 import views.home.toolsbar.NoteCreationDialogueView;
 import views.home.toolsbar.ToolsBarView;
 import views.notification.NotificationView;
+import views.viewnote.ViewNoteView;
 
 public class ViewFactory {
 
@@ -97,5 +98,9 @@ public class ViewFactory {
 
     public MessageView createMessageView(String title, String description, String date, Icon icon) {
         return new MessageView(title, description, date, icon);
+    }
+
+    public ViewNoteView createViewNoteView(NoteModel note) {
+        return new ViewNoteView(note);
     }
 }

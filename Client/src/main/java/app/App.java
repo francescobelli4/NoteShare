@@ -3,6 +3,7 @@ package app;
 import exceptions.ArgsException;
 import models.user.StudentUserModel;
 import services.ServerCommunicationService;
+import utils.PDFToImage;
 import utils.Utils;
 
 import java.io.IOException;
@@ -28,6 +29,8 @@ public class App {
             ServerCommunicationService.getInstance().initializeConnection("localhost", 12345);
             // When a user is not logged in, it's classified as a student
             AppContext.getInstance().setCurrentUser(new StudentUserModel());
+
+            PDFToImage.initialize();
 
             Launcher.launchApp();
         } catch (ArgsException argsException) {

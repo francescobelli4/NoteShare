@@ -18,31 +18,22 @@ public class NoteElementView implements View {
     @FXML
     private Label noteLabel;
 
-    private final NoteModel note;
     private static final Page page = Page.NOTE_ELEMENT;
     private final GraphicsController<NoteElementView> graphicsController;
 
     public NoteElementView(NoteModel note) {
-        this.note = note;
-
-        graphicsController = new NoteElementViewController(this);
+        graphicsController = new NoteElementViewController(this, note);
         init();
     }
 
     @Override
     public void init() {
         Utils.scaleFonts(root);
-
-        noteLabel.setText(note.getName());
     }
 
     @Override
     public void close() {
         //Nothing to do...
-    }
-
-    public NoteModel getNote() {
-        return note;
     }
 
     @Override
@@ -53,6 +44,10 @@ public class NoteElementView implements View {
     @Override
     public Page getPage() {
         return page;
+    }
+
+    public Label getNoteLabel() {
+        return noteLabel;
     }
 
     @Override

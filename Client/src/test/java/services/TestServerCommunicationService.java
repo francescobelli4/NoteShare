@@ -42,7 +42,6 @@ class TestServerCommunicationService {
                     while (server != null && server.isBound() && !server.isClosed()) {
 
                         try {
-                            System.out.println("READING....");
                             String data = dataInputStream.readUTF();
                             SocketMessage receivedMessage = SocketMessage.fromJson(data);
 
