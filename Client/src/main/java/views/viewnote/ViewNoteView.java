@@ -1,14 +1,10 @@
 package views.viewnote;
 
 import graphics_controllers.GraphicsController;
-import graphics_controllers.home.HomeViewController;
 import graphics_controllers.viewnote.ViewNoteViewController;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import models.note.NoteModel;

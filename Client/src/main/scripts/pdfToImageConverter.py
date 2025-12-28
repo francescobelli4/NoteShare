@@ -1,10 +1,10 @@
-import sys
-import socket
 import json
-import threading
-import struct
-from io import BytesIO
 import pypdfium2 as pdfium
+import socket
+import struct
+import sys
+import threading
+from io import BytesIO
 
 # Mutex for writing to noteshare
 write_lock = threading.Lock()

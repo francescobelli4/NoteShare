@@ -2,18 +2,10 @@ package graphics_controllers.viewnote;
 
 import graphics_controllers.GraphicsController;
 import javafx.application.Platform;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import models.note.NoteModel;
 import utils.PDFToImage;
-import views.ViewFactory;
-import views.ViewNavigator;
-import views.home.HomeView;
-import views.home.folders_container.FoldersContainerView;
-import views.home.leftbar.LeftBarView;
-import views.home.messages.MessagesContainerView;
-import views.home.toolsbar.ToolsBarView;
 import views.viewnote.ViewNoteView;
 
 import java.util.LinkedHashMap;
@@ -26,18 +18,18 @@ import java.util.concurrent.TimeUnit;
 public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
 
     /** Max number of cached images */
-    private final int MAX_CACHED_IMAGES = 10;
+    private final static int MAX_CACHED_IMAGES = 10;
 
     /** Max number of images in loading process */
-    private final int MAX_LOADING_IMAGES = 7;
+    private final static int MAX_LOADING_IMAGES = 7;
 
     /** Loaded pages with distance > UNUSED_PAGE_THRESHOLD from visiblePage will be unloaded */
-    private final int UNUSED_PAGE_THRESHOLD = 5;
+    private final static int UNUSED_PAGE_THRESHOLD = 5;
 
     /** The page that is actually visible in the scroll pane. It's used to decide which pages should be actually
      *  loaded.
      */
-    int visiblePage = 0;
+    private int visiblePage = 0;
 
     /** An ExecutorService is basically a pool of n threads. Every thread executes a task and it's blocked until the
      *  execution finishes.
