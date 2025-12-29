@@ -5,7 +5,6 @@ import app.ArgsParser;
 import communication.SocketMessage;
 import communication.SocketMessageFactory;
 import communication.dtos.responses.login.LoginFailureReason;
-import communication.dtos.user.UserDTO;
 import communication.dtos.user.UserStudentDTO;
 import communication.dtos.user.UserType;
 import exceptions.LoginFailureException;

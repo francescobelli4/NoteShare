@@ -4,7 +4,6 @@ import app.AppContext;
 import app.ArgsParser;
 import communication.SocketMessageFactory;
 import communication.dtos.responses.login.RegisterFailureReason;
-import communication.dtos.user.UserDTO;
 import communication.dtos.user.UserStudentDTO;
 import communication.dtos.user.UserType;
 import exceptions.RegisterFailureException;
