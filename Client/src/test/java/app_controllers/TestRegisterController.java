@@ -9,7 +9,6 @@ import communication.dtos.user.UserStudentDTO;
 import communication.dtos.user.UserType;
 import exceptions.RegisterFailureException;
 import mappers.UserMapper;
-import models.user.StudentUserModel;
 import models.user.UserModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -51,7 +50,7 @@ class TestRegisterController {
 
         AppContext.getInstance().setOptions(ArgsParser.parseArgs(args));
 
-        AppContext.getInstance().setCurrentUser(new StudentUserModel("TMOOOOO", UserType.STUDENT));
+        AppContext.getInstance().setCurrentUser(new UserModel("TMOOOOO", UserType.STUDENT));
 
         ServerCommunicationService mockedServerComm = mock(ServerCommunicationService.class);
         UserStudentDTO mockDTO = new UserStudentDTO();
@@ -70,8 +69,7 @@ class TestRegisterController {
 
             staticServerComm.when(ServerCommunicationService::getInstance).thenReturn(mockedServerComm);
 
-            StudentUserModel finalUser = new StudentUserModel("TMOOOOO", UserType.STUDENT);
-            staticUserMapper.when(() -> UserMapper.populateModel(any(UserModel.class), any(UserDTO.class))).thenReturn(finalUser);
+            UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), mockDTO);
 
             staticUtils.when(Utils::getMinUsernameLength).thenReturn(5);
             staticUtils.when(Utils::getMaxUsernameLength).thenReturn(20);

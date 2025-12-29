@@ -6,10 +6,10 @@ import communication.dtos.user.UserStudentDTO;
 import communication.dtos.user.UserTeacherDTO;
 import communication.dtos.user.UserType;
 import daos.folder.NPFolderDAO;
-import models.user.AdminUserModel;
-import models.user.StudentUserModel;
-import models.user.TeacherUserModel;
 import models.user.UserModel;
+import models.user.roles.AdminRole;
+import models.user.roles.StudentRole;
+import models.user.roles.TeacherRole;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
@@ -30,6 +30,7 @@ class TestUserMapper {
 
     private UserTeacherDTO genMockedTeacherStudentDTO() {
         UserTeacherDTO user = mock(UserTeacherDTO.class);
+        when(user.getUsername()).thenReturn("guest");
         when(user.getUserType()).thenReturn(UserType.TEACHER);
 
         return user;
@@ -37,6 +38,7 @@ class TestUserMapper {
 
     private UserAdminDTO genMockedAdminStudentDTO() {
         UserAdminDTO user = mock(UserAdminDTO.class);
+        when(user.getUsername()).thenReturn("guest");
         when(user.getUserType()).thenReturn(UserType.ADMINISTRATOR);
 
         return user;
@@ -54,10 +56,10 @@ class TestUserMapper {
             staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
             UserModel user = UserMapper.toModel(genMockedUserStudentDTO());
 
-            assertInstanceOf(StudentUserModel.class, user);
+            assertInstanceOf(StudentRole.class, user.getRole());
             assertEquals("TMO", user.getUsername());
-            assertEquals(UserType.STUDENT, user.getUserType());
-            assertEquals(100, ((StudentUserModel)user).getCoins());
+            assertEquals(UserType.STUDENT, user.getRole().getUserType());
+            assertEquals(100, ((StudentRole)user.getRole()).getCoins());
         }
     }
 
@@ -73,9 +75,9 @@ class TestUserMapper {
             staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
             UserModel user = UserMapper.toModel(genMockedTeacherStudentDTO());
 
-            assertInstanceOf(TeacherUserModel.class, user);
+            assertInstanceOf(TeacherRole.class, user.getRole());
             assertEquals("guest", user.getUsername());
-            assertEquals(UserType.TEACHER, user.getUserType());
+            assertEquals(UserType.TEACHER, user.getRole().getUserType());
         }
     }
 
@@ -90,9 +92,9 @@ class TestUserMapper {
             staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
             UserModel user = UserMapper.toModel(genMockedAdminStudentDTO());
 
-            assertInstanceOf(AdminUserModel.class, user);
+            assertInstanceOf(AdminRole.class, user.getRole());
             assertEquals("guest", user.getUsername());
-            assertEquals(UserType.ADMINISTRATOR, user.getUserType());
+            assertEquals(UserType.ADMINISTRATOR, user.getRole().getUserType());
         }
     }
 
@@ -100,23 +102,19 @@ class TestUserMapper {
     void populateModel() {
 
         AppContext mockedAppContext = mock(AppContext.class);
-        UserModel mockedUser = mock(UserModel.class);
-
-        when(mockedUser.getUsername()).thenReturn("TMO");
-        when(mockedUser.getUserType()).thenReturn(UserType.STUDENT);
-
         when(mockedAppContext.getFolderDAO()).thenReturn(new NPFolderDAO());
 
         try (MockedStatic<AppContext> staticAppContext = mockStatic(AppContext.class)) {
 
             staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
 
-            UserModel newModel = UserMapper.populateModel(mockedUser, genMockedUserStudentDTO());
+            UserModel user = new UserModel();
+            UserMapper.populateModel(user, genMockedUserStudentDTO());
 
-            assertInstanceOf(StudentUserModel.class, newModel);
-            assertEquals("TMO", newModel.getUsername());
-            assertEquals(UserType.STUDENT, newModel.getUserType());
-            assertEquals(100, ((StudentUserModel)newModel).getCoins());
+            assertInstanceOf(StudentRole.class, user.getRole());
+            assertEquals("TMO", user.getUsername());
+            assertEquals(UserType.STUDENT, user.getRole().getUserType());
+            assertEquals(100, ((StudentRole)user.getRole()).getCoins());
         }
     }
 }

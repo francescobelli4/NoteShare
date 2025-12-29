@@ -4,7 +4,6 @@ import app.AppContext;
 import app.ArgsParser;
 import communication.dtos.user.UserType;
 import models.folder.FolderModel;
-import models.user.StudentUserModel;
 import models.user.UserModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -29,7 +28,7 @@ class TestFoldersController {
         AppContext instance = AppContext.getInstance();
         instance.setOptions(ArgsParser.parseArgs(args));
 
-        instance.setCurrentUser(new StudentUserModel("TMO", UserType.STUDENT));
+        instance.setCurrentUser(new UserModel("TMO", UserType.STUDENT));
         FolderModel parent = new FolderModel(":D");
         FoldersController.goToFolder(parent);
         assertEquals(parent, instance.getCurrentUser().getActiveFolder());

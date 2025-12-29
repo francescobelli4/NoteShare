@@ -79,13 +79,7 @@ class TestUserModel {
 
     @Test
     void getUserType() {
-        assertEquals(UserType.STUDENT, user.getUserType());
-    }
-
-    @Test
-    void setUserType() {
-        user.setUserType(UserType.TEACHER);
-        assertEquals(UserType.TEACHER, user.getUserType());
+        assertEquals(UserType.STUDENT, user.getRole().getUserType());
     }
 
     @Test

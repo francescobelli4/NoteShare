@@ -4,15 +4,35 @@ import app.AppContext;
 import communication.dtos.user.UserType;
 import models.folder.FolderModel;
 import models.messages.MessageModel;
+import models.user.roles.AdminRole;
+import models.user.roles.Role;
+import models.user.roles.StudentRole;
+import models.user.roles.TeacherRole;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 /**
- * This class should represent a user in the system.
- * Actually, a user can be a Student, a Teacher, or an Admin.
- * Every UserModel subclass inherits common functionalities from this class.
+ * https://martinfowler.com/apsupp/roles.pdf Page 13 "Turning the roles into separate objects":
+ *
+ * "The implementation looks very similar to using the State Object pattern, the difference lies in
+ * the interface. When using Role Subtype with State Object, the state objects are entirely hidden
+ * from the user of the class. To find a manager’s budget a user asks the person object, which then
+ * makes the appropriate delegation. When using Role Object, however, the user asks the person object
+ * for its manager role, and then asks that role for the budget. In other words the roles are public
+ * knowledge"
+ *
+ * None of GoF design patterns seemed correct to represent the fact that a User can be specified at runtime
+ * in Student, Teacher or Admin.
+ * Obviously, the "State Pattern" was the most correct pattern, but it didn't support well the fact that
+ * different states of User (Student, Teacher, Admin) had completely different methods: the State Pattern
+ * only offers communication with "User", but not with his states (Student, Teacher, Admin).
+ * So I chose a pattern from this paper, which is actually a State Pattern with public access to the
+ * User's role.
  */
+
 public class UserModel {
 
     /** This should always be the app's local folder out of demo mode.
@@ -29,10 +49,10 @@ public class UserModel {
     private FolderModel activeFolder;
 
     private String username;
-    private UserType userType;
-    private final List<MessageModel> messages = new ArrayList<>();
-
+    private Role role;
     protected boolean loggedIn = false;
+
+    private final List<MessageModel> messages = new ArrayList<>();
 
     private final List<LoginListener> loginListeners = new ArrayList<>();
     public void addUserLoginListener(LoginListener listener) {
@@ -59,26 +79,23 @@ public class UserModel {
     }
 
     public UserModel() {
-        // Default user (not logged in)
-        this("guest", UserType.STUDENT);
+        this("guest", null);
     }
 
     public UserModel(String username, UserType userType) {
 
         this.username = username;
-        this.userType = userType;
+
+        role = switch (userType) {
+            case STUDENT -> new StudentRole(this);
+            case TEACHER -> new TeacherRole(this);
+            case ADMINISTRATOR -> new AdminRole(this);
+            case null -> new StudentRole(this);
+        };
 
         setRootFolder(AppContext.getInstance().getFolderDAO().getRootFolder());
         setActiveFolder(AppContext.getInstance().getFolderDAO().getUserFolder(this));
         AppContext.getInstance().getFolderDAO().save(getActiveFolder(), getRootFolder());
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
     }
 
     public String getUsername() {
@@ -89,6 +106,18 @@ public class UserModel {
         this.username = username;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public <R extends Role> Optional<R> as(Class<R> type) {
+        return type.isInstance(role) ? Optional.of(type.cast(role)) : Optional.empty();
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public boolean isLoggedIn() {
         return loggedIn;
     }
@@ -96,8 +125,12 @@ public class UserModel {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
 
+        setRootFolder(AppContext.getInstance().getFolderDAO().getRootFolder());
+        setActiveFolder(AppContext.getInstance().getFolderDAO().getUserFolder(this));
+        AppContext.getInstance().getFolderDAO().save(getActiveFolder(), getRootFolder());
+
         if (loggedIn) {
-            for (LoginListener l : loginListeners) {
+            for (LoginListener l : List.copyOf(loginListeners)) {
                 l.onLoggedIn();
             }
         }

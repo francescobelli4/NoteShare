@@ -10,7 +10,6 @@ import communication.dtos.user.UserStudentDTO;
 import communication.dtos.user.UserType;
 import exceptions.LoginFailureException;
 import mappers.UserMapper;
-import models.user.StudentUserModel;
 import models.user.UserModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -57,7 +56,7 @@ class TestLoginController {
 
         AppContext.getInstance().setOptions(ArgsParser.parseArgs(args));
 
-        AppContext.getInstance().setCurrentUser(new StudentUserModel("TMOOOOO", UserType.STUDENT));
+        AppContext.getInstance().setCurrentUser(new UserModel("TMOOOOO", UserType.STUDENT));
 
         ServerCommunicationService mockedServerComm = mock(ServerCommunicationService.class);
         UserStudentDTO mockDTO = new UserStudentDTO();
@@ -76,15 +75,12 @@ class TestLoginController {
 
             staticServerComm.when(ServerCommunicationService::getInstance).thenReturn(mockedServerComm);
 
-            StudentUserModel finalUser = new StudentUserModel("TMOOOOO", UserType.STUDENT);
-            staticUserMapper.when(() -> UserMapper.populateModel(any(UserModel.class), any(UserDTO.class))).thenReturn(finalUser);
-
             staticUtils.when(Utils::getMinUsernameLength).thenReturn(5);
             staticUtils.when(Utils::getMaxUsernameLength).thenReturn(20);
             staticUtils.when(Utils::getMinPasswordLength).thenReturn(5);
             staticUtils.when(Utils::getMaxPasswordLength).thenReturn(20);
 
-            staticUtils.when(() -> Utils.saveAccessToken(anyString())).thenAnswer(i -> null);
+            staticUtils.when(() -> Utils.saveAccessToken(anyString())).thenAnswer(_ -> null);
             staticHashing.when(() -> Hashing.hashString(anyString())).thenReturn("hashedPass");
 
             LoginController.login("TMOOOOO", "TMOOOOO");
@@ -101,7 +97,7 @@ class TestLoginController {
         String[] args = {"demo", "en", "colored"};
         AppContext.getInstance().setOptions(ArgsParser.parseArgs(args));
 
-        AppContext.getInstance().setCurrentUser(new StudentUserModel("TMOOOOO", UserType.STUDENT));
+        AppContext.getInstance().setCurrentUser(new UserModel("TMOOOOO", UserType.STUDENT));
 
         try (MockedStatic<Utils> staticUtils = mockStatic(Utils.class)) {
 
@@ -119,20 +115,22 @@ class TestLoginController {
 
         String[] args = {"demo", "en", "colored"};
         AppContext.getInstance().setOptions(ArgsParser.parseArgs(args));
-        AppContext.getInstance().setCurrentUser(new StudentUserModel("TMOOOOO", UserType.STUDENT));
+        AppContext.getInstance().setCurrentUser(new UserModel());
 
         ServerCommunicationService mockService = mock(ServerCommunicationService.class);
 
         UserStudentDTO userDTO = new UserStudentDTO();
         userDTO.setUsername("TMOOOOOO");
+        userDTO.setCoins(100);
+        userDTO.setUserType(UserType.STUDENT);
+
         SocketMessage successResponse = SocketMessageFactory.createAccessSuccessResponse(userDTO, "abc", "123");
 
         when(mockService.sendSync(any())).thenReturn(successResponse);
 
         try (
                 MockedStatic<Utils> staticUtils = mockStatic(Utils.class);
-                MockedStatic<ServerCommunicationService> staticServer = mockStatic(ServerCommunicationService.class);
-                MockedStatic<UserMapper> staticMapper = mockStatic(UserMapper.class)
+                MockedStatic<ServerCommunicationService> staticServer = mockStatic(ServerCommunicationService.class)
         ) {
 
             staticServer.when(ServerCommunicationService::getInstance).thenReturn(mockService);
@@ -141,9 +139,6 @@ class TestLoginController {
             File mockFile = mock(File.class);
             staticUtils.when(() -> Utils.findFile(anyString())).thenReturn(mockFile);
             staticUtils.when(() -> Utils.readFile(mockFile)).thenReturn("123");
-
-            StudentUserModel loggedUser = new StudentUserModel("TMOOOOOO", UserType.STUDENT);
-            staticMapper.when(() -> UserMapper.populateModel(any(UserModel.class), any())).thenReturn(loggedUser);
 
             LoginController.loginUsingToken();
             assertEquals("TMOOOOOO", AppContext.getInstance().getCurrentUser().getUsername());

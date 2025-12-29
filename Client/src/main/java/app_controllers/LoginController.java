@@ -52,7 +52,7 @@ public class LoginController {
                 LOGGER.info("Login success! :D");
                 AccessSuccessResponseDTO<?> payload = (AccessSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
-                AppContext.getInstance().setCurrentUser(UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), payload.getUserDTO()));
+                UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), payload.getUserDTO());
                 AppContext.getInstance().getCurrentUser().setLoggedIn(true);
             } else if (response.getSocketMessageType() == SocketMessageType.LOGIN_FAILURE) {
                 LoginFailureResponseDTO payload = (LoginFailureResponseDTO) response.getPayload();
@@ -88,7 +88,7 @@ public class LoginController {
 
             if (response.getSocketMessageType() == SocketMessageType.ACCESS_SUCCESS) {
                 AccessSuccessResponseDTO<?> accessSuccessResponse = (AccessSuccessResponseDTO<?>) response.getPayload();
-                AppContext.getInstance().setCurrentUser(UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), accessSuccessResponse.getUserDTO()));
+                UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), accessSuccessResponse.getUserDTO());
                 AppContext.getInstance().getCurrentUser().setLoggedIn(true);
             }
         } catch (IOException ioException) {

@@ -1,7 +1,7 @@
 package app;
 
 import exceptions.ArgsException;
-import models.user.StudentUserModel;
+import models.user.UserModel;
 import services.ServerCommunicationService;
 import utils.PDFToImage;
 import utils.Utils;
@@ -27,10 +27,10 @@ public class App {
 
             Utils.createDir(AppContext.getInstance().getOptions().getRootFolderPath());
             ServerCommunicationService.getInstance().initializeConnection("localhost", 12345);
-            // When a user is not logged in, it's classified as a student
-            AppContext.getInstance().setCurrentUser(new StudentUserModel());
-
             PDFToImage.initialize();
+
+            // When a user is not logged in, it's classified as a student
+            AppContext.getInstance().setCurrentUser(new UserModel());
 
             Launcher.launchApp();
         } catch (ArgsException argsException) {

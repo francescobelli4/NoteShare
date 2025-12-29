@@ -3,6 +3,7 @@ package models.user;
 import app.AppContext;
 import communication.dtos.user.UserType;
 import daos.folder.NPFolderDAO;
+import models.user.roles.StudentRole;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
@@ -20,8 +21,8 @@ class TestStudentUserModel {
         try (MockedStatic<AppContext> staticAppContext = mockStatic(AppContext.class)) {
 
             staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
-            StudentUserModel user = new StudentUserModel("TMO", UserType.STUDENT);
-            assertEquals(0, user.getCoins());
+            UserModel user = new UserModel("TMO", UserType.STUDENT);
+            assertEquals(0, (((StudentRole)user.getRole()).getCoins()));
         }
     }
 
@@ -33,9 +34,9 @@ class TestStudentUserModel {
         try (MockedStatic<AppContext> staticAppContext = mockStatic(AppContext.class)) {
 
             staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
-            StudentUserModel user = new StudentUserModel("TMO", UserType.STUDENT);
-            user.setCoins(100);
-            assertEquals(100, user.getCoins());
+            UserModel user = new UserModel("TMO", UserType.STUDENT);
+            user.as(StudentRole.class).ifPresent(student -> student.setCoins(100));
+            assertEquals(100, (((StudentRole)user.getRole()).getCoins()));
         }
     }
 }

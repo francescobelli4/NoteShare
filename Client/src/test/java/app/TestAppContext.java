@@ -3,7 +3,7 @@ package app;
 import daos.folder.NPFolderDAO;
 import daos.note.NPNoteDAO;
 import locales.Locales;
-import models.user.StudentUserModel;
+import models.user.UserModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -110,7 +110,7 @@ class TestAppContext {
     void setCurrentUser() {
 
         AppContext instance = AppContext.getInstance();
-        StudentUserModel mockedUser = mock(StudentUserModel.class);
+        UserModel mockedUser = mock(UserModel.class);
         instance.setCurrentUser(mockedUser);
         assertNotNull(instance.getCurrentUser());
     }

@@ -51,7 +51,7 @@ public class RegisterController {
                 LOGGER.info("Register success! :D");
                 AccessSuccessResponseDTO<?> payload = (AccessSuccessResponseDTO<?>) response.getPayload();
                 Utils.saveAccessToken(payload.getAccessToken());
-                AppContext.getInstance().setCurrentUser(UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), payload.getUserDTO()));
+                UserMapper.populateModel(AppContext.getInstance().getCurrentUser(), payload.getUserDTO());
                 AppContext.getInstance().getCurrentUser().setLoggedIn(true);
             } else if (response.getSocketMessageType() == SocketMessageType.REGISTER_FAILURE) {
                 throw new RegisterFailureException(RegisterFailureReason.USERNAME_ALREADY_TAKEN);

@@ -3,7 +3,7 @@ package app_controllers;
 import app.AppContext;
 import app.ArgsParser;
 import communication.dtos.user.UserType;
-import models.user.StudentUserModel;
+import models.user.UserModel;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -21,7 +21,7 @@ class TestNotesController {
 
         File f = new File("TMOOOO");
 
-        instance.setCurrentUser(new StudentUserModel("TMO", UserType.STUDENT));
+        instance.setCurrentUser(new UserModel("TMO", UserType.STUDENT));
         NotesController.createNote(":D", f);
 
         assertNotNull(instance.getCurrentUser().getActiveFolder().searchNote(":D"));

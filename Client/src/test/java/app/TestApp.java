@@ -1,6 +1,6 @@
 package app;
 
-import models.user.StudentUserModel;
+import models.user.roles.StudentRole;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import services.ServerCommunicationService;
@@ -48,7 +48,7 @@ class TestApp {
             utilsStatic.verify(() -> Utils.createDir(anyString()));
             pdfToImageStatic.verify(PDFToImage::initialize);
             assertNotNull(AppContext.getInstance().getCurrentUser());
-            assertInstanceOf(StudentUserModel.class, AppContext.getInstance().getCurrentUser());
+            assertInstanceOf(StudentRole.class, AppContext.getInstance().getCurrentUser().getRole());
         }
     }
 }

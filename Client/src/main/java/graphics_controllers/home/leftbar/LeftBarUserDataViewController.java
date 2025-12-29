@@ -1,9 +1,9 @@
 package graphics_controllers.home.leftbar;
 
 import app.AppContext;
-import communication.dtos.user.UserType;
 import graphics_controllers.GraphicsController;
-import models.user.StudentUserModel;
+import models.user.UserModel;
+import models.user.roles.StudentRole;
 import views.ViewNavigator;
 import views.home.leftbar.LeftBarUserDataView;
 
@@ -16,7 +16,8 @@ public class LeftBarUserDataViewController extends GraphicsController<LeftBarUse
     @Override
     public void loaded() {
 
-        boolean isLoggedIn = AppContext.getInstance().getCurrentUser().isLoggedIn();
+        UserModel user = AppContext.getInstance().getCurrentUser();
+        boolean isLoggedIn = user.isLoggedIn();
 
         getView().getAccessForm().setManaged(!isLoggedIn);
         getView().getAccessForm().setVisible(!isLoggedIn);
@@ -24,10 +25,8 @@ public class LeftBarUserDataViewController extends GraphicsController<LeftBarUse
         getView().getUserData().setVisible(isLoggedIn);
 
         if (isLoggedIn) {
-            getView().getUsernameLabel().setText(AppContext.getInstance().getCurrentUser().getUsername());
-
-            if (AppContext.getInstance().getCurrentUser().getUserType() == UserType.STUDENT)
-                getView().getCoinsLabel().setText(AppContext.getInstance().getCurrentUserAs(StudentUserModel.class).getCoins()+"");
+            getView().getUsernameLabel().setText(user.getUsername());
+            user.as(StudentRole.class).ifPresent(student -> getView().getCoinsLabel().setText(student.getCoins()+""));
         }
 
         getView().getAccessButton().setOnMouseClicked(_ -> accessButtonClicked());

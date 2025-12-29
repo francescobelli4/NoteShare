@@ -1,10 +1,11 @@
 package mappers;
 
 import communication.dtos.user.*;
-import models.user.AdminUserModel;
-import models.user.StudentUserModel;
-import models.user.TeacherUserModel;
 import models.user.UserModel;
+import models.user.roles.AdminRole;
+import models.user.roles.Role;
+import models.user.roles.StudentRole;
+import models.user.roles.TeacherRole;
 
 public class UserMapper {
 
@@ -26,37 +27,35 @@ public class UserMapper {
 
     /**
      * This function should populate a UserModel using a UserDTO
-     * @param userModel the model that has to be populated
+     * @param user the model that has to be populated
      * @param userDTO the UserDTO that has to be converted
      */
-    public static UserModel populateModel(UserModel userModel, UserDTO userDTO) {
+    public static void populateModel(UserModel user, UserDTO userDTO) {
 
-        UserModel newModel = toModel(userDTO);
+        Role role = switch (userDTO.getUserType()) {
+            case STUDENT -> new StudentRole(user);
+            case TEACHER -> new TeacherRole(user);
+            case ADMINISTRATOR -> new AdminRole(user);
+        };
 
-        newModel.setMessages(userModel.getMessages());
-        for (UserModel.LoginListener l : userModel.getLoginListeners()) {
-            newModel.addUserLoginListener(l);
-        }
-        for (UserModel.MessageListener l : userModel.getMessageListeners()) {
-            newModel.addUserMessageListener(l);
-        }
+        user.setUsername(userDTO.getUsername());
+        user.setRole(role);
 
-        return newModel;
+        user.as(StudentRole.class).ifPresent(studentRole -> studentRole.setCoins(((UserStudentDTO)userDTO).getCoins()));
     }
 
-    private static StudentUserModel toStudentUserModel(UserStudentDTO studentDTO) {
+    private static UserModel toStudentUserModel(UserStudentDTO userStudentDTO) {
+        UserModel user = new UserModel(userStudentDTO.getUsername(), UserType.STUDENT);
 
-        StudentUserModel studentUserModel = new StudentUserModel(studentDTO.getUsername(), UserType.STUDENT);
-        studentUserModel.setCoins(studentDTO.getCoins());
-
-        return studentUserModel;
+        user.as(StudentRole.class).ifPresent(studentRole -> studentRole.setCoins(userStudentDTO.getCoins()));
+        return user;
     }
 
-    private static TeacherUserModel toTeacherUserModel(UserTeacherDTO teacherDTO) {
-        return new TeacherUserModel();
+    private static UserModel toTeacherUserModel(UserTeacherDTO userTeacherDTO) {
+        return new UserModel(userTeacherDTO.getUsername(), UserType.TEACHER);
     }
 
-    private static AdminUserModel toAdminUserModel(UserAdminDTO adminDTO) {
-        return new AdminUserModel();
+    private static UserModel toAdminUserModel(UserAdminDTO userAdminDTO) {
+        return new UserModel(userAdminDTO.getUsername(), UserType.ADMINISTRATOR);
     }
 }
