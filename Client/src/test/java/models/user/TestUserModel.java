@@ -104,11 +104,18 @@ class TestUserModel {
         UserModel.LoginListener listener = mock(UserModel.LoginListener.class);
         user.addUserLoginListener(listener);
 
-        user.setLoggedIn(true);
-        assertTrue(user.isLoggedIn());
+        AppContext mockedAppContext = mock(AppContext.class);
+        when(mockedAppContext.getFolderDAO()).thenReturn(new NPFolderDAO());
 
-        for (UserModel.LoginListener l : user.getLoginListeners()) {
-            verify(l, times(1)).onLoggedIn();
+        try (MockedStatic<AppContext> staticAppContext = mockStatic(AppContext.class)) {
+
+            staticAppContext.when(AppContext::getInstance).thenReturn(mockedAppContext);
+            user.setLoggedIn(true);
+            assertTrue(user.isLoggedIn());
+
+            for (UserModel.LoginListener l : user.getLoginListeners()) {
+                verify(l, times(1)).onLoggedIn();
+            }
         }
     }
 
