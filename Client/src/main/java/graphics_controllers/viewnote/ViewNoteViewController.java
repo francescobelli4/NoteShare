@@ -84,6 +84,7 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
         super(view);
 
         this.note = note;
+        getView().getNoteNameLabel().setText(note.getName());
         setupUI();
         setupZoom();
     }

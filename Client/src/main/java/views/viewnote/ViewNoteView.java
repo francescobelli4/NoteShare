@@ -25,6 +25,8 @@ public class ViewNoteView implements View {
     @FXML
     private Label pageLabel;
     @FXML
+    private Label noteNameLabel;
+    @FXML
     private Button pageUpButton;
     @FXML
     private Button pageDownButton;
@@ -70,6 +72,10 @@ public class ViewNoteView implements View {
 
     public Label getPageLabel() {
         return pageLabel;
+    }
+
+    public Label getNoteNameLabel() {
+        return noteNameLabel;
     }
 
     public Button getPageUpButton() {
