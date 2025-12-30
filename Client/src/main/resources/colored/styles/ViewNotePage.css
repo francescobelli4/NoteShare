@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #805dff, #f1f8ff);
+}
+
+#topbar {
+    -fx-background-color: white;
+    -fx-background-radius: 40;
+}
+
+.rounded {
+    -fx-background-radius: 10;
+}
+
+.hoverable:hover {
+    -fx-background-color: rgb(231, 231, 231);
+    -fx-background-radius: 40;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-background-radius: 40;
+}

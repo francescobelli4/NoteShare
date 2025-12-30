@@ -4,6 +4,8 @@ import graphics_controllers.GraphicsController;
 import graphics_controllers.viewnote.ViewNoteViewController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,6 +22,14 @@ public class ViewNoteView implements View {
     private ScrollPane scrollPane;
     @FXML
     private VBox imagesContainer;
+    @FXML
+    private Label pageLabel;
+    @FXML
+    private Button pageUpButton;
+    @FXML
+    private Button pageDownButton;
+    @FXML
+    private Button closeButton;
 
 
     private static final Page page = Page.VIEW_NOTE_PAGE;
@@ -56,6 +66,22 @@ public class ViewNoteView implements View {
 
     public VBox getImagesContainer() {
         return imagesContainer;
+    }
+
+    public Label getPageLabel() {
+        return pageLabel;
+    }
+
+    public Button getPageUpButton() {
+        return pageUpButton;
+    }
+
+    public Button getPageDownButton() {
+        return pageDownButton;
+    }
+
+    public Button getCloseButton() {
+        return closeButton;
     }
 
     @Override

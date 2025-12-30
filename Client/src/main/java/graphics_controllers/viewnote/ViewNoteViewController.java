@@ -4,8 +4,10 @@ import graphics_controllers.GraphicsController;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import models.note.NoteModel;
 import utils.PDFToImage;
+import views.ViewNavigator;
 import views.viewnote.ViewNoteView;
 
 import java.util.LinkedHashMap;
@@ -30,6 +32,10 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
      *  loaded.
      */
     private int visiblePage = 0;
+
+    private static final double MIN_ZOOM = 0.2;
+    private static final double MAX_ZOOM = 5.0;
+    private static final double ZOOM_FACTOR = 1.05;
 
     /** An ExecutorService is basically a pool of n threads. Every thread executes a task and it's blocked until the
      *  execution finishes.
@@ -79,11 +85,15 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
 
         this.note = note;
         setupUI();
+        setupZoom();
     }
 
     @Override
     public void loaded() {
         getView().getScrollPane().vvalueProperty().addListener(_ -> calculateNewVisiblePage());
+        getView().getPageDownButton().setOnMouseClicked(_ -> pageDownButtonClicked());
+        getView().getPageUpButton().setOnMouseClicked(_ -> pageUpButtonClicked());
+        getView().getCloseButton().setOnMouseClicked(_ -> closeButtonClicked());
     }
 
     private void setupUI() {
@@ -98,6 +108,71 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
         onVisiblePageUpdated(0);
     }
 
+    private void setupZoom() {
+
+        getView().getScrollPane().addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.isControlDown()) {
+
+                double delta = event.getDeltaY();
+                double newScale = getView().getImagesContainer().getScaleY();
+
+                if (delta > 0) {
+                    newScale *= ZOOM_FACTOR;
+                } else {
+                    newScale /= ZOOM_FACTOR;
+                }
+
+                newScale = Math.max(MIN_ZOOM, Math.min(newScale, MAX_ZOOM));
+
+                getView().getImagesContainer().setScaleX(newScale);
+                getView().getImagesContainer().setScaleY(newScale);
+                event.consume();
+
+                calculateNewVisiblePage();
+            }
+        });
+    }
+
+    private void pageDownButtonClicked() {
+        scrollToPage(visiblePage + 1);
+    }
+
+    private void pageUpButtonClicked() {
+        scrollToPage(visiblePage - 1);
+    }
+
+    private void closeButtonClicked() {
+        ViewNavigator.displayHomeView();
+    }
+
+    /**
+     * This function should scroll the ScrollPane to the new target page.
+     *
+     * It should calculate the height of a page (with zoom) and then scroll to pageHeight * targetPage (to percent)
+     * @param targetPage the page that has to be shown
+     */
+    private void scrollToPage(int targetPage) {
+
+        if (targetPage < 0 || targetPage >= note.getPdf().getPdfConfig().getNumberOfPages()) {
+            return;
+        }
+
+        double currentZoom = getView().getImagesContainer().getScaleX();
+        double pageHeight = note.getPdf().getPdfConfig().getMaxHeight() * currentZoom;
+        double spacing = getView().getImagesContainer().getSpacing() * currentZoom;
+        // Height of a zoomed page in pixels
+        double totalPageHeight = pageHeight + spacing;
+        // The Y of the next page
+        double nextPageY = targetPage * totalPageHeight;
+
+        // Total scrollable height. (Ignores the top bar)
+        // getBoundsInParent() calculates the VBox's height using also zoom value
+        double scrollableValue = getView().getImagesContainer().getBoundsInParent().getHeight() - getView().getScrollPane().getViewportBounds().getHeight();
+
+        // nextPageY to percent
+        double vValue = nextPageY / scrollableValue;
+        getView().getScrollPane().setVvalue(vValue);
+    }
 
     /**
      * This function should launch the threads that will "load the images".
@@ -115,6 +190,7 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
      */
     private void onVisiblePageUpdated(int visiblePage) {
         this.visiblePage = visiblePage;
+        getView().getPageLabel().setText(String.format("%d/%d", visiblePage+1, note.getPdf().getPdfConfig().getNumberOfPages()));
 
         for (int i = -3; i <= 3; i++) {
 
@@ -149,14 +225,29 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
      */
     private void calculateNewVisiblePage() {
 
-        double scrollValue = getView().getScrollPane().getVvalue();
-        double scrollableValue = getView().getImagesContainer().getHeight() - getView().getScrollPane().getViewportBounds().getHeight();
-        double containerLevel = scrollValue * scrollableValue;
-        double pageHeight = note.getPdf().getPdfConfig().getMaxHeight() + getView().getImagesContainer().getSpacing();
-        int page = (int)Math.floor((containerLevel + pageHeight/2) / pageHeight);
+        double currentZoom = getView().getImagesContainer().getScaleX();
+        double scrolledPixels = calculateCurrentlyScrolledPixels();
+
+        // The height of every page (every ImageView)
+        double pageHeight = note.getPdf().getPdfConfig().getMaxHeight() * currentZoom;
+        double pageSpacing = getView().getImagesContainer().getSpacing() * currentZoom;
+        // Zoomed page height (including the spacing). Also spacing should be scaled because I'm scaling the parent VBox
+        double totalPageHeight = pageHeight + pageSpacing;
+        // The part of height the user can see of the ScrollPane
+        int page = (int) Math.floor((scrolledPixels + 5) / totalPageHeight);
 
         if (page != visiblePage) {
             onVisiblePageUpdated(page);
         }
+    }
+
+    private double calculateCurrentlyScrolledPixels() {
+        // percent value representing scroll position
+        double scrollValue = getView().getScrollPane().getVvalue();
+        // Total scrollable height. (Ignores the top bar)
+        // getBoundsInParent() calculates the VBox's height using also zoom value
+        double scrollableValue = getView().getImagesContainer().getBoundsInParent().getHeight() - getView().getScrollPane().getViewportBounds().getHeight();
+        // The level that the user is actually seeing
+        return scrollValue * scrollableValue;
     }
 }
