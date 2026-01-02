@@ -4,6 +4,7 @@ import graphics_controllers.GraphicsController;
 import graphics_controllers.home.folders_container.NoteElementViewController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import models.note.NoteModel;
@@ -17,6 +18,8 @@ public class NoteElementView implements View {
     private VBox root;
     @FXML
     private Label noteLabel;
+    @FXML
+    private Button optionsButton;
 
     private static final Page page = Page.NOTE_ELEMENT;
     private final GraphicsController<NoteElementView> graphicsController;
@@ -34,6 +37,10 @@ public class NoteElementView implements View {
     @Override
     public void close() {
         //Nothing to do...
+    }
+
+    public Button getOptionsButton() {
+        return optionsButton;
     }
 
     @Override

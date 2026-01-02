@@ -185,4 +185,13 @@ class TestUserModel {
         user.setRootFolder(mockedFolder);
         assertEquals(mockedFolder, user.getRootFolder());
     }
+
+    @Test
+    void setCopiedElement() {
+        FolderModel f = new FolderModel(":D");
+        user.setCopiedElement(f);
+        assertEquals(f, user.getCopiedElement());
+    }
+
+
 }

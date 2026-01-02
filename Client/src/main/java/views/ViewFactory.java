@@ -1,5 +1,6 @@
 package views;
 
+import models.Controllable;
 import models.folder.FolderModel;
 import models.note.NoteModel;
 import views.access.AccessView;
@@ -8,6 +9,7 @@ import views.access.forms.LoginFormView;
 import views.access.forms.RegisterFormView;
 import views.home.HomeView;
 import views.home.folders_container.FolderElementView;
+import views.home.folders_container.FoldersContainerElementOptionsFormView;
 import views.home.folders_container.FoldersContainerView;
 import views.home.folders_container.NoteElementView;
 import views.home.leftbar.LeftBarMenuOptionsView;
@@ -102,5 +104,9 @@ public class ViewFactory {
 
     public ViewNoteView createViewNoteView(NoteModel note) {
         return new ViewNoteView(note);
+    }
+
+    public FoldersContainerElementOptionsFormView createFoldersContainerElementOptionsFormView(Controllable element, double x, double y) {
+        return new FoldersContainerElementOptionsFormView(element, x, y);
     }
 }

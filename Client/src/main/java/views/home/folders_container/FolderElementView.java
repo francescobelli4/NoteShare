@@ -4,6 +4,7 @@ import graphics_controllers.GraphicsController;
 import graphics_controllers.home.folders_container.FolderElementViewController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import models.folder.FolderModel;
@@ -17,12 +18,13 @@ public class FolderElementView implements View {
     private VBox root;
     @FXML
     private Label folderLabel;
+    @FXML
+    private Button optionsButton;
 
     private static final Page page = Page.FOLDER_ELEMENT;
     private final GraphicsController<FolderElementView> graphicsController;
 
     public FolderElementView(FolderModel folder) {
-
         graphicsController = new FolderElementViewController(this, folder);
         init();
     }
@@ -45,6 +47,10 @@ public class FolderElementView implements View {
     @Override
     public Page getPage() {
         return page;
+    }
+
+    public Button getOptionsButton() {
+        return optionsButton;
     }
 
     public Label getFolderLabel() {

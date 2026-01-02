@@ -39,6 +39,8 @@ public class PDFWrapper {
     /** The config associated with this PDF */
     private final PDFConfig pdfConfig;
 
+    private final File pdfFile;
+
     /**
      * Base constructor
      *
@@ -46,6 +48,8 @@ public class PDFWrapper {
      * @param pdfFile the PDF file
      */
     public PDFWrapper(File pdfFile) {
+
+        this.pdfFile = pdfFile;
 
         pdfConfig = new PDFConfig();
         pdfConfig.setPdfFile(pdfFile.getPath());
@@ -84,6 +88,7 @@ public class PDFWrapper {
      */
     public PDFWrapper(PDFConfig config) {
         //TODO
+        this.pdfFile = new File(config.pdfFilePath);
         this.pdfConfig = config;
     }
 
@@ -102,6 +107,10 @@ public class PDFWrapper {
 
     public PDFConfig getPdfConfig() {
         return pdfConfig;
+    }
+
+    public File getPdfFile() {
+        return pdfFile;
     }
 
     /**

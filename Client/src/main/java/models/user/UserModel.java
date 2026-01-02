@@ -2,6 +2,7 @@ package models.user;
 
 import app.AppContext;
 import communication.dtos.user.UserType;
+import models.Controllable;
 import models.folder.FolderModel;
 import models.messages.MessageModel;
 import models.user.roles.AdminRole;
@@ -47,6 +48,7 @@ public class UserModel {
      * needs to see.
      */
     private FolderModel activeFolder;
+    private Controllable copiedElement;
 
     private String username;
     private Role role;
@@ -190,6 +192,14 @@ public class UserModel {
 
     public void setRootFolder(FolderModel rootFolder) {
         this.rootFolder = rootFolder;
+    }
+
+    public Controllable getCopiedElement() {
+        return copiedElement;
+    }
+
+    public void setCopiedElement(Controllable copiedElement) {
+        this.copiedElement = copiedElement;
     }
 
     public interface LoginListener {

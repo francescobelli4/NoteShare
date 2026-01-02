@@ -1,7 +1,9 @@
 package graphics_controllers.home.toolsbar;
 
-import app.AppContext;
 import app_controllers.NotesController;
+import exceptions.DuplicateNoteException;
+import exceptions.InvalidNoteNameException;
+import exceptions.InvalidNotePDFException;
 import graphics_controllers.GraphicsController;
 import locales.Locales;
 import utils.Utils;
@@ -40,27 +42,15 @@ public class NoteCreationDialogueViewController extends GraphicsController<NoteC
         String title = Locales.get("error");
         Icon icon = Icon.ERROR;
 
-        if (getView().getNoteNameTextField().getText().isEmpty()) {
-            ViewNavigator.displayNotification(title, Locales.get("note_name_too_short"), icon);
-            return;
-        }
-
-        if (getView().getNoteNameTextField().getText().length() > 15) {
-            ViewNavigator.displayNotification(title, Locales.get("note_name_too_long"), icon);
-            return;
-        }
-
-        if (AppContext.getInstance().getCurrentUser().getActiveFolder().searchNote(getView().getNoteNameTextField().getText()) != null) {
+        try {
+            NotesController.createNote(getView().getNoteNameTextField().getText(), selectedPDF);
+            getView().close();
+        } catch (DuplicateNoteException _) {
             ViewNavigator.displayNotification(title, Locales.get("note_already_exists"), icon);
-            return;
-        }
-
-        if (selectedPDF == null) {
+        } catch (InvalidNoteNameException e) {
+            ViewNavigator.displayNotification(title, Locales.get(e.getMessage()), icon);
+        } catch (InvalidNotePDFException _) {
             ViewNavigator.displayNotification(title, Locales.get("note_pdf_not_set"), icon);
-            return;
         }
-
-        NotesController.createNote(getView().getNoteNameTextField().getText(), selectedPDF);
-        getView().close();
     }
 }

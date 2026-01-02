@@ -10,6 +10,11 @@ public class NPNoteDAO implements NoteDAO {
     }
 
     @Override
+    public void delete(NoteModel note) {
+        note.getParentFolder().deleteNote(note);
+    }
+
+    @Override
     public NoteModel searchByPath(String path, FolderModel folder) {
         return folder.searchNote(path);
     }

@@ -22,6 +22,11 @@ public class NPFolderDAO implements FolderDAO {
     }
 
     @Override
+    public void delete(FolderModel folder) {
+        folder.getParentFolder().deleteSubFolder(folder);
+    }
+
+    @Override
     public FolderModel searchByPath(String path, FolderModel parentFolder) {
         return parentFolder.searchSubFolder(path);
     }

@@ -159,4 +159,27 @@ class TestFolderModel {
         assertEquals(testFolder, f.getParentFolder());
         assertEquals("TMO/:D", f.getPath());
     }
+
+    @Test
+    void copy() {
+        FolderModel mockedFolder = mock(FolderModel.class);
+        FolderModel mockedFolderCopy = mock(FolderModel.class);
+        when(mockedFolderCopy.getName()).thenReturn("TMO");
+        when(mockedFolder.copy()).thenReturn(mockedFolderCopy);
+        testFolder.addSubFolder(mockedFolder);
+
+        NoteModel mockedNote = mock(NoteModel.class);
+        NoteModel mockedNoteCopy = mock(NoteModel.class);
+        when(mockedNoteCopy.getName()).thenReturn(":D");
+        when(mockedNote.copy()).thenReturn(mockedNoteCopy);
+        testFolder.addNote(mockedNote);
+
+        FolderModel copied = (FolderModel) testFolder.copy();
+
+        verify(mockedFolder, times(1)).copy();
+        verify(mockedNote, times(1)).copy();
+
+        assertNotNull(copied.searchNote(":D"));
+        assertNotNull(copied.searchSubFolder("TMO"));
+    }
 }

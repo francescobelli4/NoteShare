@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
-<StackPane fx:id="root" prefWidth="1920" prefHeight="1080" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../../styles/HomePage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080" prefWidth="1920" stylesheets="@../../styles/HomePage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane styleClass="root">
          <columnConstraints>
@@ -41,7 +41,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="20.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="searchBar" id="searchbar" blendMode="SRC_ATOP" prefHeight="91.0" prefWidth="667.0" promptText="Search for a note..." HBox.hgrow="ALWAYS">
+                              <TextField id="searchbar" fx:id="searchBar" blendMode="SRC_ATOP" prefHeight="91.0" prefWidth="667.0" promptText="Search for a note..." HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font name="Cantarell Regular" size="47.0" />
                                  </font>

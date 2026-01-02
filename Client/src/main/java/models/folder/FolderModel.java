@@ -1,5 +1,6 @@
 package models.folder;
 
+import models.Controllable;
 import models.note.NoteModel;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Objects;
  * TODO potrebbe essere "salvata in app a livelli", cioè con un parametro di depth che dice
  * TODO quanti strati di subfolders l'app dovrebbe salvare su stack.
  */
-public class FolderModel {
+public class FolderModel implements Controllable {
 
     private final List<Listener> listeners = new ArrayList<>();
     public void addListener(Listener listener) {
@@ -115,6 +116,14 @@ public class FolderModel {
         }
     }
 
+    public void deleteNote(NoteModel note) {
+        this.notes.remove(note);
+
+        for (Listener l : listeners) {
+            l.folderUpdated();
+        }
+    }
+
     public NoteModel searchNote(String name) {
         if (this.getNotes().isEmpty()) return null;
 
@@ -130,6 +139,14 @@ public class FolderModel {
     public void addSubFolder(FolderModel folder) {
         this.subFolders.add(folder);
         folder.setParentFolder(this);
+
+        for (Listener l : listeners) {
+            l.folderUpdated();
+        }
+    }
+
+    public void deleteSubFolder(FolderModel folder) {
+        this.subFolders.remove(folder);
 
         for (Listener l : listeners) {
             l.folderUpdated();
@@ -160,6 +177,21 @@ public class FolderModel {
     public void setParentFolder(FolderModel parentFolder) {
         this.parentFolder = parentFolder;
         this.path = parentFolder.getPath() + "/" + name;
+    }
+
+    @Override
+    public Controllable copy() {
+        FolderModel copy = new FolderModel(this.name);
+
+        for (FolderModel subFolder : subFolders) {
+            copy.addSubFolder((FolderModel) subFolder.copy());
+        }
+
+        for (NoteModel note : notes) {
+            copy.addNote((NoteModel) note.copy());
+        }
+
+        return copy;
     }
 
     public interface Listener {

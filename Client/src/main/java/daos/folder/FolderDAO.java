@@ -8,5 +8,6 @@ public interface FolderDAO {
     FolderModel getRootFolder();
     FolderModel getUserFolder(UserModel user);
     void save(FolderModel folder, FolderModel parentFolder);
+    void delete(FolderModel folder);
     FolderModel searchByPath(String path, FolderModel parentFolder);
 }

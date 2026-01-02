@@ -25,6 +25,8 @@ public class ToolsBarView implements View, UserModel.ActiveFolderListener {
     @FXML
     private Button noteAddButton;
     @FXML
+    private Button pasteButton;
+    @FXML
     private Label pathLabel;
 
     private static final Page page = Page.TOOLS_BAR;
@@ -70,6 +72,10 @@ public class ToolsBarView implements View, UserModel.ActiveFolderListener {
 
     public Button getFolderAddButton() {
         return folderAddButton;
+    }
+
+    public Button getPasteButton() {
+        return pasteButton;
     }
 
     public Button getNoteAddButton() {

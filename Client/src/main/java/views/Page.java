@@ -18,7 +18,8 @@ public enum Page {
     FOLDERS_CONTAINER("/colored/pages/forms/FoldersContainerForm.fxml"),
     FOLDER_ELEMENT("/colored/pages/elements/FolderElement.fxml"),
     NOTE_ELEMENT("/colored/pages/elements/NoteElement.fxml"),
-    MESSAGE_ELEMENT("/colored/pages/elements/MessageElement.fxml");
+    MESSAGE_ELEMENT("/colored/pages/elements/MessageElement.fxml"),
+    FOLDERS_CONTAINER_ELEMENT_OPTIONS_FORM("/colored/pages/forms/FoldersContainerElementOptionsForm.fxml");
 
     private String path;
 

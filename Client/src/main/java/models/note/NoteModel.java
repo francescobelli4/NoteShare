@@ -1,5 +1,6 @@
 package models.note;
 
+import models.Controllable;
 import models.folder.FolderModel;
 import utils.PDFWrapper;
 
@@ -9,7 +10,7 @@ import java.io.File;
  * This class represents the actual state of a note in the app. It should implement
  * methods for getting and setting the actual note's state and domain-logic functions.
  */
-public class NoteModel {
+public class NoteModel implements Controllable {
 
     private String name;
     /** Path to the config file */
@@ -71,5 +72,10 @@ public class NoteModel {
 
     private void createConfigFile() {
         //TODO
+    }
+
+    @Override
+    public Controllable copy() {
+        return new NoteModel(this.name, this.pdf);
     }
 }

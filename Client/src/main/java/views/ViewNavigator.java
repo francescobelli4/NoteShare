@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import models.Controllable;
 import models.note.NoteModel;
 
 public class ViewNavigator {
@@ -46,6 +47,10 @@ public class ViewNavigator {
     public static void displayViewNoteView(NoteModel note) {
         activeView = ViewFactory.getInstance().createViewNoteView(note);
         scene.setRoot(activeView.getRoot());
+    }
+
+    public static void displayFoldersContainerElementOptionsFormView(Controllable element, double x, double y) {
+        ((StackPane)activeView.getRoot()).getChildren().add(ViewFactory.getInstance().createFoldersContainerElementOptionsFormView(element, x, y).getRoot());
     }
 
     public static Stage getStage() {

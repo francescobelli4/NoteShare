@@ -2,6 +2,8 @@ package graphics_controllers.home.toolsbar;
 
 import app.AppContext;
 import app_controllers.FoldersController;
+import exceptions.DuplicateFolderException;
+import exceptions.InvalidFolderNameException;
 import graphics_controllers.GraphicsController;
 import locales.Locales;
 import views.Icon;
@@ -25,22 +27,13 @@ public class FolderCreationDialogueViewController extends GraphicsController<Fol
         String title = Locales.get("error");
         Icon icon = Icon.ERROR;
 
-        if (getView().getFolderNameTextField().getText().isEmpty()) {
-            ViewNavigator.displayNotification(title, Locales.get("folder_name_too_short"), icon);
-            return;
-        }
-
-        if (getView().getFolderNameTextField().getText().length() > 15) {
-            ViewNavigator.displayNotification(title, Locales.get("folder_name_too_long"), icon);
-            return;
-        }
-
-        if (AppContext.getInstance().getCurrentUser().getActiveFolder().searchSubFolder(getView().getFolderNameTextField().getText()) != null) {
+        try {
+            FoldersController.addSubFolder(getView().getFolderNameTextField().getText(), AppContext.getInstance().getCurrentUser().getActiveFolder());
+            getView().close();
+        } catch (DuplicateFolderException _) {
             ViewNavigator.displayNotification(title, Locales.get("folder_already_exists"), icon);
-            return;
+        } catch (InvalidFolderNameException e) {
+            ViewNavigator.displayNotification(title, Locales.get(e.getMessage()), icon);
         }
-
-        FoldersController.addSubFolder(getView().getFolderNameTextField().getText(), AppContext.getInstance().getCurrentUser().getActiveFolder());
-        getView().close();
     }
 }

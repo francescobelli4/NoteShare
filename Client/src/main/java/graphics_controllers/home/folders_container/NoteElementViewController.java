@@ -1,6 +1,7 @@
 package graphics_controllers.home.folders_container;
 
 import graphics_controllers.GraphicsController;
+import javafx.scene.input.MouseEvent;
 import models.note.NoteModel;
 import views.ViewNavigator;
 import views.home.folders_container.NoteElementView;
@@ -19,6 +20,7 @@ public class NoteElementViewController extends GraphicsController<NoteElementVie
     @Override
     public void loaded() {
         getView().getRoot().setOnMouseClicked(_ -> noteClicked());
+        getView().getOptionsButton().setOnMouseClicked(this::optionsButtonClicked);
     }
 
     private void setupUI() {
@@ -27,5 +29,9 @@ public class NoteElementViewController extends GraphicsController<NoteElementVie
 
     private void noteClicked() {
         ViewNavigator.displayViewNoteView(note);
+    }
+
+    private void optionsButtonClicked(MouseEvent clickEvent) {
+        ViewNavigator.displayFoldersContainerElementOptionsFormView(note, clickEvent.getScreenX(), clickEvent.getScreenY());
     }
 }

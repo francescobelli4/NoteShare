@@ -2,7 +2,9 @@ package graphics_controllers.home.folders_container;
 
 import app_controllers.FoldersController;
 import graphics_controllers.GraphicsController;
+import javafx.scene.input.MouseEvent;
 import models.folder.FolderModel;
+import views.ViewNavigator;
 import views.home.folders_container.FolderElementView;
 
 public class FolderElementViewController extends GraphicsController<FolderElementView> {
@@ -20,6 +22,7 @@ public class FolderElementViewController extends GraphicsController<FolderElemen
     public void loaded() {
 
         getView().getRoot().setOnMouseClicked(_ -> folderClicked());
+        getView().getOptionsButton().setOnMouseClicked(this::optionsButtonClicked);
     }
 
     private void setupUI() {
@@ -28,5 +31,9 @@ public class FolderElementViewController extends GraphicsController<FolderElemen
 
     private void folderClicked() {
         FoldersController.goToFolder(folder);
+    }
+
+    private void optionsButtonClicked(MouseEvent clickEvent) {
+        ViewNavigator.displayFoldersContainerElementOptionsFormView(folder, clickEvent.getScreenX(), clickEvent.getScreenY());
     }
 }
