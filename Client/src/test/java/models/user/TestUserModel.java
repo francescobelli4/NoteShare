@@ -78,6 +78,21 @@ class TestUserModel {
     }
 
     @Test
+    void addUserSearchQueryListener() {
+        UserModel.SearchQueryListener listener = mock(UserModel.SearchQueryListener.class);
+        user.addUserSearchQueryListener(listener);
+        assertTrue(user.getSearchQueryListeners().contains(listener));
+    }
+
+    @Test
+    void removeUserSearchQueryListener() {
+        UserModel.SearchQueryListener listener = mock(UserModel.SearchQueryListener.class);
+        user.addUserSearchQueryListener(listener);
+        user.removeUserSearchQueryListener(listener);
+        assertFalse(user.getSearchQueryListeners().contains(listener));
+    }
+
+    @Test
     void getUserType() {
         assertEquals(UserType.STUDENT, user.getRole().getUserType());
     }
@@ -193,5 +208,17 @@ class TestUserModel {
         assertEquals(f, user.getCopiedElement());
     }
 
+    @Test
+    void setSearchQuery() {
+        UserModel.SearchQueryListener listener = mock(UserModel.SearchQueryListener.class);
+        user.addUserSearchQueryListener(listener);
 
+        user.setSearchQuery("test");
+
+        assertEquals("test", user.getQuery());
+
+        for (UserModel.SearchQueryListener l : user.getSearchQueryListeners()) {
+            verify(l, times(1)).queryUpdated("test");
+        }
+    }
 }

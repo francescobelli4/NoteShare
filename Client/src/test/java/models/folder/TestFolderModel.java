@@ -154,10 +154,17 @@ class TestFolderModel {
     @Test
     void setParentFolder() {
         FolderModel f = new FolderModel(":D");
+        FolderModel child = mock(FolderModel.class);
+        NoteModel childNote = mock(NoteModel.class);
+        f.addSubFolder(child);
+        f.addNote(childNote);
+
         f.setParentFolder(testFolder);
 
         assertEquals(testFolder, f.getParentFolder());
         assertEquals("TMO/:D", f.getPath());
+        verify(child, atLeast(1)).setParentFolder(f);
+        verify(childNote, atLeast(1)).setParentFolder(f);
     }
 
     @Test
@@ -181,5 +188,16 @@ class TestFolderModel {
 
         assertNotNull(copied.searchNote(":D"));
         assertNotNull(copied.searchSubFolder("TMO"));
+    }
+
+    @Test
+    void isRoot() {
+        assertFalse(testFolder.isRoot());
+    }
+
+    @Test
+    void setIsRoot() {
+        testFolder.setIsRoot(true);
+        assertTrue(testFolder.isRoot());
     }
 }

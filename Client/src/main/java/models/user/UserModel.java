@@ -55,6 +55,7 @@ public class UserModel {
     protected boolean loggedIn = false;
 
     private final List<MessageModel> messages = new ArrayList<>();
+    private String query = "";
 
     private final List<LoginListener> loginListeners = new ArrayList<>();
     public void addUserLoginListener(LoginListener listener) {
@@ -78,6 +79,14 @@ public class UserModel {
     }
     public void removeUserActiveFolderListener(ActiveFolderListener listener) {
         this.activeFolderListeners.remove(listener);
+    }
+
+    private final List<SearchQueryListener> searchQueryListeners = new ArrayList<>();
+    public void addUserSearchQueryListener(SearchQueryListener listener) {
+        this.searchQueryListeners.add(listener);
+    }
+    public void removeUserSearchQueryListener(SearchQueryListener listener) {
+        this.searchQueryListeners.remove(listener);
     }
 
     public UserModel() {
@@ -167,6 +176,10 @@ public class UserModel {
         return activeFolderListeners;
     }
 
+    public List<SearchQueryListener> getSearchQueryListeners() {
+        return searchQueryListeners;
+    }
+
     public List<MessageModel> getMessages() {
         return messages;
     }
@@ -202,6 +215,18 @@ public class UserModel {
         this.copiedElement = copiedElement;
     }
 
+    public void setSearchQuery(String query) {
+        this.query = query;
+
+        for (SearchQueryListener l : searchQueryListeners) {
+            l.queryUpdated(query);
+        }
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
     public interface LoginListener {
         void onLoggedIn();
     }
@@ -213,5 +238,9 @@ public class UserModel {
 
     public interface ActiveFolderListener {
         void activeFolderSet(FolderModel folder);
+    }
+
+    public interface SearchQueryListener {
+        void queryUpdated(String query);
     }
 }

@@ -5,8 +5,7 @@ import models.user.UserModel;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,6 +27,7 @@ class TestNPFolderDAO {
     void getRootFolder() {
         FolderModel folderModel = folderDAO.getRootFolder();
         assertEquals("NoteShare", folderModel.getName());
+        assertTrue(folderModel.isRoot());
     }
 
     @Test

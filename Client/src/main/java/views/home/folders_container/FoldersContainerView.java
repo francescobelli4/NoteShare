@@ -4,6 +4,7 @@ import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.folders_container.FoldersContainerViewController;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -15,7 +16,9 @@ import views.Page;
 import views.View;
 import views.ViewFactory;
 
-public class FoldersContainerView implements View, FolderModel.Listener, UserModel.ActiveFolderListener {
+import java.util.List;
+
+public class FoldersContainerView implements View, FolderModel.Listener, UserModel.ActiveFolderListener, UserModel.SearchQueryListener {
 
     @FXML
     private VBox root;
@@ -23,7 +26,7 @@ public class FoldersContainerView implements View, FolderModel.Listener, UserMod
     private FlowPane foldersContainer;
 
     private static final Page page = Page.FOLDERS_CONTAINER;
-    private final GraphicsController<FoldersContainerView> graphicsController;
+    private final FoldersContainerViewController graphicsController;
 
     public FoldersContainerView() {
         graphicsController = new FoldersContainerViewController(this);
@@ -35,8 +38,9 @@ public class FoldersContainerView implements View, FolderModel.Listener, UserMod
         Utils.scaleFonts(root);
         AppContext.getInstance().getCurrentUser().getActiveFolder().addListener(this);
         AppContext.getInstance().getCurrentUser().addUserActiveFolderListener(this);
+        AppContext.getInstance().getCurrentUser().addUserSearchQueryListener(this);
 
-        displayActiveFolder();
+        graphicsController.updateDisplay();
     }
 
     @Override
@@ -44,34 +48,30 @@ public class FoldersContainerView implements View, FolderModel.Listener, UserMod
         //Nothing to do...
     }
 
-    private void displayActiveFolder() {
+    public void displayElements(List<Node> folders, List<Node> notes) {
         foldersContainer.getChildren().clear();
-        for (FolderModel f : AppContext.getInstance().getCurrentUser().getActiveFolder().getSubFolders()) {
-            appendFolder(f);
+        for (Node f : folders) {
+            foldersContainer.getChildren().add(f);
         }
-
-        for (NoteModel n : AppContext.getInstance().getCurrentUser().getActiveFolder().getNotes()) {
-            appendNote(n);
+        for (Node n : notes) {
+            foldersContainer.getChildren().add(n);
         }
-    }
-
-    public void appendFolder(FolderModel folder) {
-        foldersContainer.getChildren().add(ViewFactory.getInstance().createFolderElementView(folder).getRoot());
-    }
-
-    public void appendNote(NoteModel note) {
-        foldersContainer.getChildren().add(ViewFactory.getInstance().createNoteElementView(note).getRoot());
     }
 
     @Override
     public void activeFolderSet(FolderModel folder) {
         folder.addListener(this);
-        displayActiveFolder();
+        graphicsController.updateDisplay(folder);
     }
 
     @Override
     public void folderUpdated() {
-        displayActiveFolder();
+        graphicsController.updateDisplay();
+    }
+
+    @Override
+    public void queryUpdated(String query) {
+        graphicsController.updateDisplay(query);
     }
 
     @Override

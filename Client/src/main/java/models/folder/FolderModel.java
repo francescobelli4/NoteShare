@@ -35,7 +35,7 @@ public class FolderModel implements Controllable {
         this.listeners.clear();
     }
 
-    protected String name;
+    private final String name;
 
     /**
      * This folder's path. In demo mode, the path is simulated and it's always relative
@@ -43,24 +43,25 @@ public class FolderModel implements Controllable {
      *
      * TODO decidere per release mode come rappresentare il path
      */
-    protected String path;
+    private String path;
 
     /**
      * This folder's subfolders. These should depend on depth parameter is release mode...
      */
-    protected List<FolderModel> subFolders = new ArrayList<>();
+    private final List<FolderModel> subFolders = new ArrayList<>();
 
     /**
      * The notes contained in this folder.
      * TODO considerare l'idea di rendere le note dei file (nomenota).noteshare invece che
      * TODO semplici pdf.
      */
-    protected List<NoteModel> notes = new ArrayList<>();
+    private final List<NoteModel> notes = new ArrayList<>();
 
     /**
      * This folder's parent folder
      */
-    protected FolderModel parentFolder;
+    private FolderModel parentFolder;
+    private boolean isRoot = false;
 
 
     /**
@@ -177,6 +178,14 @@ public class FolderModel implements Controllable {
     public void setParentFolder(FolderModel parentFolder) {
         this.parentFolder = parentFolder;
         this.path = parentFolder.getPath() + "/" + name;
+
+        for (FolderModel f : subFolders) {
+            f.setParentFolder(this);
+        }
+
+        for (NoteModel n : notes) {
+            n.setParentFolder(this);
+        }
     }
 
     @Override
@@ -192,6 +201,14 @@ public class FolderModel implements Controllable {
         }
 
         return copy;
+    }
+
+    public boolean isRoot() {
+        return isRoot;
+    }
+
+    public void setIsRoot(boolean isRoot) {
+        this.isRoot = isRoot;
     }
 
     public interface Listener {

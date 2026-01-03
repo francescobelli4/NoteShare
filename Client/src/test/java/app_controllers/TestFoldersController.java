@@ -81,6 +81,7 @@ class TestFoldersController {
         FolderModel parent = new FolderModel(":D");
         FoldersController.goToFolder(parent);
         assertEquals(parent, instance.getCurrentUser().getActiveFolder());
+        assertTrue(instance.getCurrentUser().getQuery().isBlank());
     }
 
     @Test
@@ -96,6 +97,7 @@ class TestFoldersController {
             staticCTX.when(AppContext::getInstance).thenReturn(mockAppContext);
 
             FolderModel rootFolder = mock(FolderModel.class);
+            when(rootFolder.isRoot()).thenReturn(true);
             FolderModel folderA = mock(FolderModel.class);
 
             when(folderA.getParentFolder()).thenReturn(rootFolder);

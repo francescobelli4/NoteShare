@@ -1,5 +1,6 @@
 package views.home;
 
+import app.AppContext;
 import graphics_controllers.GraphicsController;
 import graphics_controllers.home.HomeViewController;
 import javafx.fxml.FXML;
@@ -9,11 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import models.user.UserModel;
 import utils.Utils;
 import views.Page;
 import views.View;
 
-public class HomeView implements View {
+public class HomeView implements View, UserModel.SearchQueryListener {
 
     @FXML
     private StackPane root;
@@ -59,6 +61,7 @@ public class HomeView implements View {
     @Override
     public void init() {
         Utils.scaleFonts(root);
+        AppContext.getInstance().getCurrentUser().addUserSearchQueryListener(this);
     }
 
     @Override
@@ -99,5 +102,10 @@ public class HomeView implements View {
 
     public VBox getToolsSlot() {
         return toolsSlot;
+    }
+
+    @Override
+    public void queryUpdated(String query) {
+        searchBar.setText(query);
     }
 }

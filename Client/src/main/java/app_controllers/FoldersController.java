@@ -35,11 +35,13 @@ public class FoldersController {
 
     public static void goToFolder(FolderModel folder) {
         AppContext.getInstance().getCurrentUser().setActiveFolder(folder);
+        AppContext.getInstance().getCurrentUser().setSearchQuery("");
     }
 
     public static void goToParentFolder() {
-        if (AppContext.getInstance().getCurrentUser().getActiveFolder().getParentFolder() != AppContext.getInstance().getCurrentUser().getRootFolder())
+        if (!AppContext.getInstance().getCurrentUser().getActiveFolder().getParentFolder().isRoot()) {
             goToFolder(AppContext.getInstance().getCurrentUser().getActiveFolder().getParentFolder());
+        }
     }
 
     public static void copyFolder(FolderModel folder) {

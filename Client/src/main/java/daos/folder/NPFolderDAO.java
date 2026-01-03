@@ -8,7 +8,9 @@ public class NPFolderDAO implements FolderDAO {
 
     @Override
     public FolderModel getRootFolder() {
-        return new FolderModel("NoteShare");
+        FolderModel rootFolder = new FolderModel("NoteShare");
+        rootFolder.setIsRoot(true);
+        return rootFolder;
     }
 
     @Override
