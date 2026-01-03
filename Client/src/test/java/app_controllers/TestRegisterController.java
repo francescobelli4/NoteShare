@@ -61,7 +61,6 @@ class TestRegisterController {
 
         try (
                 MockedStatic<ServerCommunicationService> staticServerComm = mockStatic(ServerCommunicationService.class);
-                MockedStatic<UserMapper> staticUserMapper = mockStatic(UserMapper.class);
                 MockedStatic<Utils> staticUtils = mockStatic(Utils.class);
                 MockedStatic<Hashing> staticHashing = mockStatic(Hashing.class)
         ) {

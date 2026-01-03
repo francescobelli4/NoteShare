@@ -8,7 +8,6 @@ import communication.dtos.responses.login.LoginFailureReason;
 import communication.dtos.user.UserStudentDTO;
 import communication.dtos.user.UserType;
 import exceptions.LoginFailureException;
-import mappers.UserMapper;
 import models.user.UserModel;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -67,7 +66,6 @@ class TestLoginController {
 
         try (
                 MockedStatic<ServerCommunicationService> staticServerComm = mockStatic(ServerCommunicationService.class);
-                MockedStatic<UserMapper> staticUserMapper = mockStatic(UserMapper.class);
                 MockedStatic<Utils> staticUtils = mockStatic(Utils.class);
                 MockedStatic<Hashing> staticHashing = mockStatic(Hashing.class)
         ) {

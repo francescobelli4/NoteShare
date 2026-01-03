@@ -3,8 +3,6 @@ package graphics_controllers.home;
 import app_controllers.SearchController;
 import graphics_controllers.GraphicsController;
 import javafx.geometry.Bounds;
-import javafx.scene.control.TextFormatter;
-import utils.Utils;
 import views.ViewFactory;
 import views.ViewNavigator;
 import views.home.HomeView;
@@ -27,9 +25,7 @@ public class HomeViewController extends GraphicsController<HomeView> {
         loadFoldersContainer();
         getView().getMessagesButton().setOnMouseClicked(_ -> messagesButtonClicked());
 
-        getView().getSearchBar().textProperty().addListener((_, _, newV) -> {
-            SearchController.updateQuery(newV);
-        });
+        getView().getSearchBar().textProperty().addListener((_, _, newV) -> SearchController.updateQuery(newV));
     }
 
     private void loadLeftBar() {

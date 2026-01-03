@@ -9,12 +9,10 @@ import javafx.scene.Parent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import models.folder.FolderModel;
-import models.note.NoteModel;
 import models.user.UserModel;
 import utils.Utils;
 import views.Page;
 import views.View;
-import views.ViewFactory;
 
 import java.util.List;
 

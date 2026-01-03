@@ -123,7 +123,7 @@ public class ViewNoteViewController extends GraphicsController<ViewNoteView> {
                     newScale /= ZOOM_FACTOR;
                 }
 
-                newScale = Math.max(MIN_ZOOM, Math.min(newScale, MAX_ZOOM));
+                newScale = Math.clamp(newScale, MIN_ZOOM, MAX_ZOOM);
 
                 getView().getImagesContainer().setScaleX(newScale);
                 getView().getImagesContainer().setScaleY(newScale);

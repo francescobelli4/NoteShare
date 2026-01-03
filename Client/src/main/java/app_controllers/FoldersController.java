@@ -55,7 +55,9 @@ public class FoldersController {
         switch (user.getCopiedElement()) {
             case FolderModel folder -> addSubFolder(folder, user.getActiveFolder());
             case NoteModel note -> NotesController.createNote(note.getName(), note.getPdf().getPdfFile());
-            case null, default -> {}
+            case null, default -> {
+                //Nothing :D
+            }
         }
     }
 
